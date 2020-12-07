@@ -1,4 +1,4 @@
-# ElasticSearch doc and common-write（ElasticSearch doc文档摘要与工具类封装）
+# ElasticSearch doc and common-write（ElasticSearch doc文档摘要）
 
 ## 什么是ElasticSearch？
 ```text
