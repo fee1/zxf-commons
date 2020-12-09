@@ -21,7 +21,7 @@ public class JestEsClient implements EsClient{
     private JestClient jestClient;
 
     /**
-     * gson ??
+     * gson final ??
      */
     private final Gson gson;
 
