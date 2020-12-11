@@ -18,7 +18,7 @@ public interface EsClient extends Closeable {
     boolean existsIndex(String indexName) throws IOException;
 
     /**
-     * 是否存在索引的别名
+     * 是否存在索引名与别名
      * @param indexName 索引名称
      * @param includeAlias 别名
      * @return boolean
