@@ -34,5 +34,11 @@
 ```
 ### 2.数据输出(搜索和分析)
 ```text
+    1.ElasticSearch客户端支持多种语言：Java、JavaScript、Go、Python等
+    2.类似与sql查询的语法(JSON形式)
+    3.能够帮助我们在大量的数据中分析数据，查找，汇总，计算以及能够分析最近几个月的数据
+```
+### 3.可伸缩与弹性：集群，节点和分片(Scalability and resilience: clusters, nodes, and shardsedit)
+```text
     1.
 ```
