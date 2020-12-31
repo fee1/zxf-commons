@@ -40,5 +40,5 @@
 ```
 ### 3.可伸缩与弹性：集群，节点和分片(Scalability and resilience: clusters, nodes, and shardsedit)
 ```text
-    1.
+    1. 
 ```

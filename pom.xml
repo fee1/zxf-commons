@@ -61,6 +61,12 @@
             <version>${alibaba-fastjson.verison}</version>
         </dependency>
 
+        <!--es官方工具，将sql装换为es-sql-->
+        <dependency>
+            <groupId>org.elasticsearch.plugin</groupId>
+            <artifactId>x-pack-sql-jdbc</artifactId>
+            <version>7.10.1</version>
+        </dependency>
     </dependencies>
 
 </project>
