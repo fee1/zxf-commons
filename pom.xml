@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>es-common</artifactId>
+    <artifactId>zxf-common</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -15,6 +15,12 @@
         <spring.version>5.2.7.RELEASE</spring.version>
         <common-io.version>2.6</common-io.version>
         <alibaba-fastjson.verison>1.2.75</alibaba-fastjson.verison>
+
+
+
+        <junit.version>4.8.2</junit.version>
+        <springboot-test.version>2.3.1.RELEASE</springboot-test.version>
+        <spring-test.version>5.2.7.RELEASE</spring-test.version>
     </properties>
 
     <dependencies>
@@ -37,12 +43,6 @@
             <version>${searchbox.jest.version}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.elasticsearch.client</groupId>-->
-<!--            <artifactId>elasticsearch-rest-client</artifactId>-->
-<!--            <version>7.10.0</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
@@ -61,12 +61,38 @@
             <version>${alibaba-fastjson.verison}</version>
         </dependency>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-test.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${springboot-test.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <!--es官方工具，将sql装换为es-sql-->
         <dependency>
             <groupId>org.elasticsearch.plugin</groupId>
             <artifactId>x-pack-sql-jdbc</artifactId>
             <version>7.10.1</version>
         </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.elasticsearch.client</groupId>-->
+        <!--            <artifactId>elasticsearch-rest-client</artifactId>-->
+        <!--            <version>7.10.0</version>-->
+        <!--        </dependency>-->
     </dependencies>
 
 </project>

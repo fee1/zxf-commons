@@ -1,11 +1,11 @@
 package com.zxf.builder;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
- * es query string 构建测试
+ *
  * @author zxf
  */
 class EsQueryStringBuilderTest {
-
-
 
 }
