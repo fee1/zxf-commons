@@ -22,11 +22,6 @@ public class EsQueryStringBuilder {
         oredCriteria = new LinkedList<>();
     }
 
-    private Criteria createCriteriaInternal() {
-        Criteria criteria = new Criteria();
-        return criteria;
-    }
-
     public Criteria createCriteria() {
         Criteria criteria = new Criteria();
         if (oredCriteria.size() == 0) {
@@ -122,6 +117,28 @@ public class EsQueryStringBuilder {
          */
         public Criteria andNotRangeEquals(String fieldName, Object minValue, Object maxValue) {
             return this.addFormatCriteria("NOT %s:[%s TO %s]", fieldName, minValue, maxValue);
+        }
+
+        /**
+         * 不包含边界值
+         * @param fieldName
+         * @param minValue
+         * @param maxValue
+         * @return Criteria
+         */
+        public Criteria andRange(String fieldName, Object minValue, Object maxValue){
+            return this.addFormatCriteria("%s:{%s TO %s}", fieldName, minValue, maxValue);
+        }
+
+        /**
+         * 不包含边界值
+         * @param fieldName
+         * @param minValue
+         * @param maxValue
+         * @return Criteria
+         */
+        public Criteria andNotRange(String fieldName, Object minValue, Object maxValue){
+            return this.addFormatCriteria("NOT %s:{%s TO %s}", fieldName, minValue, maxValue);
         }
 
         /**

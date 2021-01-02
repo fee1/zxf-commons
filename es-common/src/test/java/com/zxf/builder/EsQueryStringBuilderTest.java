@@ -1,6 +1,4 @@
 package com.zxf.builder;
-
-import com.zxf.BaseTest;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,15 +24,49 @@ public class EsQueryStringBuilderTest {
         q = esQueryStringBuilder.build();
         assertEquals("(ID:(123,312))", q);
         esQueryStringBuilder.clear();
+    }
 
+    @Test
+    public void rangeQString(){
+        EsQueryStringBuilder esQueryStringBuilder = EsQueryStringBuilder.create();
         esQueryStringBuilder.createCriteria().andNotIn("ID", "123", "312");
-        q = esQueryStringBuilder.build();
+        String q = esQueryStringBuilder.build();
         assertEquals("(NOT ID:(123,312))", q);
+        esQueryStringBuilder.clear();
+
+        esQueryStringBuilder.createCriteria().andRangeEquals("AGE", 18, 24);
+        q = esQueryStringBuilder.build();
+        assertEquals("(AGE:[18 TO 24])", q);
+        esQueryStringBuilder.clear();
+
+        esQueryStringBuilder.createCriteria().andNotRangeEquals("AGE", 18, 24);
+        q = esQueryStringBuilder.build();
+        assertEquals("(NOT AGE:[18 TO 24])", q);
+        esQueryStringBuilder.clear();
+
+        esQueryStringBuilder.createCriteria().andRange("AGE", 18, 24);
+        q = esQueryStringBuilder.build();
+        assertEquals("(AGE:{18 TO 24})", q);
+        esQueryStringBuilder.clear();
+
+        esQueryStringBuilder.createCriteria().andNotRange("AGE", 18, 24);
+        q = esQueryStringBuilder.build();
+        assertEquals("(NOT AGE:{18 TO 24})", q);
+        esQueryStringBuilder.clear();
+
+        esQueryStringBuilder.createCriteria().andGteEquals("AGE", 18);
+        q = esQueryStringBuilder.build();
+        assertEquals("(AGE:[18 TO *])", q);
+        esQueryStringBuilder.clear();
+
+        esQueryStringBuilder.createCriteria().andLteEquals("AGE", 24);
+        q = esQueryStringBuilder.build();
+        assertEquals("(AGE:[* TO 24])", q);
         esQueryStringBuilder.clear();
     }
 
     /**
-     * 符合查询
+     * 复合查询
      */
     @Test
     public void complexQString(){
