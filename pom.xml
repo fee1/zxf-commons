@@ -6,93 +6,15 @@
 
     <groupId>org.example</groupId>
     <artifactId>zxf-common</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>es-common</module>
+        <module>test-common</module>
+    </modules>
 
     <properties>
-        <lombok.version>1.18.12</lombok.version>
-        <google.code.gson.version>2.8.6</google.code.gson.version>
-        <searchbox.jest.version>6.3.1</searchbox.jest.version>
-        <spring.version>5.2.7.RELEASE</spring.version>
-        <common-io.version>2.6</common-io.version>
-        <alibaba-fastjson.verison>1.2.75</alibaba-fastjson.verison>
 
-
-
-        <junit.version>4.8.2</junit.version>
-        <springboot-test.version>2.3.1.RELEASE</springboot-test.version>
-        <spring-test.version>5.2.7.RELEASE</spring-test.version>
     </properties>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${google.code.gson.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.searchbox</groupId>
-            <artifactId>jest</artifactId>
-            <version>${searchbox.jest.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${common-io.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${alibaba-fastjson.verison}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring-test.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <version>${springboot-test.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!--es官方工具，将sql装换为es-sql-->
-        <dependency>
-            <groupId>org.elasticsearch.plugin</groupId>
-            <artifactId>x-pack-sql-jdbc</artifactId>
-            <version>7.10.1</version>
-        </dependency>
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.elasticsearch.client</groupId>-->
-        <!--            <artifactId>elasticsearch-rest-client</artifactId>-->
-        <!--            <version>7.10.0</version>-->
-        <!--        </dependency>-->
-    </dependencies>
 
 </project>

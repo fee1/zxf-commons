@@ -1,4 +1,4 @@
-package com.zxf;
+package com.zxf.config;
 
 import lombok.Data;
 

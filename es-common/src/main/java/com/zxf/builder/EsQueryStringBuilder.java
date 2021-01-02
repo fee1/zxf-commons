@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
  */
 public class EsQueryStringBuilder {
 
+    public static EsQueryStringBuilder create(){
+        return new EsQueryStringBuilder();
+    }
+
     private List<Criteria> oredCriteria;
 
     public EsQueryStringBuilder() {
