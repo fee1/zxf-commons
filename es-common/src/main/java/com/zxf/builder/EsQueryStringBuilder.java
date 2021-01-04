@@ -84,7 +84,7 @@ public class EsQueryStringBuilder {
          * @return Criteria
          */
         public Criteria andIn(String fieldName, String... value) {
-            return addFormatCriteria("%s:(%s)", fieldName, String.join("," , value ));
+            return addFormatCriteria("%s:(%s)", fieldName, String.join(" OR " , value ));
         }
 
         /**
@@ -94,7 +94,7 @@ public class EsQueryStringBuilder {
          * @return Criteria
          */
         public Criteria andNotIn(String fieldName, String... value) {
-            return addFormatCriteria("NOT %s:(%s)", fieldName, String.join("," , value ));
+            return addFormatCriteria("NOT %s:(%s)", fieldName, String.join(" OR " , value ));
         }
 
         /**
