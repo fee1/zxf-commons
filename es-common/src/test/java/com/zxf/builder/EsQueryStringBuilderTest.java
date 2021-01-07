@@ -22,7 +22,7 @@ public class EsQueryStringBuilderTest {
 
         esQueryStringBuilder.createCriteria().andIn("ID", "123", "312");
         q = esQueryStringBuilder.build();
-        assertEquals("(ID:(123,312))", q);
+        assertEquals("(ID:(123 OR 312))", q);
         esQueryStringBuilder.clear();
     }
 
@@ -31,7 +31,7 @@ public class EsQueryStringBuilderTest {
         EsQueryStringBuilder esQueryStringBuilder = EsQueryStringBuilder.create();
         esQueryStringBuilder.createCriteria().andNotIn("ID", "123", "312");
         String q = esQueryStringBuilder.build();
-        assertEquals("(NOT ID:(123,312))", q);
+        assertEquals("(NOT ID:(123 OR 312))", q);
         esQueryStringBuilder.clear();
 
         esQueryStringBuilder.createCriteria().andRangeEquals("AGE", 18, 24);

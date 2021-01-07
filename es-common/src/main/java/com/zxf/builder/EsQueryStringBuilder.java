@@ -16,7 +16,7 @@ public class EsQueryStringBuilder {
         return new EsQueryStringBuilder();
     }
 
-    private List<Criteria> oredCriteria;
+    private final List<Criteria> oredCriteria;
 
     public EsQueryStringBuilder() {
         oredCriteria = new LinkedList<>();
@@ -50,7 +50,7 @@ public class EsQueryStringBuilder {
     }
 
     public static class Criteria {
-        private List<String> criteria;
+        private final List<String> criteria;
 
         private Criteria() {
             criteria = new LinkedList<>();
@@ -59,10 +59,8 @@ public class EsQueryStringBuilder {
         private Criteria addFormatCriteria(String format, String fieldName, Object... values) {
             Assert.isTrue(values.length > 0, "Value for "+ fieldName + "cannot be null");
             Object[] args = new Object[values.length + 1];
+            System.arraycopy(values, 0, args, 1, args.length-1);
             args[0] = fieldName;
-            for (int i = 0; i < values.length; i++ ) {
-                args[i +1] = values[i];
-            }
             criteria.add(String.format(format, args));
             return this;
         }
