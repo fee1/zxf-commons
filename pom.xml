@@ -11,6 +11,7 @@
     <modules>
         <module>es-common</module>
         <module>test-common</module>
+        <module>common</module>
     </modules>
 
     <properties>
