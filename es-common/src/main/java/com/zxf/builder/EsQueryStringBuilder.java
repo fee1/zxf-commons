@@ -46,7 +46,7 @@ public class EsQueryStringBuilder {
      */
     public String build() {
         String q = this.oredCriteria.stream().map(Criteria::formatQuery).collect(Collectors.joining(") OR ("));
-        return String.format("(%s)", q);
+        return q.length() > 0 ? String.format("(%s)", q) : "" ;
     }
 
     public static class Criteria {
