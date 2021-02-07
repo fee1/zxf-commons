@@ -12,6 +12,7 @@
         <module>es-common</module>
         <module>test-common</module>
         <module>common</module>
+        <module>redis-common</module>
     </modules>
 
     <properties>
