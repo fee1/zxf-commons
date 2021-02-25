@@ -1998,5 +1998,3 @@
 {"account_number":990,"balance":44456,"firstname":"Kelly","lastname":"Steele","age":35,"gender":"M","address":"809 Hoyt Street","employer":"Eschoir","email":"kellysteele@eschoir.com","city":"Stewartville","state":"ID"}
 {"index":{"_id":"995"}}
 {"account_number":995,"balance":21153,"firstname":"Phelps","lastname":"Parrish","age":25,"gender":"M","address":"666 Miller Place","employer":"Pearlessa","email":"phelpsparrish@pearlessa.com","city":"Brecon","state":"ME"}
-
-
