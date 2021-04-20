@@ -7,4 +7,5 @@ spring:
 swagger:
   title: ${spring.application.name}
   description: 启动类
-  version： 1.0
+  version: 1.0
+  name: test
