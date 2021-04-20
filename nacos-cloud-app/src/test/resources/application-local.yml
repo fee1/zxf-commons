@@ -1,0 +1,14 @@
+project:
+  service:
+    ip: 127.0.0.1
+    uri:
+spring:
+  application:
+    name: nacos-cloud-test
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://${project.service.ip}:8848
+        register-enabled: true # 是否注册
+server:
+  port: 8080

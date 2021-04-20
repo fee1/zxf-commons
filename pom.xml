@@ -13,15 +13,52 @@
         <module>test-common</module>
         <module>common</module>
         <module>redis-common</module>
+        <module>nacos-cloud-app</module>
+        <module>boot-app</module>
     </modules>
 
     <properties>
+        <alibaba-cloud.version>2.2.0.RELEASE</alibaba-cloud.version>
+        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
+        <swagger2.version>2.9.2</swagger2.version>
+        <swagger-models.version>1.6.0</swagger-models.version>
+        <swagger-annotations.version>1.6.0</swagger-annotations.version>
+        <alibaba-fastjson.version>1.2.75</alibaba-fastjson.version>
+
+
+
         <common.version>1.0-SNAPSHOT</common.version>
         <es-common.version>1.0-SNAPSHOT</es-common.version>
+        <redis-common.version>1.0-SNAPSHOT</redis-common.version>
+        <test-common.version>1.0-SNAPSHOT</test-common.version>
+        <nacos-cloud-app.version>1.0-SNAPSHOT</nacos-cloud-app.version>
+        <boot-app.version>1.0-SNAPSHOT</boot-app.version>
     </properties>
 
+    <!--管理工具包的版本，管理使用工具包的人的jar版本-->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.2.1.RELEASE</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${alibaba-cloud.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
             <dependency>
                 <groupId>com.zxf</groupId>
                 <artifactId>common</artifactId>
@@ -34,11 +71,39 @@
             </dependency>
             <dependency>
                 <groupId>com.zxf</groupId>
-                <artifactId>common</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <artifactId>redis-common</artifactId>
+                <version>${redis-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zxf</groupId>
+                <artifactId>test-common</artifactId>
+                <version>${test-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zxf</groupId>
+                <artifactId>nacos-cloud-app</artifactId>
+                <version>${nacos-cloud-app.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zxf</groupId>
+                <artifactId>boot-app</artifactId>
+                <version>${boot-app.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${alibaba-fastjson.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>

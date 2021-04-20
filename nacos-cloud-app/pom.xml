@@ -9,32 +9,28 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common</artifactId>
-    <version>${common.version}</version>
-
-    <properties>
-        <alibaba-fastjson.version>1.2.75</alibaba-fastjson.version>
-        <lombok.version>1.18.12</lombok.version>
-        <test-common.version>1.0-SNAPSHOT</test-common.version>
-    </properties>
+    <artifactId>nacos-cloud-app</artifactId>
+    <version>${nacos-cloud-app.version}</version>
 
     <dependencies>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${alibaba-fastjson.version}</version>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.example</groupId>
+            <groupId>com.zxf</groupId>
+            <artifactId>boot-app</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zxf</groupId>
             <artifactId>test-common</artifactId>
-            <version>${test-common.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

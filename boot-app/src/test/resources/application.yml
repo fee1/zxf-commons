@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: boot-app
+
+swagger:
+  title: ${spring.application.name}
+  description: 启动类
+  version： 1.0
