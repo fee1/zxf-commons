@@ -12,14 +12,6 @@
     <artifactId>test-common</artifactId>
     <version>${test-common.version}</version>
 
-    <properties>
-        <junit.version>4.8.2</junit.version>
-        <springboot-test.version>2.3.1.RELEASE</springboot-test.version>
-        <spring-test.version>5.2.7.RELEASE</spring-test.version>
-        <openFeign.version>2.2.3.RELEASE</openFeign.version>
-        <mockito.version>1.10.19</mockito.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

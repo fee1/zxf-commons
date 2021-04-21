@@ -12,3 +12,8 @@ spring:
         register-enabled: true # 是否注册
 server:
   port: 8080
+swagger:
+  title: ${spring.application.name}
+  description: cloud-app 启动类
+  version: 1.0
+  name: test

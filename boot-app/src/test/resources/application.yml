@@ -4,8 +4,19 @@ spring:
   application:
     name: boot-app
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'info,health,prometheus,metrics,service-registry' # 通过HTTP暴露Actuator endpoints
+  health:
+    elasticsearch:
+      enabled: false # 去除elastic健康检查
+  endpoint:
+    shutdown:
+      enabled: true # 打开健康检查
 swagger:
   title: ${spring.application.name}
-  description: 启动类
+  description: boot-app类
   version: 1.0
   name: test

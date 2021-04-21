@@ -1,0 +1,21 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: eureka-client-app
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8080/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+    registry-fetch-interval-seconds: 10 # 更新server周期时间，隔多久去拉取服务注册信息，默认为30秒
+  instance:
+    lease-renewal-interval-in-seconds: 3 # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-expiration-duration-in-seconds: 10 # 发呆时间，即服务续约到期时间（缺省为90s）
+
+swagger:
+  title: ${spring.application.name}
+  description: eureka-client-app类
+  version: 1.0
+  name: test
