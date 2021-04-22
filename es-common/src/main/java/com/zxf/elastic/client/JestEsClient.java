@@ -1,11 +1,11 @@
-package com.zxf.client;
+package com.zxf.elastic.client;
 
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.zxf.config.EsConfig;
+import com.zxf.elastic.config.EsConfig;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.JestResult;

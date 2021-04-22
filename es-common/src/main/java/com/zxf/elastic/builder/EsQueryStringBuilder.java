@@ -1,4 +1,4 @@
-package com.zxf.builder;
+package com.zxf.elastic.builder;
 
 import org.springframework.util.Assert;
 

@@ -1,4 +1,5 @@
 package com.zxf.builder;
+import com.zxf.elastic.builder.EsQueryStringBuilder;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

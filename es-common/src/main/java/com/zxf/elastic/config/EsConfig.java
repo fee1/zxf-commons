@@ -1,4 +1,4 @@
-package com.zxf.config;
+package com.zxf.elastic.config;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.zxf.client;
+package com.zxf.elastic.client;
 
 import java.io.Closeable;
 import java.io.IOException;
