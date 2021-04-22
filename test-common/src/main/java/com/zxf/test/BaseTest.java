@@ -1,4 +1,4 @@
-package com.zxf;
+package com.zxf.test;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,5 +1,6 @@
 package com.zxf;
 
+import com.zxf.startup.NacosCloudStarter;
 import org.springframework.boot.SpringApplication;
 
 public class NacosCloudStarterTest {
