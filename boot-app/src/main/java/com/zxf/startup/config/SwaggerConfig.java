@@ -1,6 +1,7 @@
-package com.zxf.config;
+package com.zxf.startup.config;
 
-import com.zxf.domain.SwaggerProperties;
+import com.zxf.startup.config.BaseSwaggerConfig;
+import com.zxf.startup.domain.SwaggerProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 

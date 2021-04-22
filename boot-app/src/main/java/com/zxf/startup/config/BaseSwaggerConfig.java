@@ -1,6 +1,6 @@
-package com.zxf.config;
+package com.zxf.startup.config;
 
-import com.zxf.domain.SwaggerProperties;
+import com.zxf.startup.domain.SwaggerProperties;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
