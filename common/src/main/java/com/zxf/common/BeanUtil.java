@@ -1,4 +1,4 @@
-package com.zxf;
+package com.zxf.common;
 
 import com.alibaba.fastjson.JSONObject;
 

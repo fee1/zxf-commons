@@ -1,6 +1,7 @@
 package com.zxf;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zxf.common.BeanUtil;
 import lombok.Data;
 import org.junit.Test;
 
