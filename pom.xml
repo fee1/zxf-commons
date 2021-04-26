@@ -12,7 +12,7 @@
         <module>es-common</module>
         <module>test-common</module>
         <module>common</module>
-        <module>redis-common</module>
+        <module>cache-common</module>
         <module>nacos-cloud-app</module>
         <module>boot-app</module>
         <module>eureka-cloud-server-app</module>
@@ -40,7 +40,7 @@
 
         <common.version>1.0-SNAPSHOT</common.version>
         <es-common.version>1.0-SNAPSHOT</es-common.version>
-        <redis-common.version>1.0-SNAPSHOT</redis-common.version>
+        <cache-common.version>1.0-SNAPSHOT</cache-common.version>
         <test-common.version>1.0-SNAPSHOT</test-common.version>
         <nacos-cloud-app.version>1.0-SNAPSHOT</nacos-cloud-app.version>
         <boot-app.version>1.0-SNAPSHOT</boot-app.version>
@@ -75,7 +75,6 @@
             </dependency>
 
 
-
             <!--管理自定义jar版本-->
             <dependency>
                 <groupId>com.zxf</groupId>
@@ -89,8 +88,8 @@
             </dependency>
             <dependency>
                 <groupId>com.zxf</groupId>
-                <artifactId>redis-common</artifactId>
-                <version>${redis-common.version}</version>
+                <artifactId>cache-common</artifactId>
+                <version>${cache-common.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zxf</groupId>
