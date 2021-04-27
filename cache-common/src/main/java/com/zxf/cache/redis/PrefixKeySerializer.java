@@ -6,14 +6,14 @@ import org.springframework.data.redis.serializer.SerializationException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * redis 存储对象
+ * 前缀化序列化字符串redis存储
  * @author 朱晓峰
  */
-public class KeySerializer implements RedisSerializer<String> {
+public class PrefixKeySerializer implements RedisSerializer<String> {
 
     private final String prefixKey;
 
-    public KeySerializer(String prefixKey) {
+    public PrefixKeySerializer(String prefixKey) {
         this.prefixKey = prefixKey;
     }
 
