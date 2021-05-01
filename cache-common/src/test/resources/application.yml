@@ -1,0 +1,4 @@
+cache:
+  redis:
+    enable: true
+    redis-node: localhost:6379

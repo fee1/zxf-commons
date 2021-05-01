@@ -8,6 +8,10 @@
 ```text
 用 @NotNull 声明注释的元素不允许返回 null 值 （对于方法），传递给（对于参数）和保持（对于局部变量和字段）。
 ```
+## @ConfigurationProperties
+```text
+需要
+```
 # 有关类
 
 ## RedisSerializer
