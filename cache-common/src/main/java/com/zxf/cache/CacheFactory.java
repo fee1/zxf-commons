@@ -17,7 +17,7 @@ public interface CacheFactory {
      * @param cacheName 缓存类型的名称
      * @return ICache
      */
-    ICache getCache(String cacheName);
+    ICache doGetCache(String cacheName);
 
     /**
      *
@@ -25,7 +25,7 @@ public interface CacheFactory {
      * @param timeOut 过期时间
      * @return
      */
-    ICache getCache(String cacheName, int timeOut);
+    ICache doGetCache(String cacheName, int timeOut);
 
     /**
      *
@@ -33,7 +33,12 @@ public interface CacheFactory {
      * @param withoutTTL 是否无过期时间 true 无 false 有
      * @return
      */
-    ICache getCache(String cacheName, boolean withoutTTL);
+    ICache doGetCache(String cacheName, boolean withoutTTL);
+
+    /**
+     * 初始化缓存
+     */
+    default void init(){}
 
     /**
      * 销毁缓存
