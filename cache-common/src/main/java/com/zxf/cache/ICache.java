@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 缓存产品类
@@ -20,6 +21,76 @@ public interface ICache {
      * @param value 缓存值
      */
     void put(String key, Object value);
+
+    /**
+     * 插入缓存并且设置过期时间
+     * @param key 缓存key
+     * @param value 缓存值
+     * @param timeOut 超时时间
+     * @param timeUnit 时间单位
+     */
+    void put(String key, Object value, long timeOut, TimeUnit timeUnit);
+
+    /**
+     * 插入并且更新缓存时间
+     * @param key 缓存key
+     * @param value 缓存值
+     */
+    void putAndRefreshTimeOut(String key, Object value);
+
+    /**
+     * 插入缓存
+     * @param key 缓存key
+     * @param hashMap 缓存值
+     */
+    void putMap(String key, Map<String, Object> hashMap);
+
+    /**
+     * 插入缓存
+     * @param key 缓存key
+     * @param hashKey 缓存hashkey-key
+     * @param value 缓存值
+     */
+    void putMap(String key, String hashKey, Object value);
+
+    /**
+     * 获取hash中的所有key
+     * @param key 缓存key
+     */
+    Map<String, Object> getEntries(String key);
+
+    /**
+     * 删除hash中的key对应的值
+     * @param key 缓存key
+     * @param hashKey 缓存hashkey
+     */
+    void removeInMap(String key, String hashKey);
+
+    /**
+     * 获取缓存并且刷新
+     * @param key 缓存key
+     * @param <T> 返回类型
+     * @return T T
+     */
+    <T> T getAndRefreshTimeOut(String key);
+
+    /**
+     * 获取hash类型缓存并且刷新
+     * @param key 缓存key
+     * @param hashKey 缓存hashkey
+     * @param <T> 返回类型
+     * @return T T
+     */
+    <T> T getFromHash(String key, String hashKey);
+
+    /**
+     * 根据key设置缓存过期时间
+     * @param key 缓存key
+     * @param timeOut 超时时间
+     * @param timeUnit 时间单位
+     * @return boolean
+     */
+    boolean setTimeOut(String key, long timeOut, TimeUnit timeUnit);
 
     /**
      * 获取缓存带默认值

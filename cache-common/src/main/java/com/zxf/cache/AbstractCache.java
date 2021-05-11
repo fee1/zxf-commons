@@ -6,6 +6,12 @@ package com.zxf.cache;
  */
 public abstract class AbstractCache implements ICache{
 
+    private String name;
+
+    public final String getName(){
+        return this.name;
+    }
+
 
 
 }
