@@ -1,4 +1,3 @@
-cache:
+spring:
   redis:
-    enable: true
-    redis-node: localhost:6379
+    host:

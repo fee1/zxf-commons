@@ -22,10 +22,10 @@ public interface CacheFactory {
     /**
      *
      * @param cacheName 缓存类型的名称
-     * @param timeOut 过期时间
+     * @param timeout 过期时间
      * @return
      */
-    ICache doGetCache(String cacheName, int timeOut);
+    ICache doGetCache(String cacheName, int timeout);
 
     /**
      *

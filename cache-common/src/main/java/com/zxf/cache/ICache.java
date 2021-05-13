@@ -26,17 +26,17 @@ public interface ICache {
      * 插入缓存并且设置过期时间
      * @param key 缓存key
      * @param value 缓存值
-     * @param timeOut 超时时间
+     * @param timeout 超时时间
      * @param timeUnit 时间单位
      */
-    void put(String key, Object value, long timeOut, TimeUnit timeUnit);
+    void put(String key, Object value, long timeout, TimeUnit timeUnit);
 
     /**
      * 插入并且更新缓存时间
      * @param key 缓存key
      * @param value 缓存值
      */
-    void putAndRefreshTimeOut(String key, Object value);
+    void putAndRefreshTimeout(String key, Object value);
 
     /**
      * 插入缓存
@@ -72,7 +72,7 @@ public interface ICache {
      * @param <T> 返回类型
      * @return T T
      */
-    <T> T getAndRefreshTimeOut(String key);
+    <T> T getAndRefreshTimeout(String key);
 
     /**
      * 获取hash类型缓存并且刷新
@@ -86,11 +86,11 @@ public interface ICache {
     /**
      * 根据key设置缓存过期时间
      * @param key 缓存key
-     * @param timeOut 超时时间
+     * @param timeout 超时时间
      * @param timeUnit 时间单位
      * @return boolean
      */
-    boolean setTimeOut(String key, long timeOut, TimeUnit timeUnit);
+    boolean setTimeout(String key, long timeout, TimeUnit timeUnit);
 
     /**
      * 获取缓存带默认值

@@ -37,22 +37,22 @@ public abstract class AbstractCacheFactory implements CacheFactory, Initializing
         if (withoutTTL){
             return this.doGetCache(cacheName, -1);
         }else {
-            return this.doGetCache(cacheName, this.getDefaultTimeOut());
+            return this.doGetCache(cacheName, this.getDefaultTimeout());
         }
     }
 
     /**
      * 获取缓存工厂产品
      * @param cacheName
-     * @param timeOut
+     * @param timeout
      * @return
      */
     @Override
-    public final ICache doGetCache(String cacheName, int timeOut) {
+    public final ICache doGetCache(String cacheName, int timeout) {
         synchronized (this){
             ICache cache = cacheHashMap.get(cacheName);
             if (null == cache){
-                AbstractCache newCahe = this.createCache(cacheName, timeOut);
+                AbstractCache newCahe = this.createCache(cacheName, timeout);
                 this.cacheHashMap.put(cacheName, newCahe);
                 return newCahe;
             }
@@ -63,12 +63,12 @@ public abstract class AbstractCacheFactory implements CacheFactory, Initializing
     /**
      * 创建缓存工厂
      * @param cacheName 缓存工厂名
-     * @param timeOut 超时时间
+     * @param timeout 超时时间
      * @return AbstractCache
      */
-    protected abstract AbstractCache createCache(String cacheName, int timeOut);
+    protected abstract AbstractCache createCache(String cacheName, int timeout);
 
-    protected int getDefaultTimeOut(){
+    protected int getDefaultTimeout(){
         return 0;
     }
 
