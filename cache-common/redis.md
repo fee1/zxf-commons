@@ -37,5 +37,4 @@ RedisTemplate默认使用的序列化机制是JdkSerializationRedisSerializer，
 ## 获取过期时间
 ### 获取过期时间(long)，单位秒
 ### 获取过期时间，单位自己设置
-
 ## 
