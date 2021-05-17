@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -25,12 +23,10 @@ import org.springframework.data.redis.connection.lettuce.LettucePoolingClientCon
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -204,7 +200,7 @@ public class RedisConfig {
     @Bean
     CacheManager cacheManager(@Autowired LettuceConnectionFactory lettuceConnectionFactory){
         StringRedisSerializer keySerializer = new StringRedisSerializer();
-        RedisSerializer valueSerializer = new ValueSerializer();
+        ValueSerializer valueSerializer = new ValueSerializer();
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
                 .computePrefixWith(key -> formatFullKey(prefixKey, key))
                 .entryTtl(Duration.ofSeconds(this.timeout))
