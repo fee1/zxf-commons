@@ -2,6 +2,7 @@ package com.zxf.cache.redis;
 
 import io.lettuce.core.ClientOptions;
 import io.lettuce.core.SocketOptions;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
@@ -35,6 +36,7 @@ import java.util.List;
 @Configuration
 @ConditionalOnProperty(value = "spring.cache.redis.enable", matchIfMissing = true)
 @ConfigurationProperties(prefix = "spring.cache.redis")
+@Data
 @Slf4j
 public class RedisConfig {
 
@@ -43,6 +45,8 @@ public class RedisConfig {
      */
     @Value("${hosts:}")
     private String[] hosts;
+
+
 
     /**
      * 连接超时时间,5s
@@ -101,7 +105,7 @@ public class RedisConfig {
     /**
      * key前缀
      */
-    @Value("${prefix-key}:")
+    @Value("${prefix-key:}")
     private String prefixKey;
 
     /**
@@ -112,7 +116,8 @@ public class RedisConfig {
         ArrayList<RedisNode> redisNodes = new ArrayList<>();
         for (String host : this.hosts){
             String[] items = host.split(":");
-            Assert.isTrue(StringUtils.isBlank(items[0]) || StringUtils.isBlank(items[1]), "host与port未配置正确，格式: host:port");
+            Assert.isTrue(StringUtils.isNotBlank(items[0]) && StringUtils.isNotBlank(items[1]),
+                    "host与port未配置正确，格式: host:port");
             redisNodes.add(new RedisNode(items[0], Integer.parseInt(items[1])));
         }
         return redisNodes;

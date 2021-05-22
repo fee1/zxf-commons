@@ -11,9 +11,8 @@ public class RedisConfigTest extends BaseTest {
     RedisConfig redisConfig;
 
     @Test
-    public void testProperties(){
-        System.out.println(redisConfig.getHost());
-        System.out.println(redisConfig.getHosts()[1]);
+    public void testPropertiesValue(){
+        System.out.println("----------test redis config----------");
     }
 
 }
