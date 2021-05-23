@@ -1,5 +1,6 @@
 package com.zxf.cache.redis;
 
+import com.zxf.common.Base64Util;
 import io.lettuce.core.ClientOptions;
 import io.lettuce.core.SocketOptions;
 import lombok.Data;
@@ -45,8 +46,6 @@ public class RedisConfig {
      */
     @Value("${hosts:}")
     private String[] hosts;
-
-
 
     /**
      * 连接超时时间,5s
@@ -131,20 +130,8 @@ public class RedisConfig {
     LettuceConnectionFactory lettuceConnectionFactory(){
         List<RedisNode> nodes = getRedisNodes();
         Assert.isTrue(nodes.size() > 0, "未配置redis的hosts");
-
-        try {
-            //使用 SM2 解密
-            //todo 密码加解密
-//            password = encoder.
-
-        }catch (Exception e){
-            // base64解密
-            try {
-
-            }catch (Exception exception){
-
-            }
-        }
+        // todo 可以使用sm2 加解密和base64双重加解密方式
+        this.password = Base64Util.decrypt(password);
         //连接池配置
         GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
         poolConfig.setMaxIdle(maxIdle);

@@ -12,6 +12,4 @@ public abstract class AbstractCache implements ICache{
         return this.name;
     }
 
-
-
 }

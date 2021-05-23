@@ -1,6 +1,7 @@
 package com.zxf.cache.redis;
 
 import com.zxf.cache.AbstractCache;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -11,7 +12,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class RedisCache extends AbstractCache {
 
-
+    public RedisCache(RedisTemplate<String, Object> redisTemplate, String name, int timeout){
+        super();
+    }
 
     @Override
     public void put(String key, Object value) {
