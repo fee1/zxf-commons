@@ -2,6 +2,7 @@ package com.zxf.cache.redis;
 
 import com.zxf.cache.AbstractCache;
 import com.zxf.cache.AbstractCacheFactory;
+import com.zxf.cache.redis.serializer.AutoTypeValueSerializer;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -34,7 +35,8 @@ public class RedisCacheFactory extends AbstractCacheFactory {
     }
 
     public RedisTemplate<String, Object> createRedisTemplate(LettuceConnectionFactory lettuceConnectionFactory, String cacheName){
-        RedisSerializer valueSerializer =
+        RedisSerializer<Object> valueSerializer = AutoTypeValueSerializer.getInstance();
+        return this.createRedisTemplate(lettuceConnectionFactory, cacheName, valueSerializer);
     }
 
     /**
@@ -45,7 +47,7 @@ public class RedisCacheFactory extends AbstractCacheFactory {
      * @return RedisTemplate
      */
     public RedisTemplate<String, Object> createRedisTemplate(LettuceConnectionFactory lettuceConnectionFactory,
-                                                             String cacheName, RedisSerializer valueSerializer){
+                                                             String cacheName, RedisSerializer<Object> valueSerializer){
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         //设置非共享连接，允许多个连接公用一个物理连接。如果设置false ,每一个连接的操作都会开启和关闭socket连接。
         lettuceConnectionFactory.setShareNativeConnection(false);

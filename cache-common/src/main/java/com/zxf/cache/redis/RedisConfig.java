@@ -1,5 +1,6 @@
 package com.zxf.cache.redis;
 
+import com.zxf.cache.redis.serializer.AutoTypeValueSerializer;
 import com.zxf.common.Base64Util;
 import io.lettuce.core.ClientOptions;
 import io.lettuce.core.SocketOptions;
@@ -163,14 +164,12 @@ public class RedisConfig {
             redisStandaloneConfiguration.setHostName(node.getHost());
             redisStandaloneConfiguration.setPort(node.getPort());
             if (StringUtils.isNotBlank(this.password)){
-                //todo 解密
                 redisStandaloneConfiguration.setPassword(RedisPassword.of(this.password));
             }
             connectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration, lettucePoolingClientConfiguration);
         }else {
             //集群
             RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration();
-
             redisClusterConfiguration.setClusterNodes(nodes);
             redisClusterConfiguration.setMaxRedirects(maxRedirects);
             if (StringUtils.isNotBlank(this.password)) {
@@ -191,12 +190,13 @@ public class RedisConfig {
     @Bean
     CacheManager cacheManager(@Autowired LettuceConnectionFactory lettuceConnectionFactory){
         StringRedisSerializer keySerializer = new StringRedisSerializer();
-        ValueSerializer valueSerializer = new ValueSerializer();
+
+        AutoTypeValueSerializer autoTypeValueSerializer = new AutoTypeValueSerializer();
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
                 .computePrefixWith(key -> formatFullKey(prefixKey, key))
                 .entryTtl(Duration.ofSeconds(this.timeout))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(autoTypeValueSerializer))
                 .disableCachingNullValues();
         return RedisCacheManager.builder(lettuceConnectionFactory).cacheDefaults(configuration).build();
     }
