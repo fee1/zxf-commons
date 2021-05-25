@@ -50,7 +50,6 @@ public class AutoTypeValueSerializer implements RedisSerializer<Object> {
             type = LONG;
         }else {
             bytes = this.jsonValueSerializer.serialize(o);
-            type = OTHER;
         }
         byte[] typeBytes = new byte[bytes.length + 1];
         typeBytes[0] = type;
@@ -60,6 +59,11 @@ public class AutoTypeValueSerializer implements RedisSerializer<Object> {
 
     @Override
     public Object deserialize(byte[] bytes) throws SerializationException {
+        if (bytes[0] == BYTE){
+            return bytes;
+        }else if (bytes[0] == STR){
+            return null;
+        }
         return null;
     }
 }
