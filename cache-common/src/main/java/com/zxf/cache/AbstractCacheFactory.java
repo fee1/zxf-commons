@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 /**
  * 抽象缓存工厂
+ *
  * @author 朱晓峰
  */
 public abstract class AbstractCacheFactory implements CacheFactory, InitializingBean, DisposableBean {
@@ -18,6 +19,7 @@ public abstract class AbstractCacheFactory implements CacheFactory, Initializing
 
     /**
      * 获取缓存工厂产品
+     *
      * @param cacheName 缓存类型的名称
      * @return ICache
      */
@@ -28,30 +30,32 @@ public abstract class AbstractCacheFactory implements CacheFactory, Initializing
 
     /**
      * 获取缓存工厂产品
-     * @param cacheName 缓存类型的名称
+     *
+     * @param cacheName  缓存类型的名称
      * @param withoutTTL 是否无过期时间 true 无 false 有
      * @return
      */
     @Override
     public ICache doGetCache(String cacheName, boolean withoutTTL) {
-        if (withoutTTL){
+        if (withoutTTL) {
             return this.doGetCache(cacheName, -1);
-        }else {
+        } else {
             return this.doGetCache(cacheName, this.getDefaultTimeout());
         }
     }
 
     /**
      * 获取缓存工厂产品
+     *
      * @param cacheName
      * @param timeout
      * @return
      */
     @Override
     public final ICache doGetCache(String cacheName, int timeout) {
-        synchronized (this){
+        synchronized (this) {
             ICache cache = cacheHashMap.get(cacheName);
-            if (null == cache){
+            if (null == cache) {
                 AbstractCache newCahe = this.createCache(cacheName, timeout);
                 this.cacheHashMap.put(cacheName, newCahe);
                 return newCahe;
@@ -62,13 +66,14 @@ public abstract class AbstractCacheFactory implements CacheFactory, Initializing
 
     /**
      * 创建缓存工厂
+     *
      * @param cacheName 缓存工厂名
-     * @param timeout 超时时间
+     * @param timeout   超时时间
      * @return AbstractCache
      */
     protected abstract AbstractCache createCache(String cacheName, int timeout);
 
-    protected int getDefaultTimeout(){
+    protected int getDefaultTimeout() {
         return 0;
     }
 

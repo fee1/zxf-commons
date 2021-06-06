@@ -33,6 +33,7 @@ import java.util.List;
 
 /**
  * redis配置类
+ *
  * @author 朱晓峰
  */
 @Configuration
@@ -110,11 +111,12 @@ public class RedisConfig {
 
     /**
      * 获取redisNode结点
+     *
      * @return List<RedisNode>
      */
-    private List<RedisNode> getRedisNodes(){
+    private List<RedisNode> getRedisNodes() {
         ArrayList<RedisNode> redisNodes = new ArrayList<>();
-        for (String host : this.hosts){
+        for (String host : this.hosts) {
             String[] items = host.split(":");
             Assert.isTrue(StringUtils.isNotBlank(items[0]) && StringUtils.isNotBlank(items[1]),
                     "host与port未配置正确，格式: host:port");
@@ -125,10 +127,11 @@ public class RedisConfig {
 
     /**
      * LettuceConnectionFactory
+     *
      * @return LettuceConnectionFactory
      */
     @Bean
-    LettuceConnectionFactory lettuceConnectionFactory(){
+    LettuceConnectionFactory lettuceConnectionFactory() {
         List<RedisNode> nodes = getRedisNodes();
         Assert.isTrue(nodes.size() > 0, "未配置redis的hosts");
         // todo 可以使用sm2 加解密和base64双重加解密方式
@@ -150,24 +153,24 @@ public class RedisConfig {
 
         LettucePoolingClientConfiguration lettucePoolingClientConfiguration =
                 LettucePoolingClientConfiguration.builder()
-                .poolConfig(poolConfig)
-                .clientOptions(clientOptions)
-                .commandTimeout(Duration.ofMillis(this.connectTimeout))
-                .build();
+                        .poolConfig(poolConfig)
+                        .clientOptions(clientOptions)
+                        .commandTimeout(Duration.ofMillis(this.connectTimeout))
+                        .build();
 
         LettuceConnectionFactory connectionFactory;
 
         //单机
-        if (nodes.size() == 1){
+        if (nodes.size() == 1) {
             RedisNode node = nodes.get(0);
             RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
             redisStandaloneConfiguration.setHostName(node.getHost());
             redisStandaloneConfiguration.setPort(node.getPort());
-            if (StringUtils.isNotBlank(this.password)){
+            if (StringUtils.isNotBlank(this.password)) {
                 redisStandaloneConfiguration.setPassword(RedisPassword.of(this.password));
             }
             connectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration, lettucePoolingClientConfiguration);
-        }else {
+        } else {
             //集群
             RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration();
             redisClusterConfiguration.setClusterNodes(nodes);
@@ -184,11 +187,12 @@ public class RedisConfig {
 
     /**
      * 缓存管理器
+     *
      * @param lettuceConnectionFactory
      * @return CacheManager
      */
     @Bean
-    CacheManager cacheManager(@Autowired LettuceConnectionFactory lettuceConnectionFactory){
+    CacheManager cacheManager(@Autowired LettuceConnectionFactory lettuceConnectionFactory) {
         StringRedisSerializer keySerializer = new StringRedisSerializer();
 
         AutoTypeValueSerializer autoTypeValueSerializer = new AutoTypeValueSerializer();
@@ -203,8 +207,9 @@ public class RedisConfig {
 
     /**
      * key前缀
+     *
      * @param prefixKey prefixKey
-     * @param key key
+     * @param key       key
      * @return String
      */
     static String formatFullKey(String prefixKey, String key) {
@@ -213,10 +218,11 @@ public class RedisConfig {
 
     /**
      * 获取redis缓存产品工厂
+     *
      * @return RedisCacheFactory
      */
     @Bean
-    RedisCacheFactory getRedisCacheFactory(){
+    RedisCacheFactory getRedisCacheFactory() {
         return new RedisCacheFactory(this, prefixKey);
     }
 

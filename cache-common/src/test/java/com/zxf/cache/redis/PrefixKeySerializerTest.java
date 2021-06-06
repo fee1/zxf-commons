@@ -1,6 +1,7 @@
 package com.zxf.cache.redis;
 
 
+import com.zxf.cache.redis.serializer.PrefixKeySerializer;
 import org.junit.Assert;
 import org.junit.Test;
 

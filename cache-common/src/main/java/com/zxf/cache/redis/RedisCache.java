@@ -13,7 +13,8 @@ import java.util.concurrent.TimeUnit;
 public class RedisCache extends AbstractCache {
 
     public RedisCache(RedisTemplate<String, Object> redisTemplate, String name, int timeout){
-        super();
+        super(name, timeout);
+
     }
 
     @Override

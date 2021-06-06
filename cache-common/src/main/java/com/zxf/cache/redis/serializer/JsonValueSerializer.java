@@ -9,33 +9,65 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * 对象转json序列化方式
+ *
  * @author 朱晓峰
  */
 public class JsonValueSerializer implements RedisSerializer<Object> {
 
     private static final LazyValue<JsonValueSerializer> INST = new LazyValue<>(JsonValueSerializer::new);
 
-    public static JsonValueSerializer getInstance(){
+    /**
+     * 获取实例
+     *
+     * @return JsonValueSerializer JsonValueSerializer
+     */
+    public static JsonValueSerializer getInstance() {
         return INST.get();
     }
 
+    /**
+     * 序列化
+     *
+     * @param o 对象
+     * @return byte[] 数组
+     * @throws SerializationException
+     */
     @Override
     public byte[] serialize(Object o) throws SerializationException {
-        if (o == null){
+        if (o == null) {
             return null;
         }
         return JSONObject.toJSONString(o).getBytes(StandardCharsets.UTF_8);
     }
 
+    /**
+     * 反序列化
+     *
+     * @param bytes 数组
+     * @return Object 对象
+     * @throws SerializationException
+     */
     @Override
     public Object deserialize(byte[] bytes) throws SerializationException {
-        if (bytes == null || bytes.length == 0){
+        if (bytes == null || bytes.length == 0) {
             return null;
         }
-        byte[] o = new byte[ bytes.length ];
-        System.arraycopy(bytes, 0, o, 0, bytes.length );
+        byte[] o = new byte[bytes.length];
+        System.arraycopy(bytes, 0, o, 0, bytes.length);
         String jsonStr = new String(o);
         return JSONObject.parse(jsonStr);
+    }
+
+    /**
+     * 对象形式序列化
+     *
+     * @param bytes
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public <T> T deserialize(byte[] bytes, Class<T> clazz) {
+        return null;
     }
 
 }
