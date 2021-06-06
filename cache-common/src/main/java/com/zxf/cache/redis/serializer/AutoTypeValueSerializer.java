@@ -5,6 +5,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 /**
  * 序列化值字符串redis存储
@@ -39,7 +40,7 @@ public class AutoTypeValueSerializer implements RedisSerializer<Object> {
         }
         byte[] bytes;
         byte type = OTHER;
-        if (o instanceof Byte){
+        if (o instanceof byte[]){
             bytes = (byte[]) o;
             type = BYTE;
         }else if (o instanceof String){
@@ -59,11 +60,20 @@ public class AutoTypeValueSerializer implements RedisSerializer<Object> {
 
     @Override
     public Object deserialize(byte[] bytes) throws SerializationException {
-        if (bytes[0] == BYTE){
-            return bytes;
-        }else if (bytes[0] == STR){
+        if (bytes == null || bytes.length == 0) {
             return null;
         }
-        return null;
+        byte flag = bytes[0];
+        if (flag == BYTE){
+            return Arrays.copyOfRange(bytes, 1, bytes.length);
+        }else if (flag == STR){
+            return new String(bytes, 1, bytes.length - 1, StandardCharsets.UTF_8);
+        }else if (flag == LONG){
+            return Long.parseLong(new String(bytes, 1, bytes.length - 1, StandardCharsets.UTF_8));
+        }else {
+            byte[] jsonByte = new byte[bytes.length -1];
+            System.arraycopy(bytes, 1, jsonByte, 0, bytes.length-1);
+            return this.jsonValueSerializer.deserialize(jsonByte);
+        }
     }
 }

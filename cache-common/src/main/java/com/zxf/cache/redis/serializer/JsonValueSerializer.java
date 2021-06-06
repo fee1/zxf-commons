@@ -32,9 +32,10 @@ public class JsonValueSerializer implements RedisSerializer<Object> {
         if (bytes == null || bytes.length == 0){
             return null;
         }
-        byte[] o = new byte[ bytes.length - 1 ];
-        System.arraycopy(bytes, 1, o, 0, bytes.length - 1 );
+        byte[] o = new byte[ bytes.length ];
+        System.arraycopy(bytes, 0, o, 0, bytes.length );
         String jsonStr = new String(o);
         return JSONObject.parse(jsonStr);
     }
+
 }
