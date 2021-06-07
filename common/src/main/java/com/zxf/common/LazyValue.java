@@ -22,13 +22,11 @@ public class LazyValue<T> implements Supplier<T> {
     }
 
     @Override
-    public T get() {
+    public synchronized T get() {
         if (value != null){
             return this.value;
         }
-        synchronized (this){
-            this.value = doLoad();
-        }
+        this.value = doLoad();
         return this.value;
     }
 }
