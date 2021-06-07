@@ -56,7 +56,8 @@ public abstract class AbstractCacheFactory implements CacheFactory, Initializing
         synchronized (this) {
             ICache cache = cacheHashMap.get(cacheName);
             if (null == cache) {
-                AbstractCache newCahe = this.createCache(cacheName, timeout);
+                AbstractCache newCahe = this.
+                        createCache(cacheName, timeout);
                 this.cacheHashMap.put(cacheName, newCahe);
                 return newCahe;
             }

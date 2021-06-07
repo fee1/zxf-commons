@@ -25,6 +25,8 @@ public class JsonValueSerializer implements RedisSerializer<Object> {
         return INST.get();
     }
 
+    private JsonValueSerializer(){}
+
     /**
      * 序列化
      *

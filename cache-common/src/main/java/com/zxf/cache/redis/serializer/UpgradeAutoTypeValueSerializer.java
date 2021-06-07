@@ -19,8 +19,8 @@ public class UpgradeAutoTypeValueSerializer implements RedisSerializer<Object> {
 
     private JsonValueSerializer jsonValueSerializer;
 
-    public UpgradeAutoTypeValueSerializer() {
-        this.jsonValueSerializer = new JsonValueSerializer();
+    private UpgradeAutoTypeValueSerializer() {
+        this.jsonValueSerializer = JsonValueSerializer.getInstance();
     }
 
     @Override

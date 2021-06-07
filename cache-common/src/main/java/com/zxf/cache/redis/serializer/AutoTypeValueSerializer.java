@@ -27,7 +27,7 @@ public class AutoTypeValueSerializer implements RedisSerializer<Object> {
         return INST.get();
     }
 
-    public AutoTypeValueSerializer() {
+    private AutoTypeValueSerializer() {
         this.jsonValueSerializer = JsonValueSerializer.getInstance();
     }
 

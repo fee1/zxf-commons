@@ -17,7 +17,7 @@ public abstract class AbstractCache implements ICache {
     /**
      * timeout
      */
-    private int timeout;
+    protected int timeout;
 
     public AbstractCache(String name, int timeout) {
         this.name = name;
