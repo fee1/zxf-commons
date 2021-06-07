@@ -10,7 +10,7 @@ public class LazyValue<T> implements Supplier<T> {
 
     private T value;
 
-    private Supplier<T> supplier;
+    private final Supplier<T> supplier;
 
     public LazyValue(Supplier<T> supplier){
         this.supplier = supplier;
