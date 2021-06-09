@@ -95,29 +95,31 @@ public class RedisCache extends AbstractCache {
         log.debug("[{}]缓存类删除缓存，key:{}, hashKey: {}", this.getName(), key, hashKey);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getFromHash(String key, String hashKey) {
-        return null;
+        return (T) this.hashOperations.get(key, hashKey);
     }
 
+    //todo
     @Override
     public boolean setTimeout(String key, long timeout, TimeUnit timeUnit) {
+        this.valueOperations.getOperations().expire(key, timeout, timeUnit);
+        this.hashOperations.getOperations().expire(key, timeout, timeUnit);
         return false;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T get(String key) {
-        return null;
+        return (T) this.valueOperations.get(key);
     }
 
+    //todo
     @Override
     public void remove(String key) {
-
-    }
-
-    @Override
-    public void removeKeys(String... keys) {
-
+        this.valueOperations.getOperations().delete(key);
+        this.hashOperations.getOperations().delete(key);
     }
 
     @Override

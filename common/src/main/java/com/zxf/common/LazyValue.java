@@ -3,7 +3,7 @@ package com.zxf.common;
 import java.util.function.Supplier;
 
 /**
- * 惰性加载对象
+ * 惰性加载对象（懒汉式单例）
  * @author 朱晓峰
  */
 public class LazyValue<T> implements Supplier<T> {
@@ -21,12 +21,15 @@ public class LazyValue<T> implements Supplier<T> {
         return value;
     }
 
+    //todo 性能稍微浪费
     @Override
-    public synchronized T get() {
+    public T get() {
         if (value != null){
             return this.value;
         }
-        this.value = doLoad();
+        synchronized (this){
+            this.value = doLoad();
+        }
         return this.value;
     }
 }
