@@ -101,12 +101,9 @@ public class RedisCache extends AbstractCache {
         return (T) this.hashOperations.get(key, hashKey);
     }
 
-    //todo
     @Override
     public boolean setTimeout(String key, long timeout, TimeUnit timeUnit) {
-        this.valueOperations.getOperations().expire(key, timeout, timeUnit);
-        this.hashOperations.getOperations().expire(key, timeout, timeUnit);
-        return false;
+        return this.redisTemplate.expire(key, timeout, timeUnit);
     }
 
     @SuppressWarnings("unchecked")
@@ -115,16 +112,14 @@ public class RedisCache extends AbstractCache {
         return (T) this.valueOperations.get(key);
     }
 
-    //todo
     @Override
     public void remove(String key) {
-        this.valueOperations.getOperations().delete(key);
-        this.hashOperations.getOperations().delete(key);
+        this.redisTemplate.delete(key);
     }
 
     @Override
     public boolean exists(String key) {
-        return false;
+        return this.redisTemplate.hasKey(key);
     }
 
     @Override
