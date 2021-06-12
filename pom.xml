@@ -36,6 +36,7 @@
         <searchbox.jest.version>6.3.1</searchbox.jest.version>
         <spring.version>5.2.7.RELEASE</spring.version>
         <common-io.version>2.6</common-io.version>
+        <protostuff.version>1.7.2</protostuff.version>
 
 
         <common.version>1.0-SNAPSHOT</common.version>
@@ -132,11 +133,22 @@
         </dependency>
 
 
+        <!--加载配置ConfigurationProperties注解处理器-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-configuration-processor</artifactId>-->
+<!--            <optional>true</optional>&lt;!&ndash;编译阶段使用&ndash;&gt;-->
+<!--        </dependency>-->
+
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>${protostuff.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+            <version>${protostuff.version}</version>
         </dependency>
     </dependencies>
 

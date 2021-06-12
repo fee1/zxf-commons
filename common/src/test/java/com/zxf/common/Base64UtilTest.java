@@ -1,5 +1,6 @@
 package com.zxf.common;
 
+import com.zxf.common.utils.Base64Util;
 import org.junit.jupiter.api.Test;
 
 public class Base64UtilTest {

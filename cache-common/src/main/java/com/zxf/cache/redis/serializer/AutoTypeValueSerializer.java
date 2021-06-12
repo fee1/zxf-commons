@@ -1,6 +1,8 @@
 package com.zxf.cache.redis.serializer;
 
-import com.zxf.common.LazyValue;
+import com.zxf.cache.SerializerObject;
+import com.zxf.cache.utils.ProtoSerializer;
+import com.zxf.common.utils.LazyValue;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
@@ -16,7 +18,7 @@ public class AutoTypeValueSerializer implements RedisSerializer<Object> {
 
     private static final LazyValue<AutoTypeValueSerializer> INST = new LazyValue<>(AutoTypeValueSerializer::new);
 
-    private JsonValueSerializer jsonValueSerializer;
+    private final ProtoSerializer<SerializerObject> protoSerializer;
 
     /**
      * 获取实例
@@ -28,7 +30,7 @@ public class AutoTypeValueSerializer implements RedisSerializer<Object> {
     }
 
     private AutoTypeValueSerializer() {
-        this.jsonValueSerializer = JsonValueSerializer.getInstance();
+        this.protoSerializer = new ProtoSerializer<>(SerializerObject.class);
     }
 
     private static final byte BYTE = 'B';
@@ -63,7 +65,9 @@ public class AutoTypeValueSerializer implements RedisSerializer<Object> {
             bytes = String.valueOf(o).getBytes(StandardCharsets.UTF_8);
             type = LONG;
         } else {
-            bytes = this.jsonValueSerializer.serialize(o);
+            SerializerObject serializerObject = new SerializerObject(o);
+            bytes = this.protoSerializer.serialize(serializerObject);
+
         }
         byte[] typeBytes = new byte[bytes.length + 1];
         typeBytes[0] = type;
@@ -93,7 +97,7 @@ public class AutoTypeValueSerializer implements RedisSerializer<Object> {
         } else {
             byte[] jsonByte = new byte[bytes.length - 1];
             System.arraycopy(bytes, 1, jsonByte, 0, bytes.length - 1);
-            return this.jsonValueSerializer.deserialize(jsonByte);
+            return this.protoSerializer.deserialize(jsonByte).getObject();
         }
     }
 }

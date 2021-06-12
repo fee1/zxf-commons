@@ -12,7 +12,7 @@ public class RedisConfigTest extends BaseTest {
 
     @Test
     public void testPropertiesValue(){
-        System.out.println("----------test redis config----------");
+        System.out.println("----------test redis config----------"+redisConfig.getHosts()[1]);
     }
 
 }

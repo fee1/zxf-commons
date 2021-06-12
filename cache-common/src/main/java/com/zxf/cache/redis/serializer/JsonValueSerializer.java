@@ -1,7 +1,8 @@
 package com.zxf.cache.redis.serializer;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zxf.common.LazyValue;
+import com.zxf.cache.CacheObject;
+import com.zxf.common.utils.LazyValue;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
@@ -60,16 +61,5 @@ public class JsonValueSerializer implements RedisSerializer<Object> {
         return JSONObject.parse(jsonStr);
     }
 
-    /**
-     * 对象形式序列化
-     *
-     * @param bytes
-     * @param clazz
-     * @param <T>
-     * @return
-     */
-    public <T> T deserialize(byte[] bytes, Class<T> clazz) {
-        return null;
-    }
 
 }

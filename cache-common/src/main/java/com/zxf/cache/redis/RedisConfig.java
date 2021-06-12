@@ -1,7 +1,7 @@
 package com.zxf.cache.redis;
 
 import com.zxf.cache.redis.serializer.AutoTypeValueSerializer;
-import com.zxf.common.Base64Util;
+import com.zxf.common.utils.Base64Util;
 import io.lettuce.core.ClientOptions;
 import io.lettuce.core.SocketOptions;
 import lombok.Data;
@@ -195,7 +195,7 @@ public class RedisConfig {
     CacheManager cacheManager(@Autowired LettuceConnectionFactory lettuceConnectionFactory) {
         StringRedisSerializer keySerializer = new StringRedisSerializer();
 
-        AutoTypeValueSerializer autoTypeValueSerializer = new AutoTypeValueSerializer();
+        AutoTypeValueSerializer autoTypeValueSerializer = AutoTypeValueSerializer.getInstance();
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
                 .computePrefixWith(key -> formatFullKey(prefixKey, key))
                 .entryTtl(Duration.ofSeconds(this.timeout))

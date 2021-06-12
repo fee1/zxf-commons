@@ -29,7 +29,8 @@ public class AutoTypeValueSerializerTest {
 
         People xiaoming = new People("xiaoming", "23");
         byte[] serialize4 = instance.serialize(xiaoming);
-        System.out.println("JSONObject: "+ instance.deserialize(serialize4));
+        Object deserialize = instance.deserialize(serialize4);
+        System.out.println("People class: "+ deserialize);
     }
 
     @Data

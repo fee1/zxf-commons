@@ -1,4 +1,4 @@
-package com.zxf.common;
+package com.zxf.common.utils;
 
 import java.util.Base64;
 
