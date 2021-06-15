@@ -39,7 +39,7 @@ public abstract class AbstractLoadingCache<Key, Value> implements LoadingCache<K
         return String.valueOf(key);
     }
 
-    private Value get(String key){
+    private Value getFormCache(String key){
         return this.cache.get(key);
     }
 
@@ -47,13 +47,13 @@ public abstract class AbstractLoadingCache<Key, Value> implements LoadingCache<K
     @SneakyThrows
     public final Value get(Key key) {
         String keyStr = this.convertKey(key);
-        Value value = this.get(keyStr);
+        Value value =  this.getFormCache(keyStr);
         if (value != null) {
             return value;
         }
 
         synchronized (this){
-            Value newValue = this.get(keyStr);
+            Value newValue =  this.getFormCache(keyStr);
             if (newValue == null) {
                 newValue = this.load(key);
             }
