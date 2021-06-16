@@ -19,14 +19,14 @@ import java.util.function.Function;
  * @author 朱晓峰
  */
 @Slf4j
-public abstract class AbstractLoadingCache<Key, Value> implements LoadingCache<Key, Value>, InitializingBean {
+public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, InitializingBean {
 
     @Autowired
     private CacheService cacheService;
 
     private ICache cache;
 
-    protected abstract Value doLoad() throws Exception;
+    protected abstract V doLoad() throws Exception;
 
     public abstract String getCacheName();
 
@@ -39,71 +39,71 @@ public abstract class AbstractLoadingCache<Key, Value> implements LoadingCache<K
         return 3600;
     }
 
-    protected String convertKey(Key key){
-        return String.valueOf(key);
+    protected String convertKey(K k){
+        return String.valueOf(k);
     }
 
-    private Value getFormCache(String key){
+    private V getFormCache(String key){
         return this.cache.get(key);
     }
 
     @Override
     @SneakyThrows
-    public final Value get(Key key) {
-        String keyStr = this.convertKey(key);
-        Value value =  this.getFormCache(keyStr);
-        if (value != null) {
-            return value;
+    public final V get(K k) {
+        String keyStr = this.convertKey(k);
+        V v =  this.getFormCache(keyStr);
+        if (v != null) {
+            return v;
         }
 
         synchronized (this){
-            Value newValue =  this.getFormCache(keyStr);
-            if (newValue == null) {
-                newValue = this.load(key);
+            V newV =  this.getFormCache(keyStr);
+            if (newV == null) {
+                newV = this.load(k);
             }
-            return newValue;
+            return newV;
         }
     }
     
     @Override
-    public List<Value> multiGet(Collection<Key> keys, Function<Value, Key> function) {
-        Map<String, Key> keyMap = new LinkedHashMap<>(keys.size());
-        keys.forEach(key -> keyMap.put(this.convertKey(key), key));
+    public List<V> multiGet(Collection<K> ks, Function<V, K> function) {
+        Map<String, K> keyMap = new LinkedHashMap<>(ks.size());
+        ks.forEach(k -> keyMap.put(this.convertKey(k), k));
 
-        List<Value> foundValues = this.cache.multiGet(keyMap.keySet());
-        ArrayList<Value> result = new ArrayList<>();
+        List<V> foundVS = this.cache.multiGet(keyMap.keySet());
+        ArrayList<V> result = new ArrayList<>();
 
-        for (Value foundValue : foundValues) {
-            if (foundValue == null) {
+        for (V foundV : foundVS) {
+            if (foundV == null) {
                 continue;
             }
             //移除成功找到值的key
-            String key = this.convertKey(function.apply(foundValue));
+            String key = this.convertKey(function.apply(foundV));
             keyMap.remove(key);
-            result.add(foundValue);
+            result.add(foundV);
         }
-        if (result.size() == keys.size()){
+        if (result.size() == ks.size()){
             return result;
         }
         //找到那些转换convertKey 以后找不到value的key
-        Map<Key, Value> missValues = this.multiLoad(keyMap.values());
+        Map<K, V> missValues = this.multiLoad(keyMap.values());
         return result;
     }
 
     @Override
     @SneakyThrows
-    public final void set(String key, Value value) {
-        Assert.notNull(value, "缓存value不能为null");
-        this.cache.put(key, value);
+    public final void set(String key, V v) {
+        Assert.notNull(v, "缓存value不能为null");
+        this.cache.put(key, v);
     }
 
     //todo 理解
     @Override
-    public void multiPut(Map<Key, Value> map) {
-        Map<String, Value> valueMap = new LinkedHashMap<>();
-        map.forEach((key, value) -> {
-            String keyStr = this.convertKey(key);
-            valueMap.put(keyStr, value);
+    public void multiPut(Map<K, V> map) {
+        Map<String, V> valueMap = new LinkedHashMap<>();
+        map.forEach((k, v) -> {
+            String keyStr = this.convertKey(k);
+            valueMap.put(keyStr, v);
         });
         this.cache.multiPut(valueMap);
     }
@@ -113,14 +113,14 @@ public abstract class AbstractLoadingCache<Key, Value> implements LoadingCache<K
         this.cache.removeKeys(keys);
     }
 
-    protected abstract Value doLoad(Key key) throws Exception;
+    protected abstract V doLoad(K k) throws Exception;
 
-    protected Map<Key, Value> doMultiLoad(Collection<Key> keys) throws Exception{
-        LinkedHashMap<Key, Value> map = new LinkedHashMap<>();
-        for (Key key : keys) {
-            Value value = this.doLoad(key);
-            if (value != null) {
-                map.put(key, value);
+    protected Map<K, V> doMultiLoad(Collection<K> ks) throws Exception{
+        LinkedHashMap<K, V> map = new LinkedHashMap<>();
+        for (K k : ks) {
+            V v = this.doLoad(k);
+            if (v != null) {
+                map.put(k, v);
             }
         }
         return map;
@@ -128,44 +128,44 @@ public abstract class AbstractLoadingCache<Key, Value> implements LoadingCache<K
 
     @SneakyThrows
     @Override
-    public final Value load(Key key) {
+    public final V load(K k) {
         try {
-            Value value = this.doLoad(key);
-            if (value != null) {
-                this.set(this.convertKey(key), value);
+            V v = this.doLoad(k);
+            if (v != null) {
+                this.set(this.convertKey(k), v);
             }
-            return value;
+            return v;
         }catch (Exception e){
-            throw this.onLoadError(key, e);
+            throw this.onLoadError(k, e);
         }
     }
 
     @SneakyThrows
     @Override
-    public final Map<Key, Value> multiLoad(Collection<Key> keys) {
+    public final Map<K, V> multiLoad(Collection<K> ks) {
         try {
-            Map<Key, Value> keyValueMap = this.doMultiLoad(keys);
+            Map<K, V> keyValueMap = this.doMultiLoad(ks);
             if (keyValueMap != null) {
                 this.multiPut(keyValueMap);
             }
             return Optional.ofNullable(keyValueMap).orElse(new HashMap<>(0));
         }catch (Exception e){
-            throw this.onMultiLoadError(keys, e);
+            throw this.onMultiLoadError(ks, e);
         }
     }
 
     @Override
-    public boolean exists(Key key) {
-        return this.cache.exists(this.convertKey(key));
+    public boolean exists(K k) {
+        return this.cache.exists(this.convertKey(k));
     }
 
-    private Exception onLoadError(Key key, Exception e){
-        log.error("failed load key:{} to cache:{}", key, this.getCacheName(), e);
+    private Exception onLoadError(K k, Exception e){
+        log.error("failed load key:{} to cache:{}", k, this.getCacheName(), e);
         return new RuntimeException("加载缓存失败");
     }
 
-    private Exception onMultiLoadError(Collection<Key> keys, Exception e){
-        log.error("failed load key:{} to cache:{}", keys, this.getCacheName(), e);
+    private Exception onMultiLoadError(Collection<K> ks, Exception e){
+        log.error("failed load key:{} to cache:{}", ks, this.getCacheName(), e);
         return new RuntimeException("加载缓存失败");
     }
 

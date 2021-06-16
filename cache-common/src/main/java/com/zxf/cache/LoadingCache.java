@@ -8,16 +8,16 @@ import java.util.function.Function;
 /**
  * @author 朱晓峰
  */
-public interface LoadingCache<Key, Value> {
+public interface LoadingCache<K, V> {
 
     int getTimeout();
 
     /**
      * 获取缓存
-     * @param key key
+     * @param k key
      * @return value
      */
-    Value get(Key key);
+    V get(K k);
 
     /**
      * 获取多个缓存值
@@ -25,30 +25,30 @@ public interface LoadingCache<Key, Value> {
      * @param Value
      * @return
      */
-    List<Value> multiGet(Collection<Key> keys, Function<Value, Key> function);
+    List<V> multiGet(Collection<K> ks, Function<V, K> function);
 
-    default List<Value> multiGet(Collection<Key> keys){
-        return this.multiGet(keys, null);
+    default List<V> multiGet(Collection<K> ks){
+        return this.multiGet(ks, null);
     }
 
     /**
      * 设置缓存
      * @param key key
-     * @param value value
+     * @param v value
      */
-    void set(String key, Value value);
+    void set(String key, V v);
 
     /**
      * 批量设置缓存
      * @param map map
      */
-    void multiSet(Map<String, Value> map);
+    void multiSet(Map<String, V> map);
 
     /**
      * 批量设置缓存
      * @param map map
      */
-    void multiPut(Map<Key, Value> map);
+    void multiPut(Map<K, V> map);
 
     /**
      * 批量移除缓存
@@ -58,23 +58,23 @@ public interface LoadingCache<Key, Value> {
 
     /**
      * 加载缓存
-     * @param key key
+     * @param k key
      * @return Value
      */
-    Value load(Key key);
+    V load(K k);
 
     /**
      * 加载缓存
-     * @param keys keys
+     * @param ks keys
      * @return Map<Key, Value>
      */
-    Map<Key, Value> multiLoad(Collection<Key> keys);
+    Map<K, V> multiLoad(Collection<K> ks);
 
     /**
      * 判断是是否存在值
-     * @param key key
+     * @param k key
      * @return boolean
      */
-    boolean exists(Key key);
+    boolean exists(K k);
 
 }
