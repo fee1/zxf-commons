@@ -37,6 +37,7 @@
         <spring.version>5.2.7.RELEASE</spring.version>
         <common-io.version>2.6</common-io.version>
         <protostuff.version>1.7.2</protostuff.version>
+        <guava.version>23.0</guava.version>
 
 
         <common.version>1.0-SNAPSHOT</common.version>
@@ -73,6 +74,23 @@
                 <version>${spring-cloud.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>io.protostuff</groupId>
+                <artifactId>protostuff-core</artifactId>
+                <version>${protostuff.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.protostuff</groupId>
+                <artifactId>protostuff-runtime</artifactId>
+                <version>${protostuff.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
 
 
@@ -121,6 +139,7 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--公共jar-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -140,16 +159,6 @@
 <!--            <optional>true</optional>&lt;!&ndash;编译阶段使用&ndash;&gt;-->
 <!--        </dependency>-->
 
-        <dependency>
-            <groupId>io.protostuff</groupId>
-            <artifactId>protostuff-core</artifactId>
-            <version>${protostuff.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.protostuff</groupId>
-            <artifactId>protostuff-runtime</artifactId>
-            <version>${protostuff.version}</version>
-        </dependency>
     </dependencies>
 
     <build>

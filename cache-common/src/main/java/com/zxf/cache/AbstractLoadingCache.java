@@ -30,6 +30,10 @@ public abstract class AbstractLoadingCache<Key, Value> implements LoadingCache<K
 
     public abstract String getCacheName();
 
+    public String getCacheType(){
+        return "";
+    }
+
     @Override
     public int getTimeout() {
         return 3600;
@@ -60,8 +64,7 @@ public abstract class AbstractLoadingCache<Key, Value> implements LoadingCache<K
             return newValue;
         }
     }
-
-    //todo 理解
+    
     @Override
     public List<Value> multiGet(Collection<Key> keys, Function<Value, Key> function) {
         Map<String, Key> keyMap = new LinkedHashMap<>(keys.size());
@@ -74,6 +77,7 @@ public abstract class AbstractLoadingCache<Key, Value> implements LoadingCache<K
             if (foundValue == null) {
                 continue;
             }
+            //移除成功找到值的key
             String key = this.convertKey(function.apply(foundValue));
             keyMap.remove(key);
             result.add(foundValue);
@@ -81,7 +85,7 @@ public abstract class AbstractLoadingCache<Key, Value> implements LoadingCache<K
         if (result.size() == keys.size()){
             return result;
         }
-
+        //找到那些转换convertKey 以后找不到value的key
         Map<Key, Value> missValues = this.multiLoad(keyMap.values());
         return result;
     }
@@ -167,6 +171,6 @@ public abstract class AbstractLoadingCache<Key, Value> implements LoadingCache<K
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        this.cache = cacheService.getCache(this.getCacheName(), "", this.getTimeout());
+        this.cache = cacheService.getCache(this.getCacheName(), this.getCacheType(), this.getTimeout());
     }
 }
