@@ -67,7 +67,6 @@ public class AutoTypeValueSerializer implements RedisSerializer<Object> {
         } else {
             SerializerObject serializerObject = new SerializerObject(o);
             bytes = this.protoSerializer.serialize(serializerObject);
-
         }
         byte[] typeBytes = new byte[bytes.length + 1];
         typeBytes[0] = type;
