@@ -97,7 +97,7 @@ public class RedisCache extends AbstractCache {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getFromHash(String key, String hashKey) {
+    public <T> T getFromMap(String key, String hashKey) {
         return (T) this.hashOperations.get(key, hashKey);
     }
 

@@ -91,7 +91,7 @@ public interface ICache {
      * @param <T>     返回类型
      * @return T T
      */
-    <T> T getFromHash(String key, String hashKey);
+    <T> T getFromMap(String key, String hashKey);
 
     /**
      * 根据key设置缓存过期时间
