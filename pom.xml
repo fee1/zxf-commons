@@ -17,6 +17,7 @@
         <module>boot-app</module>
         <module>eureka-cloud-server-app</module>
         <module>eureka-client-app</module>
+        <module>interceptor-common</module>
     </modules>
 
     <properties>
@@ -48,6 +49,7 @@
         <boot-app.version>1.0-SNAPSHOT</boot-app.version>
         <eureka-cloud-server-app.version>1.0-SNAPSHOT</eureka-cloud-server-app.version>
         <eureka-client-app.version>1.0-SNAPSHOT</eureka-client-app.version>
+        <interceptor-common.version>1.0-SNAPSHOT</interceptor-common.version>
     </properties>
 
     <!--管理工具包的版本，管理使用工具包的人的jar版本-->
