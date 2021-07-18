@@ -8,7 +8,7 @@ import java.util.function.Supplier;
  */
 public class LazyValue<T> implements Supplier<T> {
 
-    private T value;
+    private volatile T value;
 
     private final Supplier<T> supplier;
 
@@ -21,7 +21,6 @@ public class LazyValue<T> implements Supplier<T> {
         return value;
     }
 
-    //todo 性能稍微浪费
     @Override
     public T get() {
         if (value != null){
