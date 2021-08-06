@@ -55,7 +55,7 @@ public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, 
         if (v != null) {
             return v;
         }
-
+        //加锁，防止大量请求突然访问数据库导致数据库垮掉
         synchronized (this){
             V newV =  this.getFormCache(keyStr);
             if (newV == null) {
