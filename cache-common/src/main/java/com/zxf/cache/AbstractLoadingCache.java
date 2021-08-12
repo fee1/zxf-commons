@@ -26,7 +26,7 @@ public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, 
 
     private ICache cache;
 
-    protected abstract V doLoad() throws Exception;
+//    protected abstract V doLoad() throws Exception;
 
     public abstract String getCacheName();
 
@@ -45,6 +45,11 @@ public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, 
 
     private V getFormCache(String key){
         return this.cache.get(key);
+    }
+
+    @Override
+    public void multiSet(Map<String, V> map) {
+        this.cache.multiPut(map);
     }
 
     @Override
