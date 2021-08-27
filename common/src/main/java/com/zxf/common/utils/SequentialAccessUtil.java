@@ -15,7 +15,7 @@ import java.nio.channels.FileChannel;
 public class SequentialAccessUtil {
 
     /**
-     * 顺序写入文件
+     * 顺序写字符串到文件中
      *
      * @param filePath 文件路径
      * @param content 内容
@@ -41,7 +41,7 @@ public class SequentialAccessUtil {
     }
 
     /**
-     * 顺序读文件
+     * 顺序读取文件内容
      *
      * @param filePath 文件位置
      * @param index 定位
