@@ -23,13 +23,13 @@ public class BeanUtilTest {
 
     @Test
     public void mapsToBeans() {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.put("name", "xxx");
         map.put("age", 18);
         Map map2 = new HashMap();
         map2.put("name", "xxx2");
         map2.put("age", 18);
-        List<Map> list = new LinkedList<>();
+        List<Map<String, Object>> list = new LinkedList<>();
         list.add(map);
         list.add(map2);
         List<Persion> persions = BeanUtil.mapsToBeans(list, Persion.class);
