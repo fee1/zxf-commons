@@ -16,16 +16,16 @@ public class SequentialAccessUtilTest {
     @Test
     public void fileWriteAndRead() {
 
-        MappedByteBuffer mbb = SequentialAccessUtil.fileWrite("D:\\project\\zxf-commons\\common\\src\\test\\resources\\test.txt",
+        MappedByteBuffer mbb = SequentialAccessUtil.fileWrite("src\\test\\resources\\test.txt",
                 "test", 0);
 
         System.out.println(mbb.position());
 
-        mbb = SequentialAccessUtil.fileWrite("D:\\project\\zxf-commons\\common\\src\\test\\resources\\test.txt",
+        mbb = SequentialAccessUtil.fileWrite("src\\test\\resources\\test.txt",
                 "-test-2", mbb.position());
 
-        String content = SequentialAccessUtil.fileRead("D:\\project\\zxf-commons\\common\\src\\test\\resources\\test.txt",
-                mbb.position());
+        String content = SequentialAccessUtil.fileRead("src\\test\\resources\\test.txt",
+                11);
 
         content = content.trim();
 
