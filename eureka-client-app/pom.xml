@@ -26,6 +26,12 @@
         <dependency>
             <groupId>com.zxf</groupId>
             <artifactId>boot-app</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>HdrHistogram</artifactId>
+                    <groupId>org.hdrhistogram</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
