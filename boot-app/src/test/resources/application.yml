@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8082
 spring:
   application:
     name: boot-app
@@ -16,6 +16,7 @@ management:
     shutdown:
       enabled: true # 打开健康检查
 swagger:
+  enable: false
   title: ${spring.application.name}
   description: boot-app类
   version: 1.0
