@@ -22,6 +22,8 @@ import java.util.List;
  */
 public abstract class BaseSwaggerConfig {
 
+    private static final String AUTHORIZATION = "Authorization";
+
     @Bean
     public Docket createRestApi() {
         SwaggerProperties swaggerProperties = swaggerProperties();
@@ -49,7 +51,7 @@ public abstract class BaseSwaggerConfig {
     private List<ApiKey> securitySchemes() {
         //设置请求头信息
         List<ApiKey> result = new ArrayList<>();
-        ApiKey apiKey = new ApiKey("Authorization", "Authorization", "header");
+        ApiKey apiKey = new ApiKey(AUTHORIZATION, AUTHORIZATION, "header");
         result.add(apiKey);
         return result;
     }
@@ -73,7 +75,7 @@ public abstract class BaseSwaggerConfig {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        result.add(new SecurityReference("Authorization", authorizationScopes));
+        result.add(new SecurityReference(AUTHORIZATION, authorizationScopes));
         return result;
     }
 
