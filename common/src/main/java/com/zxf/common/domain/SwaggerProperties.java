@@ -1,4 +1,4 @@
-package com.zxf.startup.domain;
+package com.zxf.common.domain;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
-package com.zxf.startup.config;
+package com.zxf.common.config;
 
-import com.zxf.startup.domain.SwaggerProperties;
+import com.zxf.common.domain.SwaggerProperties;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -81,6 +81,7 @@ public abstract class BaseSwaggerConfig {
 
     /**
      * 自定义Swagger配置
+     * @return
      */
     public abstract SwaggerProperties swaggerProperties();
 }

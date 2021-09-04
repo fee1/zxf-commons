@@ -1,7 +1,7 @@
 package com.zxf.startup.config;
 
-import com.zxf.startup.config.BaseSwaggerConfig;
-import com.zxf.startup.domain.SwaggerProperties;
+import com.zxf.common.config.BaseSwaggerConfig;
+import com.zxf.common.domain.SwaggerProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
