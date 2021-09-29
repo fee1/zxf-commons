@@ -6,6 +6,7 @@
 
     <groupId>com.zxf</groupId>
     <artifactId>zxf-commons</artifactId>
+    <!--项目产生的构件类型，例如jar、war、ear、pom。插件可以创建他们自己的构件类型，所以前面列的不是全部构件类型 -->
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
@@ -17,10 +18,17 @@
         <module>boot-app</module>
         <module>eureka-cloud-server-app</module>
         <module>eureka-client-app</module>
-        <module>interceptor-common</module>
+        <module>auth-common</module>
+        <module>data-starter</module>
+        <module>lock-common</module>
     </modules>
 
     <properties>
+        <!--设置编译版本-->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+
+        <spring-boot.version>2.2.1.RELEASE</spring-boot.version>
         <alibaba-cloud.version>2.2.0.RELEASE</alibaba-cloud.version>
         <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
         <swagger2.version>2.9.2</swagger2.version>
@@ -39,6 +47,8 @@
         <common-io.version>2.6</common-io.version>
         <protostuff.version>1.7.2</protostuff.version>
         <guava.version>23.0</guava.version>
+        <bcprov.version>1.59</bcprov.version>
+        <hutool.version>5.5.1</hutool.version>
 
 
         <common.version>1.0-SNAPSHOT</common.version>
@@ -49,7 +59,8 @@
         <boot-app.version>1.0-SNAPSHOT</boot-app.version>
         <eureka-cloud-server-app.version>1.0-SNAPSHOT</eureka-cloud-server-app.version>
         <eureka-client-app.version>1.0-SNAPSHOT</eureka-client-app.version>
-        <interceptor-common.version>1.0-SNAPSHOT</interceptor-common.version>
+        <auth-common.version>1.0-SNAPSHOT</auth-common.version>
+        <data-starter.version>1.0-SNAPSHOT</data-starter.version>
     </properties>
 
     <!--管理工具包的版本，管理使用工具包的人的jar版本-->
@@ -59,7 +70,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.2.1.RELEASE</version>
+                <version>${spring-boot.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -94,6 +105,19 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bcprov.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
 
 
             <!--管理自定义jar版本-->
@@ -163,12 +187,23 @@
 
     </dependencies>
 
+    <!--构建项目需要的信息 -->
     <build>
+        <!--子项目可以引用的默认插件信息。该插件配置项直到被引用时才会被解析或绑定到生命周期。给定插件的任何本地配置都会覆盖这里的配置 -->
         <pluginManagement>
+            <!--使用的插件列表 。 -->
             <plugins>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
