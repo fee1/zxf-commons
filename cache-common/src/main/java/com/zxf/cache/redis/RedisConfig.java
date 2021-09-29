@@ -30,6 +30,7 @@ import org.springframework.util.Assert;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * redis配置类
@@ -112,10 +113,10 @@ public class RedisConfig {
     /**
      * 获取redisNode结点
      *
-     * @return List<RedisNode>
+     * @return List
      */
     private List<RedisNode> getRedisNodes() {
-        ArrayList<RedisNode> redisNodes = new ArrayList<>();
+        List<RedisNode> redisNodes = new ArrayList<>();
         for (String host : this.hosts) {
             String[] items = host.split(":");
             Assert.isTrue(StringUtils.isNotBlank(items[0]) && StringUtils.isNotBlank(items[1]),
@@ -133,20 +134,20 @@ public class RedisConfig {
     @Bean
     LettuceConnectionFactory lettuceConnectionFactory() {
         List<RedisNode> nodes = getRedisNodes();
-        Assert.isTrue(nodes.size() > 0, "未配置redis的hosts");
+        Assert.isTrue(!nodes.isEmpty(), "未配置redis的hosts");
         // todo 可以使用sm2 加解密和base64双重加解密方式
-        this.password = Base64Util.decrypt(password);
+        this.password = Base64Util.decrypt(this.password);
         //连接池配置
         GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
-        poolConfig.setMaxIdle(maxIdle);
-        poolConfig.setMinIdle(minIdle);
-        poolConfig.setMaxTotal(maxTotal);
-        poolConfig.setMaxWaitMillis(maxWait);
+        poolConfig.setMaxIdle(this.maxIdle);
+        poolConfig.setMinIdle(this.minIdle);
+        poolConfig.setMaxTotal(this.maxTotal);
+        poolConfig.setMaxWaitMillis(this.maxWait);
 
         ClientOptions clientOptions = ClientOptions.builder()
                 .autoReconnect(true).socketOptions(
                         SocketOptions.builder()
-                                .connectTimeout(Duration.ofMillis(connectTimeout))
+                                .connectTimeout(Duration.ofMillis(this.connectTimeout))
                                 .keepAlive(true)
                                 .tcpNoDelay(true)
                                 .build()).build();
@@ -164,8 +165,8 @@ public class RedisConfig {
         if (nodes.size() == 1) {
             RedisNode node = nodes.get(0);
             RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-            redisStandaloneConfiguration.setHostName(node.getHost());
-            redisStandaloneConfiguration.setPort(node.getPort());
+            redisStandaloneConfiguration.setHostName(Objects.requireNonNull(node.getHost()));
+            redisStandaloneConfiguration.setPort(node.getPort().intValue());
             if (StringUtils.isNotBlank(this.password)) {
                 redisStandaloneConfiguration.setPassword(RedisPassword.of(this.password));
             }
@@ -174,7 +175,7 @@ public class RedisConfig {
             //集群
             RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration();
             redisClusterConfiguration.setClusterNodes(nodes);
-            redisClusterConfiguration.setMaxRedirects(maxRedirects);
+            redisClusterConfiguration.setMaxRedirects(this.maxRedirects);
             if (StringUtils.isNotBlank(this.password)) {
                 redisClusterConfiguration.setPassword(RedisPassword.of(this.password));
             }
@@ -188,21 +189,21 @@ public class RedisConfig {
     /**
      * 缓存管理器
      *
-     * @param lettuceConnectionFactory
+     * @param connectionFactory 连接
      * @return CacheManager
      */
     @Bean
-    CacheManager cacheManager(@Autowired LettuceConnectionFactory lettuceConnectionFactory) {
+    CacheManager cacheManager(@Autowired LettuceConnectionFactory connectionFactory) {
         StringRedisSerializer keySerializer = new StringRedisSerializer();
 
         AutoTypeValueSerializer autoTypeValueSerializer = AutoTypeValueSerializer.getInstance();
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
-                .computePrefixWith(key -> formatFullKey(prefixKey, key))
+                .computePrefixWith(key -> formatFullKey(this.prefixKey, key))
                 .entryTtl(Duration.ofSeconds(this.timeout))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(autoTypeValueSerializer))
                 .disableCachingNullValues();
-        return RedisCacheManager.builder(lettuceConnectionFactory).cacheDefaults(configuration).build();
+        return RedisCacheManager.builder(connectionFactory).cacheDefaults(configuration).build();
     }
 
     /**
@@ -223,7 +224,7 @@ public class RedisConfig {
      */
     @Bean
     RedisCacheFactory getRedisCacheFactory() {
-        return new RedisCacheFactory(this, prefixKey);
+        return new RedisCacheFactory(this, this.prefixKey);
     }
 
 }
