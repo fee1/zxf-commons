@@ -17,13 +17,13 @@ public class LazyValue<T> implements Supplier<T> {
     }
 
     public T doLoad(){
-        this.value = supplier.get();
-        return value;
+        this.value = this.supplier.get();
+        return this.value;
     }
 
     @Override
     public T get() {
-        if (value != null){
+        if (this.value != null){
             return this.value;
         }
         synchronized (this){

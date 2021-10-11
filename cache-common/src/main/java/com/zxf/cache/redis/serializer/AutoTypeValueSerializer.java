@@ -79,7 +79,6 @@ public class AutoTypeValueSerializer implements RedisSerializer<Object> {
      *
      * @param bytes 数组
      * @return Object 对象
-     * @throws SerializationException
      */
     @Override
     public Object deserialize(byte[] bytes) throws SerializationException {
