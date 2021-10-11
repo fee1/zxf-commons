@@ -6,7 +6,6 @@ import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -54,6 +53,7 @@ public class SpringAsyncConfiguration implements AsyncConfigurer {
     private int queueCapacity;
 
     //@Bean(name = "") ---> @Async(value = "") 执行线程池配置
+    //@ConditionalOnMissingBean
     public ThreadPoolExecutor executor(){
         ThreadFactory threadFactory = ThreadFactoryBuilder.create().setNamePrefix("async-thread-id-").build();
 
