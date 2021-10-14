@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ApiResult<String> handleValidException(MethodArgumentNotValidException validException){
+    public ApiResult<Void> handleValidException(MethodArgumentNotValidException validException){
         BindingResult bindingResult = validException.getBindingResult();
         String message = null;
         if (bindingResult.hasErrors()){
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(value = BindException.class)
-    public ApiResult<String> handleValidException(BindException bindException){
+    public ApiResult<Void> handleValidException(BindException bindException){
         BindingResult bindingResult = bindException.getBindingResult();
         String message = null;
         if (bindingResult.hasErrors()){
