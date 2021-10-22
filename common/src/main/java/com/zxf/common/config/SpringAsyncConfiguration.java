@@ -55,7 +55,7 @@ public class SpringAsyncConfiguration implements AsyncConfigurer {
 
     //@Bean(name = "") ---> @Async(value = "") 执行线程池配置
     //@ConditionalOnMissingBean
-    @Bean("defaultAsyncThreadPool")
+//    @Bean("defaultAsyncThreadPool")
     public ThreadPoolExecutor executor(){
         ThreadFactory threadFactory = ThreadFactoryBuilder.create().setNamePrefix("async-thread-id-").build();
 
