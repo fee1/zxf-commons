@@ -12,10 +12,10 @@ public class ProtoSerializer<T> implements ByteSerializer<T> {
     /**
      * 类型
      */
-    private final Class<T> c;
+    private final Class<? extends T> aClass;
 
-    public ProtoSerializer(Class<T> c) {
-        this.c = c;
+    public ProtoSerializer(Class<? extends T> aClass) {
+        this.aClass = aClass;
     }
 
     /**
@@ -43,7 +43,7 @@ public class ProtoSerializer<T> implements ByteSerializer<T> {
         if (bytes == null || bytes.length == 0) {
             return null;
         }
-        return ProtostuffUtils.deserialize(bytes, c);
+        return ProtostuffUtils.deserialize(bytes, this.aClass);
     }
 
 }
