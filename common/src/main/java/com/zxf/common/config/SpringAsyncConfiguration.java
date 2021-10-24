@@ -22,23 +22,23 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author zhuxiaofeng
  * @date 2021/9/29
  */
-@ConditionalOnProperty(value = "spring.async.config.enable", matchIfMissing = true)
+@ConditionalOnProperty(value = "spring.async.enable", matchIfMissing = true)
 @Configuration
 @EnableAsync
-@ConfigurationProperties(prefix = "spring.async.config")
+@ConfigurationProperties(prefix = "spring.async")
 @Slf4j
 public class SpringAsyncConfiguration implements AsyncConfigurer {
 
     /**
      * 核心线程数
      */
-    @Value("${core-pool-size:5}")
+    @Value("${core-pool-size:2}")
     private int corePoolSize;
 
     /**
      * 最大线程数
      */
-    @Value("${max-pool-size:10}")
+    @Value("${max-pool-size:5}")
     private int maxPoolSize;
 
     /**
@@ -56,7 +56,7 @@ public class SpringAsyncConfiguration implements AsyncConfigurer {
     //@Bean(name = "") ---> @Async(value = "") 执行线程池配置
     //@ConditionalOnMissingBean
 //    @Bean("defaultAsyncThreadPool")
-    public ThreadPoolExecutor executor(){
+    private ThreadPoolExecutor executor(){
         ThreadFactory threadFactory = ThreadFactoryBuilder.create().setNamePrefix("async-thread-id-").build();
 
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
