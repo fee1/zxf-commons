@@ -493,3 +493,6 @@ AsyncAnnotationBeanPostProcessor extends AbstractBeanFactoryAwareAdvisingPostPro
 		return false;
 	}
 ```
+```text
+Async执行过程参考AOP执行过程
+```
