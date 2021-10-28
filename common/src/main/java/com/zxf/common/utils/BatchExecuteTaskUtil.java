@@ -1,5 +1,7 @@
 package com.zxf.common.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
  * @author zhuxiaofeng
  * @date 2021/10/20
  */
+@Slf4j
 public class BatchExecuteTaskUtil {
 
     private static final ForkJoinPool FORK_JOIN_POOL =new ForkJoinPool(4);
@@ -36,6 +39,7 @@ public class BatchExecuteTaskUtil {
                 r = future.get();
             } catch (Exception e) {
                 e.printStackTrace();
+                log.error("BatchExecuteTaskUtil.executeAndReturn execute fail in future.get(): {}", e.getMessage());
             }
             rList.add(r);
         });
