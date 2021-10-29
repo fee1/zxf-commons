@@ -68,8 +68,76 @@ Spring TaskExecutor的任务中，由指定的线程池的线程执行。(推荐
     1.重新实现接口AsyncConfigurer
     2.继承AsyncConfigurerSupport
     3.配置自定义地TaskExecutor替代内置的任务执行器
-    
-    详情看SpringAsyncConfiguration配置类
+```
+```java
+@Configuration
+@EnableAsync
+@ConfigurationProperties(prefix = "spring.async")
+@Slf4j
+public class SpringAsyncConfiguration implements AsyncConfigurer {
+
+    /**
+     * 核心线程数
+     */
+    @Value("${core-pool-size:2}")
+    private int corePoolSize;
+
+    /**
+     * 最大线程数
+     */
+    @Value("${max-pool-size:5}")
+    private int maxPoolSize;
+
+    /**
+     * 非核心线程，活跃线程存活时间
+     */
+    @Value("${keep-alive-seconds:60}")
+    private int keepAliveSeconds;
+
+    /**
+     * 任务队列长度容量
+     */
+    @Value("${queue-capacity:10}")
+    private int queueCapacity;
+
+    //@Bean(name = "") ---> @Async(value = "") 执行线程池配置
+    //@ConditionalOnMissingBean
+//    @Bean("defaultAsyncThreadPool")
+    private ThreadPoolExecutor executor(){
+        ThreadFactory threadFactory = ThreadFactoryBuilder.create().setNamePrefix("async-thread-id-").build();
+
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setCorePoolSize(this.corePoolSize);
+        taskExecutor.setMaxPoolSize(this.maxPoolSize);
+        taskExecutor.setKeepAliveSeconds(this.keepAliveSeconds);
+        taskExecutor.setQueueCapacity(this.queueCapacity);
+        //拒绝策略
+        taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
+        taskExecutor.setThreadFactory(threadFactory);
+        return taskExecutor.getThreadPoolExecutor();
+    }
+
+    /**
+     * 获取异步任务线程池
+     * @return Executor
+     */
+    @Override
+    public Executor getAsyncExecutor() {
+        return executor();
+    }
+
+    /**
+     * 异步线程报错处理
+     * @return AsyncUncaughtExceptionHandler
+     */
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return (ex, method, params) -> {
+            ex.printStackTrace();
+            log.error("异步线程出错, 方法: {}, 参数: {}, 原因: {}", method, params, ex.getMessage());
+        };
+    }
+}
 ```
 ### 配置自定义的TaskExecutor
 ```text
