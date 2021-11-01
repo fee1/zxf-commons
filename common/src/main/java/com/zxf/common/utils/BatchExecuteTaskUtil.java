@@ -20,7 +20,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public class BatchExecuteTaskUtil {
 
-    private static final ForkJoinPool FORK_JOIN_POOL =new ForkJoinPool(4);
+    /**
+     * 任务线程折半使用
+     */
+    private static final ForkJoinPool FORK_JOIN_POOL =new ForkJoinPool(Runtime.getRuntime().availableProcessors() / 2);
 
     /**
      * 执行并获取返回类型，组装到list后，返回指定类型list。推荐用于入参类型和所需要返回list类型不一致的情况使用
