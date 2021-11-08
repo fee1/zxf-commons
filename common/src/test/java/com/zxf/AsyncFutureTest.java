@@ -27,7 +27,7 @@ public class AsyncFutureTest {
         Object o = null;
 
         try {
-            o = futureTask.get(0, TimeUnit.SECONDS);//没有执行完毕前get方法会一直阻塞等待执行完毕
+            o = futureTask.get(0, TimeUnit.SECONDS);//设置超时时间的方法不会等待任务是否执行完成,没有执行完毕前get()方法会一直阻塞等待执行完毕
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
