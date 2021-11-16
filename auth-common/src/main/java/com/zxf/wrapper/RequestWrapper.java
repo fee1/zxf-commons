@@ -16,7 +16,9 @@ import java.nio.charset.StandardCharsets;
  * @date 2021/7/4
  */
 @Slf4j
-public abstract class RequestWrapper extends HttpServletRequestWrapper {
+public class RequestWrapper extends HttpServletRequestWrapper {
+
+    private static final int INT = 128;
 
     /**
      * 请求内容
@@ -30,7 +32,7 @@ public abstract class RequestWrapper extends HttpServletRequestWrapper {
             StringBuilder bodyBuilder = new StringBuilder();
             if (inputStream != null) {
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-                char[] charsBuffer = new char[128];
+                char[] charsBuffer = new char[INT];
                 int bytesLocation = -1;
                 while ((bytesLocation = bufferedReader.read()) > 0){
                     bodyBuilder.append(charsBuffer, 0, bytesLocation);
@@ -47,33 +49,13 @@ public abstract class RequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public ServletInputStream getInputStream() throws IOException {
-        final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(this.bodyStr.getBytes(StandardCharsets.UTF_8));
-        return new ServletInputStream() {
-            @Override
-            public boolean isFinished() {
-                return false;
-            }
-
-            @Override
-            public boolean isReady() {
-                return false;
-            }
-
-            @Override
-            public void setReadListener(ReadListener readListener) {
-
-            }
-
-            @Override
-            public int read() throws IOException {
-                return byteArrayInputStream.read();
-            }
-        };
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(this.bodyStr.getBytes(StandardCharsets.UTF_8));
+        return new MyServletInputStream(byteArrayInputStream);
     }
 
     @Override
     public BufferedReader getReader() throws IOException {
-        return new BufferedReader(new InputStreamReader(this.getInputStream()));
+        return new BufferedReader(new InputStreamReader(this.getInputStream(), StandardCharsets.UTF_8));
     }
 
     public String getBodyStr() {
@@ -82,5 +64,33 @@ public abstract class RequestWrapper extends HttpServletRequestWrapper {
 
     public void setBodyStr(String bodyStr) {
         this.bodyStr = bodyStr;
+    }
+
+    private static class MyServletInputStream extends ServletInputStream {
+        private final ByteArrayInputStream byteArrayInputStream;
+
+        private MyServletInputStream(ByteArrayInputStream byteArrayInputStream) {
+            this.byteArrayInputStream = byteArrayInputStream;
+        }
+
+        @Override
+        public boolean isFinished() {
+            return false;
+        }
+
+        @Override
+        public boolean isReady() {
+            return false;
+        }
+
+        @Override
+        public void setReadListener(ReadListener readListener) {
+
+        }
+
+        @Override
+        public int read() throws IOException {
+            return this.byteArrayInputStream.read();
+        }
     }
 }
