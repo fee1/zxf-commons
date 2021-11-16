@@ -25,7 +25,7 @@ public class UserCache extends BaseLoadingCache<UserCache> {
     //
     @Override
     protected UserCache doLoad(String s) throws Exception {
-
+        return null;
 //        return repository.select;
     }
 
