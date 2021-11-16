@@ -17,11 +17,11 @@ public class SM2UtilTest {
     public void encrypt() throws Exception{
 
         KeyPair keyPair = SM2Util.generateSm2KeyPair();
-        //公钥  用来加密
+        //公钥  用来加密 ---- 客户端发送数据加密
         byte[] publicEncoded = keyPair.getPublic().getEncoded();
         String publicKey = new String(Base64Utils.encode(publicEncoded), StandardCharsets.UTF_8);
         System.out.println("公钥: " + publicKey);
-        //私钥  用来解密
+        //私钥  用来解密 ---- 服务端接收数据解密
         byte[] privateEncoded = keyPair.getPrivate().getEncoded();
         String privateKey = new String(Base64Utils.encode(privateEncoded), StandardCharsets.UTF_8);
         System.out.println("私钥: " + privateKey);
