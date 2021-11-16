@@ -2,6 +2,7 @@ package com.zxf.common.utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * 反射工具类
@@ -76,9 +77,9 @@ public class ObjectReflectUtil {
      * @throws Exception ex
      */
     public static <T> T newPubilcInstanceWithoutParam(Class<T> tClass) throws Exception {
-        Constructor<T> declaredConstructor = tClass.getConstructor();
-        declaredConstructor.setAccessible(true);
-        return declaredConstructor.newInstance();
+        Constructor<T> constructor = tClass.getConstructor();
+        constructor.setAccessible(true);
+        return constructor.newInstance();
     }
 
     /**
@@ -90,21 +91,41 @@ public class ObjectReflectUtil {
      * @throws Exception ex
      */
     public static <T> T newPrivateInstanceWithoutParam(Class<T> tClass) throws Exception {
-        Constructor<T> declaredConstructor = tClass.getDeclaredConstructor();
-        declaredConstructor.setAccessible(true);
-        return declaredConstructor.newInstance();
+        Constructor<T> constructor = tClass.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        return constructor.newInstance();
     }
 
     /**
      * 通过公开有参数的构造器实例化对象
+     * @param <T> 返回类型
+     * @param tClass 实例化的类型
+     * @param params 构造器参数
      */
+    public static <T> T newPubilcInstanceWithParam(Class<T> tClass, Object... params) throws Exception {
+        Class<?>[] paramsClass = new Class[params.length];
+        for (int i = 0; i < params.length; i++) {
+            paramsClass[i] = params[i].getClass();
+        }
+        Constructor<T> constructor = tClass.getConstructor(paramsClass);
+        constructor.setAccessible(true);
+        return constructor.newInstance(params);
+    }
 
     /**
      * 通过私有有参数的构造器实例化对象
+     * @param <T> 返回类型
+     * @param tClass 实例化的类型
+     * @param params 构造器参数
      */
-
-    /**
-     * 反射获取方法
-     */
+    public static <T> T newPrivateInstanceWithParam(Class<T> tClass, Object... params) throws Exception {
+        Class<?>[] paramsClass = new Class[params.length];
+        for (int i = 0; i < params.length; i++) {
+            paramsClass[i] = params[i].getClass();
+        }
+        Constructor<T> constructor = tClass.getDeclaredConstructor(paramsClass);
+        constructor.setAccessible(true);
+        return constructor.newInstance(params);
+    }
 
 }
