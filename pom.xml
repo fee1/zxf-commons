@@ -20,7 +20,6 @@
         <module>eureka-client-app</module>
         <module>auth-common</module>
         <module>data-starter</module>
-        <module>lock-common</module>
     </modules>
 
     <properties>

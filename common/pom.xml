@@ -115,11 +115,11 @@
         </dependency>
 
         <!--sm2 加解密包-->
-<!--        <dependency>-->
-<!--            <groupId>org.bouncycastle</groupId>-->
-<!--            <artifactId>bcprov-jdk15on</artifactId>-->
-<!--            <version>1.65</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.65</version>
+        </dependency>
     </dependencies>
 
 </project>
