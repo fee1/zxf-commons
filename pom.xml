@@ -46,7 +46,7 @@
         <common-io.version>2.6</common-io.version>
         <protostuff.version>1.7.2</protostuff.version>
         <guava.version>23.0</guava.version>
-        <bcprov.version>1.59</bcprov.version>
+        <bcprov.version>1.65</bcprov.version>
         <hutool.version>5.5.1</hutool.version>
         <poi-ooxml.version>5.0.0</poi-ooxml.version>
 
