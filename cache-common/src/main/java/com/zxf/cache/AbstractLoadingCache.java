@@ -21,6 +21,7 @@ import java.util.function.Function;
 @Slf4j
 public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, InitializingBean {
 
+    private static final int INT = 3600;
     @Autowired
     private CacheService cacheService;
 
@@ -36,7 +37,7 @@ public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, 
 
     @Override
     public int getTimeout() {
-        return 3600;
+        return INT;
     }
 
     protected String convertKey(K k){
@@ -71,7 +72,7 @@ public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, 
     }
     
     @Override
-    public List<V> multiGet(Collection<K> ks, Function<V, K> function) {
+    public List<V> multiGet(Collection<? extends K> ks, Function<? super V, ? extends K> function) {
         Map<String, K> keyMap = new LinkedHashMap<>(ks.size());
         ks.forEach(k -> keyMap.put(this.convertKey(k), k));
 
