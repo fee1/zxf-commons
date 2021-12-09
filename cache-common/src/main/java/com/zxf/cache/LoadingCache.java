@@ -21,11 +21,11 @@ public interface LoadingCache<K, V> {
 
     /**
      * 获取多个缓存值
-     * @param args
-     * @param Value
+     * @param ks
+     * @param function
      * @return
      */
-    List<V> multiGet(Collection<K> ks, Function<V, K> function);
+    List<V> multiGet(Collection<? extends K> ks, Function<? super V, ? extends K> function);
 
     default List<V> multiGet(Collection<K> ks){
         return this.multiGet(ks, null);
