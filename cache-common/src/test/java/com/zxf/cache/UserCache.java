@@ -1,17 +1,14 @@
 package com.zxf.cache;
 
-import com.zxf.cache.BaseLoadingCache;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import com.zxf.cache.entity.UserModel;
 
-import java.util.Map;
 
 /**
  * 获取缓存对象，在Service使用
  * @author zhuxiaofeng
  * @date 2021/8/12
  */
-public class UserCache extends BaseLoadingCache<UserCache> {
+public class UserCache extends BaseLoadingCache<UserModel> {
 
 //    @Autowired
 //    private Repository repository;
@@ -24,7 +21,7 @@ public class UserCache extends BaseLoadingCache<UserCache> {
 
     //
     @Override
-    protected UserCache doLoad(String s) throws Exception {
+    protected UserModel doLoad(String s) throws Exception {
         return null;
 //        return repository.select;
     }

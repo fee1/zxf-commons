@@ -18,8 +18,6 @@
         <module>boot-app</module>
         <module>eureka-cloud-server-app</module>
         <module>eureka-client-app</module>
-        <module>auth-common</module>
-        <module>data-starter</module>
     </modules>
 
     <properties>
