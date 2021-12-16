@@ -7,8 +7,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 /**
  * @author 朱晓峰
  */
-@SpringBootApplication
-@EnableFeignClients //表示打开Feign功能
+@SpringBootApplication(scanBasePackages = "com.zxf")
+@EnableFeignClients(basePackages = "com.zxf") //表示打开Feign功能
 public class BootStarter {
 
     public static void main(String[] args) {

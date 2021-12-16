@@ -9,10 +9,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 /**
  * @author 朱晓峰
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.zxf")
 @EnableEurekaClient // 注册客户端
 @EnableDiscoveryClient //表示eureka客户端
-@EnableFeignClients //表示打开Feign功能
+@EnableFeignClients(basePackages = "com.zxf") //表示打开Feign功能
 public class EurekaClientApp {
 
     public static void main(String[] args) {

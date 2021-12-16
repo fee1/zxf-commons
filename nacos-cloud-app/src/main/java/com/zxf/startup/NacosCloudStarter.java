@@ -7,9 +7,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 /**
  * @author 朱晓峰
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.zxf")
 @EnableDiscoveryClient//表示为客户端，非一定需要才能注册到nacos
-@EnableFeignClients //表示打开Feign功能
+@EnableFeignClients(basePackages = "com.zxf") //表示打开Feign功能
 public class NacosCloudStarter {
 
     public static void main(String[] args) {
