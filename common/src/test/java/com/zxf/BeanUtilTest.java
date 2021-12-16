@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 public class BeanUtilTest {
 
     @Test
