@@ -1,6 +1,5 @@
 package com.zxf.common.utils;
 
-import com.sun.istack.internal.Nullable;
 import com.zxf.common.exception.SerializationException;
 
 /**
@@ -15,8 +14,7 @@ public interface ByteSerializer<T>  {
      * @return byte[]
      * @throws SerializationException 序列化异常
      */
-    @Nullable
-    byte[] serialize(@Nullable T t) throws SerializationException;
+    byte[] serialize(T t) throws SerializationException;
 
     /**
      *
@@ -24,7 +22,6 @@ public interface ByteSerializer<T>  {
      * @return T 对象
      * @throws SerializationException 序列化异常
      */
-    @Nullable
-    T deserialize(@Nullable byte[] bytes) throws SerializationException;
+    T deserialize(byte[] bytes) throws SerializationException;
 
 }
