@@ -61,7 +61,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.example</groupId>
+            <groupId>com.zxf</groupId>
             <artifactId>test-common</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>

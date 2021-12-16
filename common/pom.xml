@@ -14,7 +14,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.example</groupId>
+            <groupId>com.zxf</groupId>
             <artifactId>test-common</artifactId>
             <version>${test-common.version}</version>
             <scope>test</scope>
