@@ -2,7 +2,6 @@ package com.zxf.common.log;
 
 import com.zxf.test.MvcBaseTest;
 import lombok.SneakyThrows;
-import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultMatcher;
