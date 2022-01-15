@@ -1,6 +1,5 @@
-package com.zxf.cache.model;
+package com.zxf.cache.domain.cache.key;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
