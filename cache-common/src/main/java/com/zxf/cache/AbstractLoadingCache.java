@@ -27,8 +27,6 @@ public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, 
 
     private ICache cache;
 
-//    protected abstract V doLoad() throws Exception;
-
     public abstract String getCacheName();
 
     public String getCacheType(){
@@ -103,7 +101,7 @@ public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, 
         this.cache.put(key, v);
     }
 
-    //todo 理解
+    //todo
     @Override
     public void multiPut(Map<K, V> map) {
         Map<String, V> valueMap = new LinkedHashMap<>();

@@ -33,7 +33,7 @@ public class CacheServiceImpl implements CacheService{
      */
     private CacheFactory getCacheFactory(String cacheType){
         String type = StringUtils.isEmpty(cacheType) ? this.defaultCacheType : cacheType;
-        CacheFactory cacheFactory = this.factoryMap.get(cacheType);
+        CacheFactory cacheFactory = this.factoryMap.get(type);
         Assert.notNull(cacheFactory, "没有找到对应type的cacheFactory工厂："+ cacheType);
         return cacheFactory;
     }
