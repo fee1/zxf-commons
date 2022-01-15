@@ -207,14 +207,14 @@ public class RedisConfig {
     }
 
     /**
-     * key前缀
+     * 设置项目key前缀 缓存类key前缀
      *
-     * @param prefixKey prefixKey
-     * @param key       key
+     * @param prefixKey 项目key前缀
+     * @param key       缓存类key前缀
      * @return String
      */
     static String formatFullKey(String prefixKey, String key) {
-        return String.format("%s%s:", prefixKey, key);
+        return String.format("%s:%s:", prefixKey, key);
     }
 
     /**
