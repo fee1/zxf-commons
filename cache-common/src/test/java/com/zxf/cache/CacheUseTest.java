@@ -1,4 +1,4 @@
-package com.zxf.cache.redis;
+package com.zxf.cache;
 
 import com.zxf.cache.domain.cache.UserCache;
 import com.zxf.cache.domain.model.UserModel;
