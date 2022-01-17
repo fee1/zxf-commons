@@ -38,8 +38,8 @@ import java.util.Objects;
  * @author 朱晓峰
  */
 @Configuration
-@ConditionalOnProperty(value = "spring.cache.redis.enable", matchIfMissing = true)
-@ConfigurationProperties(prefix = "spring.cache.redis")
+@ConditionalOnProperty(value = "cache.type", havingValue = "redis")
+@ConfigurationProperties(prefix = "cache")
 @Data
 @Slf4j
 public class RedisConfig {

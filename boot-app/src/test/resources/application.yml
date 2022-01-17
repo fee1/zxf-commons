@@ -21,3 +21,17 @@ swagger:
   description: boot-app类
   version: 1.0
   name: test
+
+feign:
+  okhttp: # 使用okhttp
+    enabled: on
+  hystrix: # 使用熔断器
+    enabled: on
+  compression: # 请求和返回压缩
+    request:
+      enabled: on
+    response:
+      enabled: on
+  httpclient:
+    connection-timeout: 2000 # 超时时间
+    enabled: false

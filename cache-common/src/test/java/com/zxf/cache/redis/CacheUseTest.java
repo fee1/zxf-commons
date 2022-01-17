@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author zhuxiaofeng
  * @date 2022/1/15
  */
-public class RedisConnectTest extends BaseTest {
+public class CacheUseTest extends BaseTest {
 
     @Autowired
     private UserCache userCache;
@@ -21,7 +21,7 @@ public class RedisConnectTest extends BaseTest {
      * 测试设置值
      */
     @Test
-    public void testSetValue(){
+    public void testRedisSetValue(){
         userCache.set("test", new UserModel("xiaoming", "18"));
     }
 
@@ -29,16 +29,17 @@ public class RedisConnectTest extends BaseTest {
      * 测试获取值
      */
     @Test
-    public void testGetValue(){
+    public void testRedisGetValue(){
         System.out.println(userCache.get("test"));
     }
 
     /**
-     * 测试删除值
+     * 测试guava 缓存存取值
      */
     @Test
-    public void testDelValue(){
-
+    public void testGuavaGetAndSetValue(){
+        userCache.set("test", new UserModel("xiaoming", "18"));
+        System.out.println(userCache.get("test"));
     }
 
 }
