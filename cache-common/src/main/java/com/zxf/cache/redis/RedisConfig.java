@@ -39,7 +39,7 @@ import java.util.Objects;
  */
 @Configuration
 @ConditionalOnProperty(value = "cache.type", havingValue = "redis")
-@ConfigurationProperties(prefix = "cache")
+@ConfigurationProperties(prefix = "cache.redis")
 @Data
 @Slf4j
 public class RedisConfig {

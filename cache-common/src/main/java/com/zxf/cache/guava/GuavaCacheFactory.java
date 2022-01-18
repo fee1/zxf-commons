@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
  * @author 朱晓峰
  */
 @Configuration
+@ConditionalOnProperty(value = "cache.type", havingValue = "guava")
+@ConfigurationProperties(prefix = "cache.guava")
 public class GuavaCacheFactory extends AbstractCacheFactory {
 
     @Override
