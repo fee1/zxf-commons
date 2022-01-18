@@ -2,7 +2,7 @@ cache:
 #    enable: true
 #    集群配置
 #    hosts: 127.0.0.1:6379,192.168.1.1:6379
-  type: redis # or redis
+  type: guava # or redis
   guava:
     prefix-key: test-common
   redis:
