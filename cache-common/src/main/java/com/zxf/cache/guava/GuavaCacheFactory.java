@@ -11,8 +11,6 @@ import org.springframework.context.annotation.Configuration;
  * @author 朱晓峰
  */
 @Configuration
-@ConditionalOnProperty(value = "spring.cache.guava.enable", matchIfMissing = true)
-@ConfigurationProperties(prefix = "spring.cache.guava")
 public class GuavaCacheFactory extends AbstractCacheFactory {
 
     @Override
