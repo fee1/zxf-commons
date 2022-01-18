@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author zhuxiaofeng
  * @date 2022/1/14
  */
-public class CacheServiceTest extends BaseTest {
+public class UserCacheServiceTest extends BaseTest {
 
     @Mock
     private UserMapper userMapper;

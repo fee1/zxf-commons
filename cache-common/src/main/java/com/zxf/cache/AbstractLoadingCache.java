@@ -38,6 +38,11 @@ public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, 
         return INT;
     }
 
+    /**
+     * key的规则转换，转换返回string类型的值做为key。功能由子类去实现，也可以不实现。
+     * @param k key
+     * @return string
+     */
     protected String convertKey(K k){
         return String.valueOf(k);
     }
@@ -101,7 +106,6 @@ public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, 
         this.cache.put(key, v);
     }
 
-    //todo
     @Override
     public void multiPut(Map<K, V> map) {
         Map<String, V> valueMap = new LinkedHashMap<>();
