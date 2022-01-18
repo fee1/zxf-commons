@@ -18,7 +18,7 @@ public class UserService {
 
 
     public UserModel searchUser(String name, String age) throws Exception {
-        return this.userCache.load(UserCacheKey.toKey(name, age));
+        return this.userCache.get(UserCacheKey.toKey(name, age));
     }
 
 }
