@@ -171,7 +171,7 @@ public class RedisConfig {
                 redisStandaloneConfiguration.setPassword(RedisPassword.of(this.password));
             }
             connectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration, lettucePoolingClientConfiguration);
-            //设置非共享连接，允许多个连接公用一个物理连接。如果设置false ,每一个连接的操作都会开启和关闭socket连接。 单机true
+            //设置非共享连接，允许多个连接公用一个物理连接。如果设置false ,每一个连接的操作都会开启和关闭socket连接。 true适合单机环境
             connectionFactory.setShareNativeConnection(true);
         } else {
             //集群
@@ -182,7 +182,7 @@ public class RedisConfig {
                 redisClusterConfiguration.setPassword(RedisPassword.of(this.password));
             }
             connectionFactory = new LettuceConnectionFactory(redisClusterConfiguration, lettucePoolingClientConfiguration);
-            //设置非共享连接，允许多个连接公用一个物理连接。如果设置false ,每一个连接的操作都会开启和关闭socket连接。 集群false
+            //设置非共享连接，允许多个连接公用一个物理连接。如果设置false ,每一个连接的操作都会开启和关闭socket连接。 false适合集群环境
             connectionFactory.setShareNativeConnection(false);
         }
         //是否共享本地连接
