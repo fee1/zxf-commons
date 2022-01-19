@@ -59,8 +59,7 @@ public class RedisCacheFactory extends AbstractCacheFactory {
     public RedisTemplate<String, Object> createRedisTemplate(LettuceConnectionFactory lettuceConnectionFactory,
                                                              String cacheName, RedisSerializer<Object> valueSerializer) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        //设置非共享连接，允许多个连接公用一个物理连接。如果设置false ,每一个连接的操作都会开启和关闭socket连接。
-        lettuceConnectionFactory.setShareNativeConnection(false);
+//        lettuceConnectionFactory.setShareNativeConnection(false);
         redisTemplate.setConnectionFactory(lettuceConnectionFactory);
         PrefixKeySerializer keySerializer = new PrefixKeySerializer(RedisConfig.formatFullKey(this.prefixKey, cacheName));
         redisTemplate.setKeySerializer(keySerializer);
