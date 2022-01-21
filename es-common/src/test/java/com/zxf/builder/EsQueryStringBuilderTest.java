@@ -27,6 +27,29 @@ public class EsQueryStringBuilderTest {
         esQueryStringBuilder.clear();
     }
 
+    /**
+     * 复合查询
+     */
+    @Test
+    public void complexQString(){
+        // (x1 and x2) or x3
+        EsQueryStringBuilder esQueryStringBuilder = EsQueryStringBuilder.create();
+        esQueryStringBuilder.createCriteria().andEq("NAME", "xiaoming").andGteEquals("AGE", 18);
+        esQueryStringBuilder.or().andGteEquals("HEIGHT", 180);
+        String q = esQueryStringBuilder.build();
+        assertEquals("(NAME:xiaoming AND AGE:[18 TO *]) OR (HEIGHT:[180 TO *])", q);
+        esQueryStringBuilder.clear();
+
+        // (x1 or x2) and x3   ---->  x1 and x3 union x2 and x3
+        esQueryStringBuilder.createCriteria().andEq("NAME", "xiaoming").andGteEquals("AGE", 18);
+        esQueryStringBuilder.or().andGteEquals("HEIGHT", 180).andGteEquals("AGE", 18);
+        q = esQueryStringBuilder.build();
+        assertEquals("(NAME:xiaoming AND AGE:[18 TO *]) OR (HEIGHT:[180 TO *] AND AGE:[18 TO *])", q);
+        esQueryStringBuilder.clear();
+
+        // (x1 or x2) and (x3 or x4) ---->  (x1 or x2) and x3 union (x1 or x2) and x4
+    }
+
     @Test
     public void rangeQString(){
         EsQueryStringBuilder esQueryStringBuilder = EsQueryStringBuilder.create();
@@ -64,29 +87,6 @@ public class EsQueryStringBuilderTest {
         q = esQueryStringBuilder.build();
         assertEquals("(AGE:[* TO 24])", q);
         esQueryStringBuilder.clear();
-    }
-
-    /**
-     * 复合查询
-     */
-    @Test
-    public void complexQString(){
-        // (x1 and x2) or x3
-        EsQueryStringBuilder esQueryStringBuilder = EsQueryStringBuilder.create();
-        esQueryStringBuilder.createCriteria().andEq("NAME", "xiaoming").andGteEquals("AGE", 18);
-        esQueryStringBuilder.or().andGteEquals("HEIGHT", 180);
-        String q = esQueryStringBuilder.build();
-        assertEquals("(NAME:xiaoming AND AGE:[18 TO *]) OR (HEIGHT:[180 TO *])", q);
-        esQueryStringBuilder.clear();
-
-        // (x1 or x2) and x3   ---->  x1 and x3 union x2 and x3
-        esQueryStringBuilder.createCriteria().andEq("NAME", "xiaoming").andGteEquals("AGE", 18);
-        esQueryStringBuilder.or().andGteEquals("HEIGHT", 180).andGteEquals("AGE", 18);
-        q = esQueryStringBuilder.build();
-        assertEquals("(NAME:xiaoming AND AGE:[18 TO *]) OR (HEIGHT:[180 TO *] AND AGE:[18 TO *])", q);
-        esQueryStringBuilder.clear();
-
-        // (x1 or x2) and (x3 or x4) ---->  (x1 or x2) and x3 union (x1 or x2) and x4
     }
 
 }
