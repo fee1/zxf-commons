@@ -76,6 +76,36 @@ public class EsQueryStringBuilder {
         }
 
         /**
+         * 右匹配
+         * @param fieldName
+         * @param value
+         * @return
+         */
+        public Criteria andRightMatch(String fieldName, Object value){
+            return this.andEq(fieldName, String.format("%s*",value));
+        }
+
+        /**
+         * 左匹配
+         * @param fieldName
+         * @param value
+         * @return
+         */
+        public Criteria andLeftMatch(String fieldName, Object value){
+            return this.andEq(fieldName, String.format("*%s",value));
+        }
+
+        /**
+         * 匹配
+          * @param fieldName
+         * @param value
+         * @return
+         */
+        public Criteria andMatch(String fieldName, Object value){
+            return this.andEq(fieldName, String.format("*%s*", value));
+        }
+
+        /**
          * in ()
          * @param fieldName
          * @param value

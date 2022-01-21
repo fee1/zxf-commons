@@ -25,6 +25,21 @@ public class EsQueryStringBuilderTest {
         q = esQueryStringBuilder.build();
         assertEquals("(ID:(123 OR 312))", q);
         esQueryStringBuilder.clear();
+
+        esQueryStringBuilder.createCriteria().andLeftMatch("NAME", "xiao");
+        q = esQueryStringBuilder.build();
+        assertEquals("(NAME:*xiao)", q);
+        esQueryStringBuilder.clear();
+
+        esQueryStringBuilder.createCriteria().andRightMatch("NAME", "xiao");
+        q = esQueryStringBuilder.build();
+        assertEquals("(NAME:xiao*)", q);
+        esQueryStringBuilder.clear();
+
+        esQueryStringBuilder.createCriteria().andMatch("NAME", "xiao");
+        q = esQueryStringBuilder.build();
+        assertEquals("(NAME:*xiao*)", q);
+        esQueryStringBuilder.clear();
     }
 
     /**
