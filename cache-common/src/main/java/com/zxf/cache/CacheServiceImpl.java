@@ -1,9 +1,7 @@
 package com.zxf.cache;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.HashMap;
@@ -12,7 +10,6 @@ import java.util.Map;
 /**
  * @author 朱晓峰
  */
-@Service
 public class CacheServiceImpl implements CacheService{
 
     private Map<String, CacheFactory> factoryMap = new HashMap<>();
@@ -20,7 +17,7 @@ public class CacheServiceImpl implements CacheService{
     @Value("${cache.type:redis}")
     private String defaultCacheType;
 
-    public CacheServiceImpl(@Autowired CacheFactory[] cacheFactories){
+    public CacheServiceImpl(CacheFactory[] cacheFactories){
         for (CacheFactory cacheFactory : cacheFactories) {
             this.factoryMap.put(cacheFactory.getCacheType(), cacheFactory);
         }

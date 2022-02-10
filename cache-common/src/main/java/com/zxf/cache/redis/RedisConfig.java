@@ -34,10 +34,6 @@ import java.util.Objects;
  *
  * @author 朱晓峰
  */
-//@Configuration
-//@ConditionalOnProperty(value = "cache.type", havingValue = "redis")
-//@ConfigurationProperties(prefix = "cache.redis")
-//@Data
 @Slf4j
 public class RedisConfig {
 
@@ -67,15 +63,5 @@ public class RedisConfig {
     public static String formatFullKey(String prefixKey, String key) {
         return String.format("%s:%s:", prefixKey, key);
     }
-
-//    /**
-//     * 获取redis缓存产品工厂
-//     *
-//     * @return RedisCacheFactory
-//     */
-//    @Bean
-//    RedisCacheFactory getRedisCacheFactory() {
-//        return new RedisCacheFactory(this, this.prefixKey);
-//    }
 
 }
