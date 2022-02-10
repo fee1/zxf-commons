@@ -16,24 +16,24 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 public class RedisCacheFactory extends AbstractCacheFactory {
 
     /**
-     * redisConfig
-     */
-    private final RedisConfig redisConfig;
-
-    /**
      * prefixKey
      */
     private final String prefixKey;
+
+    /**
+     * defaultTimeout
+     */
+    private final int defaultTimeout;
 
     /**
      * lettuceConnectionFactory
      */
     private final LettuceConnectionFactory lettuceConnectionFactory;
 
-    public RedisCacheFactory(RedisConfig redisConfig, String prefixKey) {
-        this.redisConfig = redisConfig;
+    public RedisCacheFactory(String prefixKey, int defaultTimeout, LettuceConnectionFactory lettuceConnectionFactory) {
         this.prefixKey = prefixKey;
-        this.lettuceConnectionFactory = redisConfig.lettuceConnectionFactory();
+        this.defaultTimeout = defaultTimeout;
+        this.lettuceConnectionFactory = lettuceConnectionFactory;
     }
 
     /**
@@ -101,6 +101,6 @@ public class RedisCacheFactory extends AbstractCacheFactory {
      */
     @Override
     protected int getDefaultTimeout() {
-        return this.redisConfig.getTimeout();
+        return this.defaultTimeout;
     }
 }

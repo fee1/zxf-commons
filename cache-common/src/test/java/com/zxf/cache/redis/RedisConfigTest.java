@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class RedisConfigTest extends BaseTest {
 
     @Autowired
-    RedisConfig redisConfig;
+    RedisProperties properties;
 
     @Test
     public void testPropertiesValue(){
-        System.out.println("----------test redis config----------"+redisConfig.getHosts()[1]);
+        System.out.println("----------test redis config----------"+ properties.getHosts()[0]);
     }
 
 }
