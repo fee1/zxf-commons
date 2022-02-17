@@ -9,13 +9,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2022/2/10
  */
 @Data
-@ConfigurationProperties("cache.redis")
 public class RedisProperties {
 
     /**
      * hosts
      */
-    @Value("${hosts:}")
+    @Value("${hosts:127.0.0.1:6379}")
     private String[] hosts;
 
     /**

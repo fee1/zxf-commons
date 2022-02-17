@@ -13,10 +13,13 @@ import io.lettuce.core.ClientOptions;
 import io.lettuce.core.SocketOptions;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisNode;
@@ -39,11 +42,13 @@ import java.util.Objects;
  * @date 2022/2/9
  */
 @Configuration(proxyBeanMethods = false)
+@ConditionalOnProperty(name = "cache.auto.config.enable", matchIfMissing = true)
 public class CacheAutoConfiguration {
 
     @Configuration(proxyBeanMethods = false)
-    @ConditionalOnProperty(value = "cache.type", havingValue = "guava")
-    public static class GuavaCacheConfiguration{
+    @AutoConfigureAfter(CacheAutoConfiguration.class)
+    @ConditionalOnProperty(value = "cache.auto.config.guava.enable", matchIfMissing = true)
+    public static class GuavaConfiguration {
         @Bean
         public GuavaCacheFactory guavaCacheFactory(){
             return new GuavaCacheFactory();
@@ -51,10 +56,12 @@ public class CacheAutoConfiguration {
     }
 
     @Configuration(proxyBeanMethods = false)
-    @ConditionalOnProperty(value = "cache.type", havingValue = "redis")
-    public static class RedisCacheConfiguration{
+    @AutoConfigureAfter(CacheAutoConfiguration.class)
+    @ConditionalOnProperty(value = "cache.auto.config.redis.enable", matchIfMissing = true)
+    public static class RedisConfiguration {
 
         @Bean
+        @ConfigurationProperties("cache.auto.config.redis")
         public RedisProperties redisProperties(){
             return new RedisProperties();
         }
@@ -132,7 +139,7 @@ public class CacheAutoConfiguration {
             StringRedisSerializer keySerializer = new StringRedisSerializer();
 
             AutoTypeValueSerializer autoTypeValueSerializer = AutoTypeValueSerializer.getInstance();
-            org.springframework.data.redis.cache.RedisCacheConfiguration configuration = org.springframework.data.redis.cache.RedisCacheConfiguration.defaultCacheConfig()
+            RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
                     .computePrefixWith(key -> RedisConfig.formatFullKey(properties.getPrefixKey(), key))
                     .entryTtl(Duration.ofSeconds(properties.getTimeout()))
                     .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer))
