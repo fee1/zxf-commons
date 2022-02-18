@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2022/2/10
  */
 @Data
+//@ConfigurationProperties(prefix = "cache.auto.config.redis")
 public class RedisProperties {
 
     /**

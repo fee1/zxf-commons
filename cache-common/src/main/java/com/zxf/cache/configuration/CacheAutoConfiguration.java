@@ -16,6 +16,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -58,6 +59,7 @@ public class CacheAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     @AutoConfigureAfter(CacheAutoConfiguration.class)
     @ConditionalOnProperty(value = "cache.auto.config.redis.enable", matchIfMissing = true)
+//    @EnableConfigurationProperties(RedisProperties.class)
     public static class RedisConfiguration {
 
         @Bean
