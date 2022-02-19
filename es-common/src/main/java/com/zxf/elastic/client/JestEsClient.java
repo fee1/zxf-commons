@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.zxf.elastic.config.EsConfig;
+import com.zxf.elastic.config.JestEsProperties;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.JestResult;
@@ -13,6 +13,8 @@ import io.searchbox.client.config.HttpClientConfig;
 import io.searchbox.core.Cat;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
+import io.searchbox.indices.CreateIndex;
+import io.searchbox.indices.DeleteIndex;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ElasticSearch客户端链接类
@@ -41,19 +44,19 @@ public class JestEsClient implements EsClient{
     /**
      * ES基本配置信息类
      */
-    private final EsConfig esConfig;
+    private final JestEsProperties jestEsProperties;
 
     private static final String DEFAULT_DOC_TYPE = "_doc";
 
 
-    public JestEsClient(ObjectProvider<Gson> gsonObjectProvider, EsConfig esConfig){
+    public JestEsClient(ObjectProvider<Gson> gsonObjectProvider, JestEsProperties jestEsProperties){
         this.gson = gsonObjectProvider.getObject();
-        this.esConfig = esConfig;
+        this.jestEsProperties = jestEsProperties;
         this.buildClient();
     }
 
-    public JestEsClient(EsConfig esConfig){
-        this.esConfig = esConfig;
+    public JestEsClient(JestEsProperties jestEsProperties){
+        this.jestEsProperties = jestEsProperties;
         this.gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         this.buildClient();
     }
@@ -61,13 +64,13 @@ public class JestEsClient implements EsClient{
     /**
      * 建立es连接
      */
-    protected void buildClient(){
-        HttpClientConfig clientConfig = new HttpClientConfig.Builder(this.esConfig.getUris())
+    protected final void buildClient(){
+        HttpClientConfig clientConfig = new HttpClientConfig.Builder(this.jestEsProperties.getUris())
                 .discoveryEnabled(false)
                 .gson(this.gson)
-                .multiThreaded(this.esConfig.isMultiThreaded())
-                .connTimeout((int)this.esConfig.getConnectionTimeout().toMillis())
-                .readTimeout((int)this.esConfig.getReadTimeout().toMillis())
+                .multiThreaded(this.jestEsProperties.isMultiThreaded())
+                .connTimeout((int)this.jestEsProperties.getConnectionTimeout().toMillis())
+                .readTimeout((int)this.jestEsProperties.getReadTimeout().toMillis())
                 .build();
 
         JestClientFactory factory = new JestClientFactory();
@@ -128,6 +131,7 @@ public class JestEsClient implements EsClient{
         return indexList;
     }
 
+    // todo 理解
     private static class FixIndicesBuilder extends Cat.IndicesBuilder {
         @Override
         public Cat build() {
@@ -143,9 +147,9 @@ public class JestEsClient implements EsClient{
      * @return string
      */
     private String buildQueryString(String q, int from, int size){
-        HashMap<String, Object> root = new HashMap<>();
-        HashMap<String, Object> queryString = new HashMap<>();
-        HashMap<String, Object> query = new HashMap<>();
+        Map<String, Object> root = new HashMap<>();
+        Map<String, Object> queryString = new HashMap<>();
+        Map<String, Object> query = new HashMap<>();
         root.put("root", queryString);
 
         if (size >= 0) {
@@ -158,23 +162,29 @@ public class JestEsClient implements EsClient{
     }
 
     /**
+     * todo
      * 创建索引
      * @param indexName 索引名称
+     * @return boolean
      * @throws IOException
      */
     @Override
     public void createIndex(String indexName) throws IOException {
-
+        CreateIndex createIndex = new CreateIndex.Builder(indexName).build();
+        JestResult result = this.jestClient.execute(createIndex);
+//        result.get
     }
 
     /**
+     * todo
      * 删除索引
      * @param indexName 索引名称
      * @throws IOException
      */
     @Override
     public void deleteIndex(String indexName) throws IOException {
-
+        DeleteIndex deleteIndex = new DeleteIndex.Builder(indexName).build();
+        this.jestClient.execute(deleteIndex);
     }
 
     /**
@@ -190,6 +200,5 @@ public class JestEsClient implements EsClient{
         } catch (IOException e) {
             log.error("es客户端连接关闭失败，cause："+e.getMessage());
         }
-//        IOUtils.closeQuietly(this.jestClient);
     }
 }

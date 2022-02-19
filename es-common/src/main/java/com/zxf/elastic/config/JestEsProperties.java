@@ -1,6 +1,8 @@
 package com.zxf.elastic.config;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -12,27 +14,32 @@ import java.util.List;
  * @author zxf
  */
 @Data
-public class EsConfig {
+@ConfigurationProperties(prefix = "elastic.jest")
+public class JestEsProperties {
 
     /**
      * Elasticsearch uri
      */
-    private List<String> uris = Collections.singletonList("http://localhost:9200");
+    @Value("${uris:http://localhost:9200}")
+    private List<String> uris;
 
     /**
      * 用户名
      */
+    @Value("${username:}")
     private String username;
 
     /**
      * 密码
      */
+    @Value("${password:}")
     private String password;
 
     /**
      * 是否支持多线程
      */
-    private boolean multiThreaded = true;
+    @Value("${multiThreaded:true}")
+    private boolean multiThreaded;
 
     /**
      * 链接超时时间 60s
@@ -44,11 +51,11 @@ public class EsConfig {
      */
     private Duration readTimeout = Duration.ofSeconds(300L);
 
-    public EsConfig(String uris){
+    public JestEsProperties(String uris){
         this.uris = Arrays.asList(uris.split(","));
     }
 
-    public EsConfig(){
+    public JestEsProperties(){
     }
 
 }
