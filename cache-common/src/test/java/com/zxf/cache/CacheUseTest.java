@@ -3,6 +3,7 @@ package com.zxf.cache;
 import com.zxf.cache.domain.cache.UserCache;
 import com.zxf.cache.domain.model.UserModel;
 import com.zxf.test.BaseTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,7 +31,7 @@ public class CacheUseTest extends BaseTest {
      */
     @Test
     public void testRedisGetValue(){
-        System.out.println(userCache.get("test"));
+        Assert.assertEquals("UserModel(name=xiaoming, age=18)", userCache.get("test").toString());
     }
 
     /**
@@ -39,7 +40,7 @@ public class CacheUseTest extends BaseTest {
     @Test
     public void testGuavaGetAndSetValue(){
         userCache.set("test", new UserModel("xiaoming", "18"));
-        System.out.println(userCache.get("test"));
+        Assert.assertEquals("UserModel(name=xiaoming, age=18)", userCache.get("test").toString());
     }
 
 }

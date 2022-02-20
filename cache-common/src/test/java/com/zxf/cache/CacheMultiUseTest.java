@@ -4,6 +4,7 @@ import com.zxf.cache.domain.cache.UserGuavaCache;
 import com.zxf.cache.domain.cache.UserRedisCache;
 import com.zxf.cache.domain.model.UserModel;
 import com.zxf.test.BaseTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,11 +24,13 @@ public class CacheMultiUseTest extends BaseTest {
     public void multiCacheUseTest(){
         //guava 缓存使用测试
         guavaCache.set("test", new UserModel("xiaoming", "18"));
-        System.out.println(guavaCache.get("test"));
+        Assert.assertEquals("UserModel(name=xiaoming, age=18)", guavaCache.get("test").toString());
+//        System.out.println(guavaCache.get("test"));
 
         //redis 缓存使用测试
         redisCache.set("test", new UserModel("xiaoming", "18"));
-        System.out.println(redisCache.get("test"));
+        Assert.assertEquals("UserModel(name=xiaoming, age=18)", redisCache.get("test").toString());
+//        System.out.println(redisCache.get("test"));
     }
 
 

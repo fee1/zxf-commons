@@ -2,6 +2,7 @@ package com.zxf.cache.redis;
 
 
 import com.zxf.test.BaseTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +13,7 @@ public class RedisConfigTest extends BaseTest {
 
     @Test
     public void testPropertiesValue(){
-        System.out.println("----------test redis config----------"+ properties.getHosts()[0]);
+        Assert.assertEquals("192.168.137.135:6379", properties.getHosts()[0]);
     }
 
 }

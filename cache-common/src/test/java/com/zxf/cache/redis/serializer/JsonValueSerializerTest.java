@@ -1,7 +1,9 @@
 package com.zxf.cache.redis.serializer;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 
@@ -15,7 +17,7 @@ public class JsonValueSerializerTest {
         System.out.println("-------serialize: "+ serialize);
 
         Object deserialize = instance.deserialize(serialize);
-        System.out.println("-------deserialize: "+ deserialize);
+        Assert.assertEquals("{\"name\":\"xiaoming\",\"age\":\"22\"}", JSONObject.toJSONString(deserialize));
     }
 
     @Data
