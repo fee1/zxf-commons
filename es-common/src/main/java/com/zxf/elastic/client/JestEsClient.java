@@ -11,10 +11,13 @@ import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.JestResult;
 import io.searchbox.client.config.HttpClientConfig;
 import io.searchbox.core.Cat;
-import io.searchbox.core.Search;
-import io.searchbox.core.SearchResult;
 import io.searchbox.indices.CreateIndex;
 import io.searchbox.indices.DeleteIndex;
+import io.searchbox.indices.IndicesExists;
+import io.searchbox.indices.aliases.AddAliasMapping;
+import io.searchbox.indices.aliases.AliasExists;
+import io.searchbox.indices.aliases.GetAliases;
+import io.searchbox.indices.aliases.ModifyAliases;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 
@@ -37,7 +40,7 @@ public class JestEsClient implements EsClient{
     private JestClient jestClient;
 
     /**
-     * gson final ??
+     * gson json格式化
      */
     private final Gson gson;
 
@@ -90,6 +93,9 @@ public class JestEsClient implements EsClient{
     }
 
     /**
+     * Head http url: http://192.168.137.135:9200/twitter
+     * response body: responseCode = 200
+     *
      * 查找字段名 true(查询其为别名) false(查询)
      * @param indexName 索引名称
      * @param includeAlias 别名
@@ -98,21 +104,111 @@ public class JestEsClient implements EsClient{
      */
     @Override
     public boolean existsIndex(String indexName, boolean includeAlias) throws IOException {
-        if (includeAlias) {
-            String queryString = this.buildQueryString("*:*", 0, 0);
-            Search.Builder builder = new Search.Builder(queryString)
-                    .addIndex(indexName).addType(DEFAULT_DOC_TYPE)
-                    .addSourceIncludePattern("_id");
-            SearchResult result = this.jestClient.execute(builder.build());
-            return result.getResponseCode() != 404;
-        } else {
-            List<String> indexList = this.findIndexList(indexName);
-            return indexList.contains(indexName);
+        boolean indexNameExists = false;
+        IndicesExists.Builder builder = new IndicesExists.Builder(indexName);
+        JestResult result = this.jestClient.execute(builder.build());
+        int responseCode = result.getResponseCode();
+        if (responseCode == 200){
+            indexNameExists = true;
         }
+        boolean aliasNameExists = this.existsAlias(indexName);
+        return indexNameExists || aliasNameExists;
+    }
+
+    /**
+     * 检查是否存在别名
+     * Head http url: http://192.168.137.135:9200/_alias/test_create_index1
+     * response body: responseCode = 200
+     *
+     * @param aliasName 别名
+     * @return
+     * @throws IOException
+     */
+    @Override
+    public boolean existsAlias(String aliasName) throws IOException {
+        AliasExists.Builder builder = new AliasExists.Builder().alias(aliasName);
+        JestResult jestResult = this.jestClient.execute(builder.build());
+        return jestResult.getResponseCode() == 200;
+    }
+
+
+    /**
+     * 添加别名
+     *
+     * Post http url: http://192.168.137.135:9200/_aliases
+     * request body:
+     * {
+     *     "actions": [
+     *         {
+     *             "add": {
+     *                 "index": "test_create_index",
+     *                 "alias": "test_create_index1"
+     *             }
+     *         }
+     *     ]
+     * }
+     * response body:
+     * {"acknowledged":true}
+     *
+     *
+     *
+     * @param indexName 索引名称
+     * @param aliasName 别名
+     * @return boolean
+     * @throws IOException
+     */
+    @Override
+    public boolean addAlias(String indexName, String aliasName) throws IOException {
+        AddAliasMapping.Builder addAliasBuild = new AddAliasMapping.Builder(indexName, aliasName);
+        ModifyAliases.Builder builder = new ModifyAliases.Builder(addAliasBuild.build());
+        JestResult result = this.jestClient.execute(builder.build());
+        return result.isSucceeded();
+    }
+
+    /**
+     * 获取别名 (相同别名的索引可能会有多个， 但是别名不能和索引名称重复)
+     *
+     * get http url: http://192.168.137.135:9200/_alias/test_create_index1
+     * response body:
+     * {
+     *     "twitter": {
+     *         "aliases": {
+     *             "test_create_index1": {}
+     *         }
+     *     },
+     *     "test_create_index": {
+     *         "aliases": {
+     *             "test_create_index1": {}
+     *         }
+     *     }
+     * }
+     *
+     * get http url: http://192.168.137.135:9200/test_create_index/_alias
+     * response body:
+     * {
+     *     "test_create_index": {
+     *         "aliases": {
+     *             "test_create_index1": {},
+     *             "test_create_index2": {}
+     *         }
+     *     }
+     * }
+     *
+     * @param aliasName 索引
+     * @return JestResult
+     * @throws IOException
+     */
+    @Override
+    public JestResult getAlias(String aliasName) throws IOException {
+        GetAliases.Builder getAliasBuild = new GetAliases.Builder().addAlias(aliasName);
+        return this.jestClient.execute(getAliasBuild.build());
     }
 
     /**
      * 查找ES字段列
+     *
+     *
+     *
      * @param indexNamePattern indexNamePattern
      * @return list<String>
      * @throws IOException IOException
@@ -131,12 +227,35 @@ public class JestEsClient implements EsClient{
         return indexList;
     }
 
-    // todo 理解
-    private static class FixIndicesBuilder extends Cat.IndicesBuilder {
-        @Override
-        public Cat build() {
-            return super.build();
-        }
+    /**
+     * todo
+     * 创建索引
+     * @param indexName 索引名称
+     * @return boolean
+     * @throws IOException
+     */
+    @Override
+    public void createIndex(String indexName) throws IOException {
+        CreateIndex createIndex = new CreateIndex.Builder(indexName).build();
+        JestResult result = this.jestClient.execute(createIndex);
+        log.info("es 创建索引结果-> {}", result);
+    }
+
+    /**
+     * 删除索引
+     *
+     * Delete http url: http://192.168.137.135:9200/test_create_index
+     * request:
+     *
+     *
+     * @param indexName 索引名称
+     * @throws IOException
+     */
+    @Override
+    public void deleteIndex(String indexName) throws IOException {
+        DeleteIndex deleteIndex = new DeleteIndex.Builder(indexName).build();
+        JestResult result = this.jestClient.execute(deleteIndex);
+        log.info("es 删除索引结果-> {}", result);
     }
 
     /**
@@ -150,7 +269,8 @@ public class JestEsClient implements EsClient{
         Map<String, Object> root = new HashMap<>();
         Map<String, Object> queryString = new HashMap<>();
         Map<String, Object> query = new HashMap<>();
-        root.put("root", queryString);
+//        root.put("root", queryString);
+        root.put("query", queryString);
 
         if (size >= 0) {
             root.put("from", from);
@@ -161,30 +281,12 @@ public class JestEsClient implements EsClient{
         return JSON.toJSONString(root);
     }
 
-    /**
-     * todo
-     * 创建索引
-     * @param indexName 索引名称
-     * @return boolean
-     * @throws IOException
-     */
-    @Override
-    public void createIndex(String indexName) throws IOException {
-        CreateIndex createIndex = new CreateIndex.Builder(indexName).build();
-        JestResult result = this.jestClient.execute(createIndex);
-//        result.get
-    }
-
-    /**
-     * todo
-     * 删除索引
-     * @param indexName 索引名称
-     * @throws IOException
-     */
-    @Override
-    public void deleteIndex(String indexName) throws IOException {
-        DeleteIndex deleteIndex = new DeleteIndex.Builder(indexName).build();
-        this.jestClient.execute(deleteIndex);
+    // todo 理解
+    private static class FixIndicesBuilder extends Cat.IndicesBuilder {
+        @Override
+        public Cat build() {
+            return super.build();
+        }
     }
 
     /**
