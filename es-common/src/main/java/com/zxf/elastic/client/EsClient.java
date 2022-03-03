@@ -1,9 +1,11 @@
 package com.zxf.elastic.client;
 
 import io.searchbox.client.JestResult;
+import io.searchbox.core.SearchResult;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * ES客户端接口类
@@ -66,5 +68,29 @@ public interface EsClient extends Closeable {
      * @throws IOException
      */
     void deleteIndex(String indexName)throws IOException;
+
+    /**
+     * 搜索文档 使用 queryString 的方式
+     * @param indexName index索引名称
+     * @param q 查询条件
+     * @param fields 返回的字段
+     * @param from 起始页
+     * @param size 页数
+     * @return
+     * @throws IOException
+     */
+    SearchResult searchByQs(String indexName, String q, String[] fields, int from, int size)throws IOException;
+
+//    /**
+//     * 搜索文档 使用 match 的方式
+//     * @param indexName index索引名称
+//     * @param match 匹配条件
+//     * @param fields 返回的字段
+//     * @param from 起始页
+//     * @param size 页数
+//     * @return
+//     * @throws IOException
+//     */
+//    SearchResult searchByMatch(String indexName, Map<String, Object> match, String[] fields, int from, int size)throws IOException;
 
 }

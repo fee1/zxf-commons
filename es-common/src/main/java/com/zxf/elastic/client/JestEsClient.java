@@ -11,6 +11,8 @@ import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.JestResult;
 import io.searchbox.client.config.HttpClientConfig;
 import io.searchbox.core.Cat;
+import io.searchbox.core.Search;
+import io.searchbox.core.SearchResult;
 import io.searchbox.indices.CreateIndex;
 import io.searchbox.indices.DeleteIndex;
 import io.searchbox.indices.IndicesExists;
@@ -206,8 +208,22 @@ public class JestEsClient implements EsClient{
 
     /**
      * 查找ES字段列
-     *
-     *
+     * Get http url: http://192.168.137.135:9200/_cat/indices/twitter
+     * response body:
+     * [
+     *     {
+     *         "health": "yellow",
+     *         "status": "open",
+     *         "index": "twitter",
+     *         "uuid": "31D3WIsZROSS6eMNinj-bw",
+     *         "pri": "1",
+     *         "rep": "1",
+     *         "docs.count": "6",
+     *         "docs.deleted": "0",
+     *         "store.size": "12.2kb",
+     *         "pri.store.size": "12.2kb"
+     *     }
+     * ]
      *
      * @param indexNamePattern indexNamePattern
      * @return list<String>
@@ -228,8 +244,16 @@ public class JestEsClient implements EsClient{
     }
 
     /**
-     * todo
      * 创建索引
+     *
+     * Put http url: http://192.168.137.135:9200/test_create_index
+     * response body:
+     * {
+     *     "acknowledged": true,
+     *     "shards_acknowledged": true,
+     *     "index": "test_create_index"
+     * }
+     *
      * @param indexName 索引名称
      * @return boolean
      * @throws IOException
@@ -245,7 +269,7 @@ public class JestEsClient implements EsClient{
      * 删除索引
      *
      * Delete http url: http://192.168.137.135:9200/test_create_index
-     * request:
+     * response body: {"acknowledged":true}
      *
      *
      * @param indexName 索引名称
@@ -259,27 +283,207 @@ public class JestEsClient implements EsClient{
     }
 
     /**
-     * 构建查询ES的json
+     * 搜索文档 使用 queryString 的方式
+     * Post http url: http://192.168.137.135:9200/twitter/_search
+     * request body:
+     * {
+     *     "size": 10,
+     *     "query": {
+     *         "query_string": {
+     *             "query": "age:20"
+     *         }
+     *     },
+     *     "_source": false,
+     *     "from": 0,
+     *     "fields": [
+     *         "*"
+     *     ]
+     * }
+     *
+     * response body:
+     * {
+     *     "took": 6,
+     *     "timed_out": false,
+     *     "_shards": {
+     *         "total": 1,
+     *         "successful": 1,
+     *         "skipped": 0,
+     *         "failed": 0
+     *     },
+     *     "hits": {
+     *         "total": {
+     *             "value": 1,
+     *             "relation": "eq"
+     *         },
+     *         "max_score": 1.0,
+     *         "hits": [
+     *             {
+     *                 "_index": "twitter",
+     *                 "_id": "1",
+     *                 "_score": 1.0,
+     *                 "_source": {},
+     *                 "fields": {
+     *                     "country": [
+     *                         "中国"
+     *                     ],
+     *                     ...
+     *                 }
+     *             }
+     *         ]
+     *     }
+     * }
+     *
+     * @param indexName index索引名称
+     * @param q 查询条件
+     * @param fields 返回的字段
+     * @param from 起始页
+     * @param size 页数
+     * @return
+     * @throws IOException
+     */
+    @Override
+    public SearchResult searchByQs(String indexName, String q, String[] fields, int from, int size) throws IOException {
+        String jsonBody = this.buildQueryStringBody(q, fields, from, size);
+        return this.search(indexName, jsonBody);
+    }
+
+//    /**
+//     * 搜索文档使用match的方式
+//     * Post http url: http://192.168.137.135:9200/twitter/_search
+//     * request body:
+//     * {
+//     *     "size": 10,
+//     *     "query": {
+//     *         "match": {
+//     *             "age": 20
+//     *         }
+//     *     },
+//     *     "_source": false,
+//     *     "from": 0,
+//     *     "fields": [
+//     *         "*"
+//     *     ]
+//     * }
+//     *
+//     * response body:
+//     * {
+//     *     "took": 1,
+//     *     "timed_out": false,
+//     *     "_shards": {
+//     *         "total": 1,
+//     *         "successful": 1,
+//     *         "skipped": 0,
+//     *         "failed": 0
+//     *     },
+//     *     "hits": {
+//     *         "total": {
+//     *             "value": 1,
+//     *             "relation": "eq"
+//     *         },
+//     *         "max_score": 1.0,
+//     *         "hits": [
+//     *             {
+//     *                 "_index": "twitter",
+//     *                 "_id": "1",
+//     *                 "_score": 1.0,
+//     *                 "fields": {
+//     *                     "country": [
+//     *                         "中国"
+//     *                     ],
+//     *                     ...
+//     *                 }
+//     *             }
+//     *         ]
+//     *     }
+//     * }
+//     *
+//     * @param indexName index索引名称
+//     * @param match 匹配条件
+//     * @param fields 返回的字段
+//     * @param from 起始页
+//     * @param size 页数
+//     * @return
+//     * @throws IOException
+//     */
+//    @Override
+//    public SearchResult searchByMatch(String indexName, Map<String, Object> match, String[] fields, int from, int size) throws IOException {
+//        String jsonBody = this.buildQueryMatchBody(match, fields, from, size);
+//        return this.search(indexName, jsonBody);
+//    }
+
+    /**
+     * 搜索文档 使用queryString 的方式
+     *
+     * @param indexName index索引名称
+     * @param jsonBody 查询jsonString
+     * @return JestResult
+     * @throws IOException
+     */
+    private SearchResult search(String indexName, String jsonBody) throws IOException {
+        Search.Builder search = new Search.Builder(jsonBody)
+                .addIndex(indexName);
+        return this.jestClient.execute(search.build());
+    }
+
+    /**
+     * 构建查询ES的 DSL - query string
+     *
+     * 我们可以使用 fields 来指定返回的字段，而不用 _source。这样做更加高效。
+     *
      * @param q 查询语句
+     * @param fields 返回字段
      * @param from 起始位置
      * @param size 页数
      * @return string
      */
-    private String buildQueryString(String q, int from, int size){
+    private String buildQueryStringBody(String q, String[] fields, int from, int size){
         Map<String, Object> root = new HashMap<>();
-        Map<String, Object> queryString = new HashMap<>();
         Map<String, Object> query = new HashMap<>();
-//        root.put("root", queryString);
+        Map<String, Object> queryString = new HashMap<>();
         root.put("query", queryString);
+        queryString.put("query_string", query);
+        query.put("query", q);
+        root.put("_source", false);
+        if (fields == null || fields.length == 0) {
+            fields = new String[]{"*"};
+        }
+        root.put("fields", fields);
 
         if (size >= 0) {
             root.put("from", from);
             root.put("size", size);
         }
-        queryString.put("query_string", query);
-        query.put("query", q);
         return JSON.toJSONString(root);
     }
+
+//    /**
+//     * 构建es 查询使用的 macth json
+//     *
+//     * 我们可以使用 fields 来指定返回的字段，而不用 _source。这样做更加高效。
+//     *
+//     * @param match 匹配条件
+//     * @param fields 返回字段
+//     * @param from 起始位置
+//     * @param size 页数
+//     * @return
+//     */
+//    private String buildQueryMatchBody(Map<String, Object> match, String[] fields, int from, int size){
+//        Map<String, Object> root = new HashMap<>();
+//        Map<String, Object> query = new HashMap<>();
+//        root.put("query", query);
+//        query.put("match", match);
+//        root.put("_source", false);
+//        if (fields == null || fields.length == 0) {
+//            fields = new String[]{"*"};
+//        }
+//        root.put("fields", fields);
+//
+//        if (size >= 0) {
+//            root.put("from", from);
+//            root.put("size", size);
+//        }
+//        return JSON.toJSONString(root);
+//    }
 
     // todo 理解
     private static class FixIndicesBuilder extends Cat.IndicesBuilder {
