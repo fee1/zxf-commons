@@ -83,13 +83,13 @@ public class JestEsClientTest extends BaseTest {
         Assert.assertTrue("没有调用成功", result.isSucceeded());
     }
 
-    @Test
-    @SneakyThrows
-    public void searchByMatch(){
-        Map<String, Object> match = new HashMap<>();
-        match.put("age", 20);
-        SearchResult result = this.jestEsClient.searchByMatch("twitter", match, new String[]{"*"}, 0, 10);
-        Assert.assertTrue("没有调用成功", result.isSucceeded());
-    }
+//    @Test
+//    @SneakyThrows
+//    public void searchByMatch(){
+//        Map<String, Object> match = new HashMap<>();
+//        match.put("age", 20);
+//        SearchResult result = this.jestEsClient.searchByMatch("twitter", match, new String[]{"*"}, 0, 10);
+//        Assert.assertTrue("没有调用成功", result.isSucceeded());
+//    }
 
 }
