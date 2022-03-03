@@ -343,8 +343,8 @@ public class JestEsClient implements EsClient{
      */
     @Override
     public SearchResult searchByQs(String indexName, String q, String[] fields, int from, int size) throws IOException {
-        String jsonBody = this.buildQueryStringBody(q, fields, from, size);
-        return this.search(indexName, jsonBody);
+        String queryString = this.buildQueryString(q, fields, from, size);
+        return this.search(indexName, queryString);
     }
 
 //    /**
@@ -436,7 +436,7 @@ public class JestEsClient implements EsClient{
      * @param size 页数
      * @return string
      */
-    private String buildQueryStringBody(String q, String[] fields, int from, int size){
+    private String buildQueryString(String q, String[] fields, int from, int size){
         Map<String, Object> root = new HashMap<>();
         Map<String, Object> query = new HashMap<>();
         Map<String, Object> queryString = new HashMap<>();
