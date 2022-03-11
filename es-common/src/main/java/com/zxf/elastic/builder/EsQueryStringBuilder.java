@@ -12,6 +12,13 @@ import java.util.stream.Collectors;
  * "type": "keyword"  不分词
  * "type": "text"     分词
  *
+ * mapping 中是一个 multi-field 项。它既是 text 也是 keyword 类型。
+ * 对于一个 keyword 类型的项来说，这个项里面的所有字符都被当做一个字符串。
+ * 它们在建立文档时，不需要进行 index。
+ *
+ * keyword 字段用于精确搜索，aggregation 和排序（sorting）
+ *
+ *
  * @author zxf
  */
 public class EsQueryStringBuilder {
