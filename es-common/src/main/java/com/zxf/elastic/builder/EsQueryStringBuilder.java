@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 /**
  * 构建Query string query
+ *
+ * "type": "keyword"  不分词
+ * "type": "text"     分词
+ *
  * @author zxf
  */
 public class EsQueryStringBuilder {
