@@ -20,6 +20,7 @@ import io.searchbox.indices.aliases.AddAliasMapping;
 import io.searchbox.indices.aliases.AliasExists;
 import io.searchbox.indices.aliases.GetAliases;
 import io.searchbox.indices.aliases.ModifyAliases;
+import io.searchbox.params.Parameters;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 
@@ -450,8 +451,8 @@ public class JestEsClient implements EsClient{
         root.put("fields", fields);
 
         if (size >= 0) {
-            root.put("from", from);
-            root.put("size", size);
+            root.put(Parameters.FROM, from);
+            root.put(Parameters.SIZE, size);
         }
         return JSON.toJSONString(root);
     }
