@@ -1,4 +1,6 @@
 cache:
+#  default:
+#    type: redis
   auto:
     config:
       enable: true

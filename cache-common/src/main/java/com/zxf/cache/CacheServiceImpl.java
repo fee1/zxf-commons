@@ -14,7 +14,7 @@ public class CacheServiceImpl implements CacheService{
 
     private Map<String, CacheFactory> factoryMap = new HashMap<>();
 
-    @Value("${cache.type:redis}")
+    @Value("${cache.default.type:redis}")
     private String defaultCacheType;
 
     public CacheServiceImpl(CacheFactory[] cacheFactories){
