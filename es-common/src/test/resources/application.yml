@@ -4,3 +4,4 @@ elastic:
       enable: true
   jest:
     uris: http://192.168.137.135:9200
+

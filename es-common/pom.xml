@@ -25,6 +25,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
@@ -34,7 +39,6 @@
             <artifactId>spring-context</artifactId>
             <scope>provided</scope>
         </dependency>
-
 
 
         <!--es官方工具，将sql装换为es-sql-->
@@ -77,6 +81,11 @@
                     <groupId>commons-io</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zxf</groupId>
+            <artifactId>common</artifactId>
         </dependency>
 
         <dependency>
