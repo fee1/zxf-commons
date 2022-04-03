@@ -48,9 +48,11 @@ public class EsSearchService {
         }catch (IOException e){
             throw new SearchException("查询异常", e);
         }
+
         if (!result.isSucceeded() || result.getResponseCode() != 200){
             throw new SearchException("查询异常，response code = "+result.getResponseCode());
         }
+
         String jsonString = result.getJsonString();
         JSONObject jsonObject = JSON.parseObject(jsonString);
         JSONObject hits = jsonObject.getJSONObject("hits");
