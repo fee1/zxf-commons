@@ -23,6 +23,7 @@ public class ObjectReflectUtil {
         Class<?> aClass = o.getClass();
         //获取所有字段，包括：私有、受保护、默认、公有
         Field field = aClass.getDeclaredField(fieldName);
+        field.setAccessible(true);
         return field.get(o);
     }
 
@@ -32,7 +33,7 @@ public class ObjectReflectUtil {
      * @param o         对象
      * @param fieldName 属性名
      */
-    public static void setSimpleFieldValue(Object o, String fieldName, Object fieldValue) throws Exception {
+    public static void setFieldValue(Object o, String fieldName, Object fieldValue) throws Exception {
         Class<?> aClass = o.getClass();
         Field field = aClass.getDeclaredField(fieldName);
         //暴力反射，解除私有限定,禁用安全检查提升性能
