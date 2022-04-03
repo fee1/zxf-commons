@@ -58,6 +58,8 @@ public class EsSearchService {
         JSONArray hitsHits = hits.getJSONArray("hits");
         Hit hit  = hitsHits.getObject(0, Hit.class);
         JSONObject fields = hit.getFields();
+        //都是设置的数组值
+//        R r1 = fields.toJavaObject(rClass);
         R r = null;
         try {
             r = rClass.getConstructor().newInstance();
