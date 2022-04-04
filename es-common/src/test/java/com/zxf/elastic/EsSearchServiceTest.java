@@ -23,9 +23,17 @@ public class EsSearchServiceTest extends BaseTest {
     public void testSearchOne(){
         String q = EsQueryStringBuilder.create().createCriteria()
                 .andEq("age", 20).formatQuery();
-        Search search = new Search("twitter", q, new String[]{"*"}, 0, 10);
+        Search search = new Search("twitter", q, new String[]{"*"}, 0, 10, null);
         User user = this.esSearchService.searchOne(search, User.class);
         System.out.println(JSONObject.toJSONString(user));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testSearch(){
+        String q = EsQueryStringBuilder.create().createCriteria()
+                .andEq("age", 20).formatQuery();
+
     }
 
 }

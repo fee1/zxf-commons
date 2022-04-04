@@ -1,8 +1,11 @@
 package com.zxf.elastic.model;
 
+import io.searchbox.core.search.sort.Sort;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * @author zhuxiaofeng
@@ -37,5 +40,10 @@ public class Search {
      * 返回条数
      */
     int size;
+
+    /**
+     * 排序
+     */
+    List<Sort> sortList;
 
 }

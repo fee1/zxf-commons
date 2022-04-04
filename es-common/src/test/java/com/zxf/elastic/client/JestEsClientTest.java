@@ -9,9 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -79,7 +77,7 @@ public class JestEsClientTest extends BaseTest {
     public void searchByQs(){
         String q = EsQueryStringBuilder.create().createCriteria()
                 .andEq("age", 20).formatQuery();
-        SearchResult result = this.jestEsClient.searchByQs("twitter", q, new String[]{"*"}, 0, 10);
+        SearchResult result = this.jestEsClient.searchFields("twitter", q, new String[]{"*"}, 0, 10);
         Assert.assertTrue("没有调用成功", result.isSucceeded());
     }
 

@@ -5,7 +5,6 @@ import io.searchbox.core.SearchResult;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * ES客户端接口类
@@ -79,7 +78,19 @@ public interface EsClient extends Closeable {
      * @return
      * @throws IOException
      */
-    SearchResult searchByQs(String indexName, String q, String[] fields, int from, int size)throws IOException;
+    SearchResult searchFields(String indexName, String q, String[] fields, int from, int size)throws IOException;
+
+    /**
+     *
+     * @param indexName
+     * @param q
+     * @param fields
+     * @param from
+     * @param size
+     * @return
+     * @throws IOException
+     */
+    SearchResult searchSource(String indexName, String q, String[] fields, int from, int size)throws IOException;
 
 //    /**
 //     * 搜索文档 使用 match 的方式

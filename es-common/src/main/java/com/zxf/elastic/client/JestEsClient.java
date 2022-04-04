@@ -52,47 +52,48 @@ public class JestEsClient implements EsClient{
      */
     private final JestEsProperties jestEsProperties;
 
+    private static final Integer SUCCESS_CODE = 200;
+
     private static final String DEFAULT_DOC_TYPE = "_doc";
 
 
     public JestEsClient(ObjectProvider<Gson> gsonObjectProvider, JestEsProperties jestEsProperties){
-        this.gson = gsonObjectProvider.getObject();
+        gson = gsonObjectProvider.getObject();
         this.jestEsProperties = jestEsProperties;
-        this.buildClient();
+        buildClient();
     }
 
     public JestEsClient(JestEsProperties jestEsProperties){
         this.jestEsProperties = jestEsProperties;
-        this.gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-        this.buildClient();
+        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        buildClient();
     }
 
     /**
      * 建立es连接
      */
     protected final void buildClient(){
-        HttpClientConfig clientConfig = new HttpClientConfig.Builder(this.jestEsProperties.getUris())
+        HttpClientConfig clientConfig = new HttpClientConfig.Builder(jestEsProperties.getUris())
                 .discoveryEnabled(false)
-                .gson(this.gson)
-                .multiThreaded(this.jestEsProperties.isMultiThreaded())
-                .connTimeout((int)this.jestEsProperties.getConnectionTimeout().toMillis())
-                .readTimeout((int)this.jestEsProperties.getReadTimeout().toMillis())
+                .gson(gson)
+                .multiThreaded(jestEsProperties.isMultiThreaded())
+                .connTimeout((int)jestEsProperties.getConnectionTimeout().toMillis())
+                .readTimeout((int)jestEsProperties.getReadTimeout().toMillis())
                 .build();
 
         JestClientFactory factory = new JestClientFactory();
         factory.setHttpClientConfig(clientConfig);
-        this.jestClient = factory.getObject();
+        jestClient = factory.getObject();
     }
 
     /**
      * 是否存在索引
      * @param indexName 索引名称
      * @return boolean
-     * @throws IOException
      */
     @Override
     public boolean existsIndex(String indexName) throws IOException {
-        return this.existsIndex(indexName, true);
+        return existsIndex(indexName, true);
     }
 
     /**
@@ -103,18 +104,17 @@ public class JestEsClient implements EsClient{
      * @param indexName 索引名称
      * @param includeAlias 别名
      * @return boolean
-     * @throws IOException
      */
     @Override
     public boolean existsIndex(String indexName, boolean includeAlias) throws IOException {
         boolean indexNameExists = false;
         IndicesExists.Builder builder = new IndicesExists.Builder(indexName);
-        JestResult result = this.jestClient.execute(builder.build());
+        JestResult result = jestClient.execute(builder.build());
         int responseCode = result.getResponseCode();
-        if (responseCode == 200){
+        if (responseCode == SUCCESS_CODE.intValue()){
             indexNameExists = true;
         }
-        boolean aliasNameExists = this.existsAlias(indexName);
+        boolean aliasNameExists = existsAlias(indexName);
         return indexNameExists || aliasNameExists;
     }
 
@@ -124,13 +124,11 @@ public class JestEsClient implements EsClient{
      * response body: responseCode = 200
      *
      * @param aliasName 别名
-     * @return
-     * @throws IOException
      */
     @Override
     public boolean existsAlias(String aliasName) throws IOException {
         AliasExists.Builder builder = new AliasExists.Builder().alias(aliasName);
-        JestResult jestResult = this.jestClient.execute(builder.build());
+        JestResult jestResult = jestClient.execute(builder.build());
         return jestResult.getResponseCode() == 200;
     }
 
@@ -158,13 +156,12 @@ public class JestEsClient implements EsClient{
      * @param indexName 索引名称
      * @param aliasName 别名
      * @return boolean
-     * @throws IOException
      */
     @Override
     public boolean addAlias(String indexName, String aliasName) throws IOException {
         AddAliasMapping.Builder addAliasBuild = new AddAliasMapping.Builder(indexName, aliasName);
         ModifyAliases.Builder builder = new ModifyAliases.Builder(addAliasBuild.build());
-        JestResult result = this.jestClient.execute(builder.build());
+        JestResult result = jestClient.execute(builder.build());
         return result.isSucceeded();
     }
 
@@ -199,12 +196,11 @@ public class JestEsClient implements EsClient{
      *
      * @param aliasName 索引
      * @return JestResult
-     * @throws IOException
      */
     @Override
     public JestResult getAlias(String aliasName) throws IOException {
         GetAliases.Builder getAliasBuild = new GetAliases.Builder().addAlias(aliasName);
-        return this.jestClient.execute(getAliasBuild.build());
+        return jestClient.execute(getAliasBuild.build());
     }
 
     /**
@@ -232,10 +228,10 @@ public class JestEsClient implements EsClient{
      */
     public List<String> findIndexList(String indexNamePattern) throws IOException{
         Cat action = new FixIndicesBuilder().addIndex(indexNamePattern).build();
-        JestResult jestResult = this.jestClient.execute(action);
+        JestResult jestResult = jestClient.execute(action);
 
         if (!jestResult.isSucceeded()){
-            return new ArrayList<String>(0);
+            return new ArrayList<>(0);
         }
 
         JsonArray jsonArray = jestResult.getJsonObject().getAsJsonArray("result");
@@ -256,13 +252,11 @@ public class JestEsClient implements EsClient{
      * }
      *
      * @param indexName 索引名称
-     * @return boolean
-     * @throws IOException
      */
     @Override
     public void createIndex(String indexName) throws IOException {
         CreateIndex createIndex = new CreateIndex.Builder(indexName).build();
-        JestResult result = this.jestClient.execute(createIndex);
+        JestResult result = jestClient.execute(createIndex);
         log.info("es 创建索引结果-> {}", result);
     }
 
@@ -274,17 +268,16 @@ public class JestEsClient implements EsClient{
      *
      *
      * @param indexName 索引名称
-     * @throws IOException
      */
     @Override
     public void deleteIndex(String indexName) throws IOException {
         DeleteIndex deleteIndex = new DeleteIndex.Builder(indexName).build();
-        JestResult result = this.jestClient.execute(deleteIndex);
+        JestResult result = jestClient.execute(deleteIndex);
         log.info("es 删除索引结果-> {}", result);
     }
 
     /**
-     * 搜索文档 使用 queryString 的方式
+     * 搜索文档 使用 queryString 的方式，不返回_source
      * Post http url: http://192.168.137.135:9200/twitter/_search
      * request body:
      * {
@@ -339,13 +332,70 @@ public class JestEsClient implements EsClient{
      * @param fields 返回的字段
      * @param from 起始页
      * @param size 页数
-     * @return
-     * @throws IOException
      */
     @Override
-    public SearchResult searchByQs(String indexName, String q, String[] fields, int from, int size) throws IOException {
-        String queryString = this.buildQueryString(q, fields, from, size);
-        return this.search(indexName, queryString);
+    public SearchResult searchFields(String indexName, String q, String[] fields, int from, int size) throws IOException {
+        String queryString = buildQueryString(q, fields, from, size, false);
+        return search(indexName, queryString);
+    }
+
+    /**
+     * 搜索文档 使用 queryString 的方式，返回_source
+     * Post http url: http://192.168.137.135:9200/twitter/_search
+     * request body:
+     * {
+     *     "size": 10,
+     *     "query": {
+     *         "query_string": {
+     *             "query": "age:20"
+     *         }
+     *     },
+     *     "_source": false,
+     *     "from": 0,
+     *     "fields": [
+     *         "*"
+     *     ]
+     * }
+     *
+     * response body:
+     * {
+     *     "took": 1,
+     *     "timed_out": false,
+     *     "_shards": {
+     *         "total": 1,
+     *         "successful": 1,
+     *         "skipped": 0,
+     *         "failed": 0
+     *     },
+     *     "hits": {
+     *         "total": {
+     *             "value": 1,
+     *             "relation": "eq"
+     *         },
+     *         "max_score": 1.0,
+     *         "hits": [
+     *             {
+     *                 "_index": "twitter",
+     *                 "_id": "1",
+     *                 "_score": 1.0,
+     *                 "_source": {
+     *                     "age": 20
+     *                 }
+     *             }
+     *         ]
+     *     }
+     * }
+     *
+     * @param indexName index索引名称
+     * @param q 查询条件
+     * @param fields 返回的字段
+     * @param from 起始页
+     * @param size 页数
+     */
+    @Override
+    public SearchResult searchSource(String indexName, String q, String[] fields, int from, int size) throws IOException {
+        String queryString = buildQueryString(q, fields, from, size, true);
+        return search(indexName, queryString);
     }
 
 //    /**
@@ -418,12 +468,11 @@ public class JestEsClient implements EsClient{
      * @param indexName index索引名称
      * @param jsonBody 查询jsonString
      * @return JestResult
-     * @throws IOException
      */
     private SearchResult search(String indexName, String jsonBody) throws IOException {
         Search.Builder search = new Search.Builder(jsonBody)
                 .addIndex(indexName);
-        return this.jestClient.execute(search.build());
+        return jestClient.execute(search.build());
     }
 
     /**
@@ -435,20 +484,26 @@ public class JestEsClient implements EsClient{
      * @param fields 返回字段
      * @param from 起始位置
      * @param size 页数
+     * @param sourceEnable 是否使用_source
      * @return string
      */
-    private String buildQueryString(String q, String[] fields, int from, int size){
-        Map<String, Object> root = new HashMap<>();
-        Map<String, Object> query = new HashMap<>();
-        Map<String, Object> queryString = new HashMap<>();
+    private String buildQueryString(String q, String[] fields, int from, int size, boolean sourceEnable){
+        Map<String, Object> root = new HashMap<>(16);
+        Map<String, Object> query = new HashMap<>(16);
+        Map<String, Object> queryString = new HashMap<>(16);
         root.put("query", queryString);
         queryString.put("query_string", query);
         query.put("query", q);
-        root.put("_source", false);
-        if (fields == null || fields.length == 0) {
-            fields = new String[]{"*"};
+
+        if (sourceEnable) {
+            root.put("_source", fields);
+        } else {
+            root.put("_source", sourceEnable);
+            if (fields == null || fields.length == 0) {
+                fields = new String[]{"*"};
+            }
+            root.put("fields", fields);
         }
-        root.put("fields", fields);
 
         if (size >= 0) {
             root.put(Parameters.FROM, from);
@@ -496,16 +551,15 @@ public class JestEsClient implements EsClient{
 
     /**
      * 关闭资源
-     * @throws IOException
      */
     @Override
     public void close() throws IOException {
         try {
-            if (this.jestClient != null) {
-                this.jestClient.close();
+            if (jestClient != null) {
+                jestClient.close();
             }
         } catch (IOException e) {
-            log.error("es客户端连接关闭失败，cause："+e.getMessage());
+            log.error("es客户端连接关闭失败，cause：{}", e.getMessage());
         }
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.util.ObjectUtils;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -34,25 +35,14 @@ public class EsSearchService {
     }
 
     /**
-     * 查询业务
+     * 查询 _score 最高的一个结果
      * @param search 查询类
      * @param rClass 返回类型
      * @param <R> 返回类型
      * @return R
      */
     public <R> R searchOne(Search search, Class<R> rClass){
-        SearchResult result = null;
-        try {
-            result = this.esClient.searchByQs(search.getIndexName(), search.getQ(),
-                    search.getFields(), search.getFrom(), search.getSize());
-        }catch (IOException e){
-            throw new SearchException("查询异常", e);
-        }
-
-        if (!result.isSucceeded() || result.getResponseCode() != 200){
-            throw new SearchException("查询异常，response code = "+result.getResponseCode());
-        }
-
+        SearchResult result = searchES(search);
         String jsonString = result.getJsonString();
         JSONObject jsonObject = JSON.parseObject(jsonString);
         JSONObject hits = jsonObject.getJSONObject("hits");
@@ -82,6 +72,32 @@ public class EsSearchService {
             }
         }
         return r;
+    }
+
+    /**
+     * 返回匹配的结果, 默认排序按照 _score 分数从高到底排序
+     * @param search 查询类
+     * @param rClass 返回的类型
+     * @param <R> 返回的类型
+     * @return 返回list
+     */
+    public <R> List<R> search(Search search, Class<R> rClass){
+        SearchResult result = searchES(search);
+        return null;
+    }
+
+    /**
+     * 查询es
+     * @param search 查询类
+     * @return SearchResult
+     */
+    private SearchResult searchES(Search search){
+        try {
+            return this.esClient.searchFields(search.getIndexName(), search.getQ(),
+                    search.getFields(), search.getFrom(), search.getSize());
+        }catch (IOException e){
+            throw new SearchException("查询异常", e);
+        }
     }
 
     /**
