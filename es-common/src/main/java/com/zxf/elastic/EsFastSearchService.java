@@ -26,11 +26,11 @@ import java.util.Set;
  * @date 2022/2/18
  */
 @Slf4j
-public class EsSearchService {
+public class EsFastSearchService {
 
     private JestEsClient esClient;
 
-    public EsSearchService(JestEsClient esClient){
+    public EsFastSearchService(JestEsClient esClient){
         this.esClient = esClient;
     }
 
@@ -83,6 +83,7 @@ public class EsSearchService {
      */
     public <R> List<R> search(Search search, Class<R> rClass){
         SearchResult result = searchES(search);
+
         return null;
     }
 

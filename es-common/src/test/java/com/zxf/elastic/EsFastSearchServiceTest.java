@@ -9,14 +9,16 @@ import lombok.SneakyThrows;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * @author zhuxiaofeng
  * @date 2022/3/3
  */
-public class EsSearchServiceTest extends BaseTest {
+public class EsFastSearchServiceTest extends BaseTest {
 
     @Autowired
-    private EsSearchService esSearchService;
+    private EsFastSearchService esFastSearchService;
 
     @Test
     @SneakyThrows
@@ -24,7 +26,7 @@ public class EsSearchServiceTest extends BaseTest {
         String q = EsQueryStringBuilder.create().createCriteria()
                 .andEq("age", 20).formatQuery();
         Search search = new Search("twitter", q, new String[]{"*"}, 0, 10, null);
-        User user = this.esSearchService.searchOne(search, User.class);
+        User user = this.esFastSearchService.searchOne(search, User.class);
         System.out.println(JSONObject.toJSONString(user));
     }
 
@@ -33,7 +35,9 @@ public class EsSearchServiceTest extends BaseTest {
     public void testSearch(){
         String q = EsQueryStringBuilder.create().createCriteria()
                 .andEq("age", 20).formatQuery();
-
+        Search search = new Search("twitter", q, new String[]{"*"}, 0, 10, null);
+        List<User> users = esFastSearchService.search(search, User.class);
+        System.out.println(JSONObject.toJSONString(users));
     }
 
 }
