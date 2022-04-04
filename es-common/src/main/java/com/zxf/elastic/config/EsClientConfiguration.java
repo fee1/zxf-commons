@@ -2,6 +2,7 @@ package com.zxf.elastic.config;
 
 import com.google.gson.Gson;
 import com.zxf.elastic.EsFastSearchService;
+import com.zxf.elastic.EsSearchService;
 import com.zxf.elastic.client.JestEsClient;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -10,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * es 引入配置类
+ *
  * @author zhuxiaofeng
  * @date 2022/2/18
  */
@@ -28,8 +31,13 @@ public class EsClientConfiguration {
     }
 
     @Bean
-    public EsFastSearchService esSearchService(JestEsClient esClient){
+    public EsFastSearchService esFastSearchService(JestEsClient esClient){
         return new EsFastSearchService(esClient);
+    }
+
+    @Bean
+    public EsSearchService esSearchService(JestEsClient esClient){
+        return new EsSearchService(esClient);
     }
 
 }
