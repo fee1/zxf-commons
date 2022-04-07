@@ -2,6 +2,7 @@ package com.zxf.elastic;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zxf.elastic.builder.EsQueryStringBuilder;
+import com.zxf.elastic.model.Page;
 import com.zxf.elastic.model.Search;
 import com.zxf.elastic.model.User;
 import com.zxf.test.BaseTest;
@@ -34,9 +35,9 @@ public class EsFastSearchServiceTest extends BaseTest {
     @SneakyThrows
     public void testSearch(){
         String q = EsQueryStringBuilder.create().createCriteria()
-                .andEq("age", 20).formatQuery();
+                .andEq("country", "中国").formatQuery();
         Search search = new Search("twitter", q, new String[]{"*"}, 0, 10, null);
-        List<User> users = esFastSearchService.search(search, User.class);
+        Page<User> users = esFastSearchService.search(search, User.class);
         System.out.println(JSONObject.toJSONString(users));
     }
 

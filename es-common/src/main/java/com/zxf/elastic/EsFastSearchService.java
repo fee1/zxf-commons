@@ -8,6 +8,7 @@ import com.zxf.common.utils.ObjectReflectUtil;
 import com.zxf.elastic.client.JestEsClient;
 import com.zxf.elastic.exception.SearchException;
 import com.zxf.elastic.model.Hit;
+import com.zxf.elastic.model.Page;
 import com.zxf.elastic.model.Search;
 import io.searchbox.core.SearchResult;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -81,11 +83,53 @@ public class EsFastSearchService {
      * @param <R> 返回的类型
      * @return 返回list
      */
-    public <R> List<R> search(Search search, Class<R> rClass){
+    public <R> Page<R> search(Search search, Class<R> rClass){
         SearchResult result = searchES(search);
-
-        return null;
+        String jsonString = result.getJsonString();
+        JSONObject jsonObject = JSON.parseObject(jsonString);
+        JSONObject hits = jsonObject.getJSONObject("hits");
+        JSONArray hitsHits = hits.getJSONArray("hits");
+        List<R> rList = new ArrayList<>();
+        for (Object hitsHit : hitsHits) {
+            JSONObject hitJson = (JSONObject) hitsHit;
+            Hit hit = hitJson.toJavaObject(Hit.class);
+            JSONObject fields = hit.getFields();
+            R r = null;
+            try {
+                r = rClass.getConstructor().newInstance();
+            } catch (Exception e){
+                throw new SearchException("实例化异常", e);
+            }
+            Set<Map.Entry<String, Object>> entries = fields.entrySet();
+            for (Map.Entry<String, Object> entry : entries) {
+                String key = entry.getKey();
+                String[] fieldNames = key.split("\\.");
+                try {
+                    Field declaredField = rClass.getDeclaredField(fieldNames[0]);
+                    JSONArray esField = (JSONArray) entry.getValue();
+                    setFieldValue(r, fieldNames, declaredField, esField.get(0));
+                } catch (NoSuchFieldException e) {
+                    log.error("没有这个字段: {}", e.getMessage());
+                } catch (Exception e) {
+                    log.error("字段赋值异常，{}", e.getMessage() + ":" + e.getCause());
+                }
+            }
+            rList.add(r);
+        }
+        Page<R> rPage = new Page<>();
+        rPage.setData(rList);
+        rPage.setFrom(search.getFrom());
+        rPage.setSize(search.getSize());
+        //总数
+        JSONObject total = hits.getJSONObject("total");
+        rPage.setTotal(total.getInteger("value"));
+        rPage.setTotalPage();
+        return rPage;
     }
+
+//    private JSONObject processResult(){
+//
+//    }
 
     /**
      * 查询es
@@ -94,7 +138,7 @@ public class EsFastSearchService {
      */
     private SearchResult searchES(Search search){
         try {
-            return this.esClient.searchFields(search.getIndexName(), search.getQ(),
+            return esClient.searchFields(search.getIndexName(), search.getQ(),
                     search.getFields(), search.getFrom(), search.getSize());
         }catch (IOException e){
             throw new SearchException("查询异常", e);
