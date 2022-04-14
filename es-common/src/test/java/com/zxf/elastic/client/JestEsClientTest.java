@@ -2,6 +2,7 @@ package com.zxf.elastic.client;
 
 
 import com.zxf.elastic.builder.EsQueryStringBuilder;
+import com.zxf.elastic.model.SearchModel;
 import com.zxf.test.BaseTest;
 import io.searchbox.core.SearchResult;
 import lombok.SneakyThrows;
@@ -77,7 +78,8 @@ public class JestEsClientTest extends BaseTest {
     public void searchByQs(){
         String q = EsQueryStringBuilder.create().createCriteria()
                 .andEq("age", 20).formatQuery();
-        SearchResult result = this.jestEsClient.searchFields("twitter", q, new String[]{"*"}, 0, 10);
+        SearchModel searchModel = new SearchModel("twitter", q, new String[]{"*"}, 0, 10, null);
+        SearchResult result = this.jestEsClient.searchFields(searchModel);
         Assert.assertTrue("没有调用成功", result.isSucceeded());
     }
 

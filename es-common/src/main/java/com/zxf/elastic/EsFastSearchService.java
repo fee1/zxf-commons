@@ -9,7 +9,7 @@ import com.zxf.elastic.client.JestEsClient;
 import com.zxf.elastic.exception.SearchException;
 import com.zxf.elastic.model.Hit;
 import com.zxf.elastic.model.Page;
-import com.zxf.elastic.model.Search;
+import com.zxf.elastic.model.SearchModel;
 import io.searchbox.core.SearchResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ObjectUtils;
@@ -43,7 +43,7 @@ public class EsFastSearchService {
      * @param <R> 返回类型
      * @return R
      */
-    public <R> R searchOne(Search search, Class<R> rClass){
+    public <R> R searchOne(SearchModel search, Class<R> rClass){
         SearchResult result = searchES(search);
         String jsonString = result.getJsonString();
         JSONObject jsonObject = JSON.parseObject(jsonString);
@@ -83,7 +83,7 @@ public class EsFastSearchService {
      * @param <R> 返回的类型
      * @return 返回list
      */
-    public <R> Page<R> search(Search search, Class<R> rClass){
+    public <R> Page<R> search(SearchModel search, Class<R> rClass){
         SearchResult result = searchES(search);
         String jsonString = result.getJsonString();
         JSONObject jsonObject = JSON.parseObject(jsonString);
@@ -136,10 +136,9 @@ public class EsFastSearchService {
      * @param search 查询类
      * @return SearchResult
      */
-    private SearchResult searchES(Search search){
+    private SearchResult searchES(SearchModel searchModel){
         try {
-            return esClient.searchFields(search.getIndexName(), search.getQ(),
-                    search.getFields(), search.getFrom(), search.getSize());
+            return esClient.searchFields(searchModel);
         }catch (IOException e){
             throw new SearchException("查询异常", e);
         }

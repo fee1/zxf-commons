@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Search {
+public class SearchModel {
 
     /**
      * 索引名称

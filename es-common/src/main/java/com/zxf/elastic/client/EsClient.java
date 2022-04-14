@@ -1,5 +1,6 @@
 package com.zxf.elastic.client;
 
+import com.zxf.elastic.model.SearchModel;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.SearchResult;
 
@@ -70,27 +71,19 @@ public interface EsClient extends Closeable {
 
     /**
      * 搜索文档 使用 queryString 的方式
-     * @param indexName index索引名称
-     * @param q 查询条件
-     * @param fields 返回的字段
-     * @param from 起始页
-     * @param size 页数
+     * @param searchModel 查询对象
      * @return
      * @throws IOException
      */
-    SearchResult searchFields(String indexName, String q, String[] fields, int from, int size)throws IOException;
+    SearchResult searchFields(SearchModel searchModel)throws IOException;
 
     /**
      *
-     * @param indexName
-     * @param q
-     * @param fields
-     * @param from
-     * @param size
+     * @param searchModel 查询参数
      * @return
      * @throws IOException
      */
-    SearchResult searchSource(String indexName, String q, String[] fields, int from, int size)throws IOException;
+    SearchResult searchSource(SearchModel searchModel)throws IOException;
 
 //    /**
 //     * 搜索文档 使用 match 的方式

@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.zxf.elastic.config.JestEsProperties;
+import com.zxf.elastic.model.SearchModel;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.JestResult;
@@ -327,16 +328,12 @@ public class JestEsClient implements EsClient{
      *     }
      * }
      *
-     * @param indexName index索引名称
-     * @param q 查询条件
-     * @param fields 返回的字段
-     * @param from 起始页
-     * @param size 页数
+     * @param searchModel 查询参数
      */
     @Override
-    public SearchResult searchFields(String indexName, String q, String[] fields, int from, int size) throws IOException {
-        String queryString = buildQueryString(q, fields, from, size, false);
-        return search(indexName, queryString);
+    public SearchResult searchFields(SearchModel searchModel) throws IOException {
+        String queryString = buildQueryString(searchModel, false);
+        return search(searchModel.getIndexName(), queryString);
     }
 
     /**
@@ -386,16 +383,12 @@ public class JestEsClient implements EsClient{
      *     }
      * }
      *
-     * @param indexName index索引名称
-     * @param q 查询条件
-     * @param fields 返回的字段
-     * @param from 起始页
-     * @param size 页数
+     * @param searchModel 查询入参
      */
     @Override
-    public SearchResult searchSource(String indexName, String q, String[] fields, int from, int size) throws IOException {
-        String queryString = buildQueryString(q, fields, from, size, true);
-        return search(indexName, queryString);
+    public SearchResult searchSource(SearchModel searchModel) throws IOException {
+        String queryString = buildQueryString(searchModel, true);
+        return search(searchModel.getIndexName(), queryString);
     }
 
 //    /**
@@ -487,27 +480,29 @@ public class JestEsClient implements EsClient{
      * @param sourceEnable 是否使用_source
      * @return string
      */
-    private String buildQueryString(String q, String[] fields, int from, int size, boolean sourceEnable){
+    private String buildQueryString(SearchModel searchModel, boolean sourceEnable){
         Map<String, Object> root = new HashMap<>(16);
         Map<String, Object> query = new HashMap<>(16);
         Map<String, Object> queryString = new HashMap<>(16);
         root.put("query", queryString);
         queryString.put("query_string", query);
-        query.put("query", q);
+        query.put("query", searchModel.getQ());
 
         if (sourceEnable) {
-            root.put("_source", fields);
+            root.put("_source", searchModel.getFields());
         } else {
             root.put("_source", sourceEnable);
-            if (fields == null || fields.length == 0) {
-                fields = new String[]{"*"};
+            String[] fields = null;
+            if (searchModel.getFields() == null || searchModel.getFields().length == 0) {
+                root.put("fields",  new String[]{"*"});
+            }else {
+                root.put("fields",  searchModel.getFields());
             }
-            root.put("fields", fields);
         }
 
-        if (size >= 0) {
-            root.put(Parameters.FROM, from);
-            root.put(Parameters.SIZE, size);
+        if (searchModel.getSize() >= 0) {
+            root.put(Parameters.FROM, searchModel.getFrom());
+            root.put(Parameters.SIZE, searchModel.getSize());
         }
         return JSON.toJSONString(root);
     }
