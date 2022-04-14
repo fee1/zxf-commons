@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.zxf.elastic.model.Sort;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,6 +32,11 @@ public class JSONTest {
 
         List<Student> listR = JSONObject.parseArray(json, Student.class);
         System.out.println(listR);
+
+        Sort sort = new Sort("age", Sort.Sorting.DESC);
+        System.out.println(sort);
+
+        System.out.println(Arrays.asList(sort));
     }
 
     public static class Student implements Serializable {

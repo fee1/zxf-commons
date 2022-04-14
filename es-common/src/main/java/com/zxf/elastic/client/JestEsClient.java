@@ -5,8 +5,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.zxf.common.utils.CollectionUtil;
 import com.zxf.elastic.config.JestEsProperties;
 import com.zxf.elastic.model.SearchModel;
+import com.zxf.elastic.model.Sort;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.JestResult;
@@ -27,7 +29,9 @@ import org.springframework.beans.factory.ObjectProvider;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -473,10 +477,7 @@ public class JestEsClient implements EsClient{
      *
      * 我们可以使用 fields 来指定返回的字段，而不用 _source。这样做更加高效。
      *
-     * @param q 查询语句
-     * @param fields 返回字段
-     * @param from 起始位置
-     * @param size 页数
+     * @param searchModel
      * @param sourceEnable 是否使用_source
      * @return string
      */
@@ -503,6 +504,14 @@ public class JestEsClient implements EsClient{
         if (searchModel.getSize() >= 0) {
             root.put(Parameters.FROM, searchModel.getFrom());
             root.put(Parameters.SIZE, searchModel.getSize());
+        }
+
+        if (CollectionUtil.isNotEmpty(searchModel.getSortList())){
+            Map<String, String> sorts = new LinkedHashMap<>();
+            for (Sort sort : searchModel.getSortList()) {
+                sorts.put(sort.getFieldName(), sort.getOrder().toString());
+            }
+            root.put("sort", sorts);
         }
         return JSON.toJSONString(root);
     }

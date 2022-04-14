@@ -1,6 +1,5 @@
 package com.zxf.elastic.model;
 
-import io.searchbox.core.search.sort.Sort;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
