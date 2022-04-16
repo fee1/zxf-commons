@@ -26,16 +26,19 @@ public class EsQueryStringBuilderTest {
         assertEquals("(ID:(123 OR 312))", q);
         esQueryStringBuilder.clear();
 
+        //只能用于keyword 类型
         esQueryStringBuilder.createCriteria().andLeftMatch("NAME", "xiao");
         q = esQueryStringBuilder.build();
         assertEquals("(NAME:*xiao)", q);
         esQueryStringBuilder.clear();
 
+        //只能用于keyword 类型
         esQueryStringBuilder.createCriteria().andRightMatch("NAME", "xiao");
         q = esQueryStringBuilder.build();
         assertEquals("(NAME:xiao*)", q);
         esQueryStringBuilder.clear();
 
+        //只能用于keyword 类型
         esQueryStringBuilder.createCriteria().andMatch("NAME", "xiao");
         q = esQueryStringBuilder.build();
         assertEquals("(NAME:*xiao*)", q);
