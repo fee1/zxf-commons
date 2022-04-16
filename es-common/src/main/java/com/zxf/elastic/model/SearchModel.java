@@ -11,7 +11,6 @@ import java.util.List;
  * @date 2022/3/3
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class SearchModel {
 
@@ -44,5 +43,25 @@ public class SearchModel {
      * 排序
      */
     List<Sort> sortList;
+
+    /**
+     * 设置高亮的字段
+     */
+    List<String> highlightField;
+
+
+    public SearchModel(String indexName, String q, String[] fields){
+        this.indexName = indexName;
+        this.q = q;
+        this.fields = fields;
+    }
+
+    public SearchModel(String indexName, String q, String[] fields, int from, int size){
+        this.indexName = indexName;
+        this.q = q;
+        this.fields = fields;
+        this.from = from;
+        this.size = size;
+    }
 
 }

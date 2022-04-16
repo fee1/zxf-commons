@@ -482,13 +482,15 @@ public class JestEsClient implements EsClient{
      * @return string
      */
     private String buildQueryString(SearchModel searchModel, boolean sourceEnable){
-        Map<String, Object> root = new HashMap<>(16);
+        Map<String, Object> root = new LinkedHashMap<>(16);
         Map<String, Object> query = new HashMap<>(16);
         Map<String, Object> queryString = new HashMap<>(16);
         root.put("query", queryString);
+        //查询条件
         queryString.put("query_string", query);
         query.put("query", searchModel.getQ());
 
+        //查询字段
         if (sourceEnable) {
             root.put("_source", searchModel.getFields());
         } else {
@@ -501,17 +503,32 @@ public class JestEsClient implements EsClient{
             }
         }
 
+        //分页
         if (searchModel.getSize() >= 0) {
             root.put(Parameters.FROM, searchModel.getFrom());
             root.put(Parameters.SIZE, searchModel.getSize());
         }
 
+        //排序
         if (CollectionUtil.isNotEmpty(searchModel.getSortList())){
             Map<String, String> sorts = new LinkedHashMap<>();
             for (Sort sort : searchModel.getSortList()) {
                 sorts.put(sort.getFieldName(), sort.getOrder().toString());
             }
             root.put("sort", sorts);
+        }
+
+        //设置高亮
+        if (CollectionUtil.isNotEmpty(searchModel.getHighlightField())){
+            Map<String, Object> highlight = new HashMap<>(16);
+            Map<String, Object> fields = new HashMap<>(16);
+            highlight.put("pre_tags", "<em>");
+            highlight.put("post_tags", "</em>");
+            highlight.put("fields", fields);
+            searchModel.getHighlightField().forEach(item -> {
+                fields.put(item, new Object());
+            });
+            root.put("highlight", highlight);
         }
         return JSON.toJSONString(root);
     }

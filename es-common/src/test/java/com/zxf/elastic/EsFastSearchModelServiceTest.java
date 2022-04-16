@@ -22,26 +22,35 @@ public class EsFastSearchModelServiceTest extends BaseTest {
     @Autowired
     private EsFastSearchService esFastSearchService;
 
+    /**
+     * 测试简单查询
+     */
     @Test
     @SneakyThrows
     public void testSearchOne(){
         String q = EsQueryStringBuilder.create().createCriteria()
                 .andEq("age", 20).formatQuery();
-        SearchModel search = new SearchModel("twitter", q, new String[]{"*"}, 0, 10, null);
+        SearchModel search = new SearchModel("twitter", q, new String[]{"*"}, 0, 10);
         User user = this.esFastSearchService.searchOne(search, User.class);
         System.out.println(JSONObject.toJSONString(user));
     }
 
+    /**
+     * 测试复杂查询
+     */
     @Test
     @SneakyThrows
     public void testSearch(){
         String q = EsQueryStringBuilder.create().createCriteria()
                 .andEq("country", "中国").formatQuery();
-        SearchModel search = new SearchModel("twitter", q, new String[]{"*"}, 0, 10, null);
+        SearchModel search = new SearchModel("twitter", q, new String[]{"*"}, 0, 10);
         Page<User> users = esFastSearchService.search(search, User.class);
         System.out.println(JSONObject.toJSONString(users));
     }
 
+    /**
+     * 测试排序
+     */
     @Test
     @SneakyThrows
     public void testSearchSort(){
@@ -49,9 +58,24 @@ public class EsFastSearchModelServiceTest extends BaseTest {
                 .andEq("country", "中国").formatQuery();
         Sort age = new Sort("age", Sort.Sorting.DESC);
         Sort uid = new Sort("uid", Sort.Sorting.ASC);
-        SearchModel search = new SearchModel("twitter", q, new String[]{"*"}, 0, 10, Arrays.asList(age, uid));
+        SearchModel search = new SearchModel("twitter", q, new String[]{"*"}, 0, 10);
+        search.setSortList(Arrays.asList(age, uid));
         Page<User> users = esFastSearchService.search(search, User.class);
         System.out.println(JSONObject.toJSONString(users));
+    }
+
+    /**
+     * 测试高亮
+     */
+    @Test
+    @SneakyThrows
+    public void testHighlight(){
+        String q = EsQueryStringBuilder.create().createCriteria()
+                .andEq("country", "中国").formatQuery();
+        SearchModel search = new SearchModel("twitter", q, new String[]{"*"}, 0, 10);
+        search.setHighlightField(Arrays.asList("country", "address"));
+        Page<User> users = esFastSearchService.search(search, User.class);
+        System.out.println(users);
     }
 
 }
