@@ -78,7 +78,7 @@ public class JestEsClientTest extends BaseTest {
     public void searchByQs(){
         String q = EsQueryStringBuilder.create().createCriteria()
                 .andEq("age", 20).formatQuery();
-        SearchModel searchModel = new SearchModel("twitter", q, new String[]{"*"}, 0, 10, null);
+        SearchModel searchModel = new SearchModel("twitter", q, new String[]{"*"}, 0, 10);
         SearchResult result = this.jestEsClient.searchFields(searchModel);
         Assert.assertTrue("没有调用成功", result.isSucceeded());
     }

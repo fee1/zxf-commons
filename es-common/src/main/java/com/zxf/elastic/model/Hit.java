@@ -18,4 +18,6 @@ public class Hit {
 
     private JSONObject fields;
 
+    private JSONObject highlight;
+
 }
