@@ -13,14 +13,11 @@ import com.zxf.elastic.model.Page;
 import com.zxf.elastic.model.SearchModel;
 import io.searchbox.core.SearchResult;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author zhuxiaofeng
@@ -69,20 +66,6 @@ public class EsFastSearchService {
                 this.setFieldValue(r, new ArrayList<>(), declaredField, fields);
             }
         }
-//        Set<Map.Entry<String, Object>> entries = fields.entrySet();
-//        for (Map.Entry<String, Object> entry : entries) {
-//            String key = entry.getKey();
-//            String[] fieldNames = key.split("\\.");
-//            try {
-//                Field declaredField = rClass.getDeclaredField(fieldNames[0]);
-//                JSONArray esField = (JSONArray) entry.getValue();
-//                setFieldValue(r, fieldNames, declaredField, esField.get(0));
-//            } catch (NoSuchFieldException e) {
-//                log.error("没有这个字段: {}", e.getMessage());
-//            } catch (Exception e) {
-//                log.error("字段赋值异常，{}", e.getMessage() + ":" + e.getCause());
-//            }
-//        }
         return r;
     }
 
@@ -121,30 +104,6 @@ public class EsFastSearchService {
                     this.setFieldValue(r, new ArrayList<>(), declaredField, fields);
                 }
             }
-
-//            Set<Map.Entry<String, Object>> entries = fields.entrySet();
-//            for (Map.Entry<String, Object> entry : entries) {
-//                String key = entry.getKey();
-//                String[] fieldNames = key.split("\\.");
-//                try {
-//                    Field declaredField = rClass.getDeclaredField(fieldNames[0]);
-//                    JSONArray esField = null;
-//                    if (CollectionUtil.isNotEmpty(hit.getHighlight())){
-//                        if (CollectionUtil.isNotEmpty(hit.getHighlight().getJSONArray(fieldNames[0]))){
-//                            esField = hit.getHighlight().getJSONArray(fieldNames[0]);
-//                        }else {
-//                            esField = (JSONArray) entry.getValue();
-//                        }
-//                    }else {
-//                        esField = (JSONArray) entry.getValue();
-//                    }
-//                    setFieldValue(r, fieldNames, declaredField, esField.get(0));
-//                } catch (NoSuchFieldException e) {
-//                    log.error("没有这个字段: {}", e.getMessage());
-//                } catch (Exception e) {
-//                    log.error("字段赋值异常，{}", e.getMessage() + ":" + e.getCause());
-//                }
-//            }
             rList.add(r);
         }
         Page<R> rPage = new Page<>();
@@ -157,10 +116,6 @@ public class EsFastSearchService {
         rPage.setTotalPage();
         return rPage;
     }
-
-//    private JSONObject processResult(){
-//
-//    }
 
     /**
      * 查询es
@@ -197,40 +152,6 @@ public class EsFastSearchService {
                 }
             }
             ObjectReflectUtil.setFieldValue(r, field.getName(), o);
-        }
-    }
-
-    /**
-     * 返回对象设置值  过时不用
-     * @param r 返回类型
-     * @param fieldNames 字段名
-     * @param field 字段
-     * @param value 字段值
-     * @throws Exception 异常
-     */
-    @Deprecated
-    private void setFieldValue(Object r, String[] fieldNames, Field field, Object value)throws Exception{
-        Class<?> type = field.getType();
-        if (isSimpleType(type)) {
-            ObjectReflectUtil.setFieldValue(r, fieldNames[0], value);
-        }else {
-            Object o = ObjectReflectUtil.getFieldValue(r, fieldNames[0]);
-            if (ObjectUtils.isEmpty(o)){
-                o = type.getConstructor().newInstance();
-            }
-            for (String fieldName : fieldNames) {
-                if (!fieldName.equals(o.getClass().getSimpleName().toLowerCase(Locale.ENGLISH))){
-                    Field declaredField = o.getClass().getDeclaredField(fieldName);
-                    Class<?> childType = declaredField.getType();
-                    if (isSimpleType(childType)){
-                        ObjectReflectUtil.setFieldValue(o, fieldName, value);
-                    }else {
-                        String[] childFieldNames = Arrays.copyOfRange(fieldNames, 1, fieldNames.length);
-                        setFieldValue(r, childFieldNames, declaredField, value);
-                    }
-                }
-                ObjectReflectUtil.setFieldValue(r, fieldNames[0], o);
-            }
         }
     }
 
