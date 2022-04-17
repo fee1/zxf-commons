@@ -1,8 +1,8 @@
 package com.zxf.elastic.config;
 
 import com.google.gson.Gson;
-import com.zxf.elastic.EsFastSearchService;
-import com.zxf.elastic.EsSearchService;
+import com.zxf.elastic.EsFastSearchServiceImpl;
+import com.zxf.elastic.EsSearchServiceImpl;
 import com.zxf.elastic.client.JestEsClient;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -31,13 +31,13 @@ public class EsClientConfiguration {
     }
 
     @Bean
-    public EsFastSearchService esFastSearchService(JestEsClient esClient){
-        return new EsFastSearchService(esClient);
+    public EsFastSearchServiceImpl esFastSearchService(JestEsClient esClient){
+        return new EsFastSearchServiceImpl(esClient);
     }
 
     @Bean
-    public EsSearchService esSearchService(JestEsClient esClient){
-        return new EsSearchService(esClient);
+    public EsSearchServiceImpl esSearchService(JestEsClient esClient){
+        return new EsSearchServiceImpl(esClient);
     }
 
 }

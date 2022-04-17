@@ -9,16 +9,14 @@ import lombok.SneakyThrows;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 /**
  * @author zhuxiaofeng
  * @date 2022/4/17
  */
-public class EsSearchServiceTest extends BaseTest {
+public class EsSearchServiceImplTest extends BaseTest {
 
     @Autowired
-    private EsSearchService searchService;
+    private EsSearchServiceImpl searchService;
 
     @Test
     @SneakyThrows

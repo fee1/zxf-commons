@@ -20,7 +20,7 @@ import java.util.Arrays;
 public class EsFastSearchModelServiceTest extends BaseTest {
 
     @Autowired
-    private EsFastSearchService esFastSearchService;
+    private EsFastSearchServiceImpl esFastSearchServiceImpl;
 
     /**
      * 测试简单查询
@@ -31,7 +31,7 @@ public class EsFastSearchModelServiceTest extends BaseTest {
         String q = EsQueryStringBuilder.create().createCriteria()
                 .andEq("age", 20).formatQuery();
         SearchModel search = new SearchModel("twitter", q, new String[]{"*"}, 0, 10);
-        User user = this.esFastSearchService.searchOne(search, User.class);
+        User user = this.esFastSearchServiceImpl.searchOne(search, User.class);
         System.out.println(JSONObject.toJSONString(user));
     }
 
@@ -44,7 +44,7 @@ public class EsFastSearchModelServiceTest extends BaseTest {
         String q = EsQueryStringBuilder.create().createCriteria()
                 .andEq("country", "中国").formatQuery();
         SearchModel search = new SearchModel("twitter", q, new String[]{"*"}, 0, 10);
-        Page<User> users = esFastSearchService.search(search, User.class);
+        Page<User> users = esFastSearchServiceImpl.search(search, User.class);
         System.out.println(JSONObject.toJSONString(users));
     }
 
@@ -60,7 +60,7 @@ public class EsFastSearchModelServiceTest extends BaseTest {
         Sort uid = new Sort("uid", Sort.Sorting.ASC);
         SearchModel search = new SearchModel("twitter", q, new String[]{"*"}, 0, 10);
         search.setSortList(Arrays.asList(age, uid));
-        Page<User> users = esFastSearchService.search(search, User.class);
+        Page<User> users = esFastSearchServiceImpl.search(search, User.class);
         System.out.println(JSONObject.toJSONString(users));
     }
 
@@ -74,7 +74,7 @@ public class EsFastSearchModelServiceTest extends BaseTest {
                 .andEq("country", "中国").formatQuery();
         SearchModel search = new SearchModel("twitter", q, new String[]{"*"}, 0, 10);
         search.setHighlightField(Arrays.asList("country", "address"));
-        Page<User> users = esFastSearchService.search(search, User.class);
+        Page<User> users = esFastSearchServiceImpl.search(search, User.class);
         System.out.println(users);
     }
 

@@ -24,11 +24,11 @@ import java.util.List;
  * @date 2022/2/18
  */
 @Slf4j
-public class EsFastSearchService implements SearchService {
+public class EsFastSearchServiceImpl implements SearchService {
 
     private JestEsClient esClient;
 
-    public EsFastSearchService(JestEsClient esClient){
+    public EsFastSearchServiceImpl(JestEsClient esClient){
         this.esClient = esClient;
     }
 

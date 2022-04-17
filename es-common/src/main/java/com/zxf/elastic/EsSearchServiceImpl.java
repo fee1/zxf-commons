@@ -1,20 +1,15 @@
 package com.zxf.elastic;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zxf.common.utils.CollectionUtil;
 import com.zxf.elastic.client.JestEsClient;
 import com.zxf.elastic.exception.SearchException;
-import com.zxf.elastic.model.Hit;
 import com.zxf.elastic.model.Page;
 import com.zxf.elastic.model.SearchModel;
 import io.searchbox.core.SearchResult;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,11 +17,11 @@ import java.util.List;
  * @date 2022/4/4
  */
 @Slf4j
-public class EsSearchService implements SearchService {
+public class EsSearchServiceImpl implements SearchService {
 
     private JestEsClient esClient;
 
-    public EsSearchService(JestEsClient esClient){
+    public EsSearchServiceImpl(JestEsClient esClient){
         this.esClient = esClient;
     }
 
