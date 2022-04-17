@@ -17,7 +17,7 @@ public class Page<T> {
 
     private Integer size;
 
-    private Integer total;
+    private Long total;
 
     private Integer totalPage;
 

@@ -351,11 +351,8 @@ public class JestEsClient implements EsClient{
      *             "query": "age:20"
      *         }
      *     },
-     *     "_source": false,
-     *     "from": 0,
-     *     "fields": [
-     *         "*"
-     *     ]
+     *     "_source": ["*"],
+     *     "from": 0
      * }
      *
      * response body:

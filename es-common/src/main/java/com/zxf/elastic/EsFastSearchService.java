@@ -24,7 +24,7 @@ import java.util.List;
  * @date 2022/2/18
  */
 @Slf4j
-public class EsFastSearchService {
+public class EsFastSearchService implements SearchService {
 
     private JestEsClient esClient;
 
@@ -39,6 +39,7 @@ public class EsFastSearchService {
      * @param <R> 返回类型
      * @return R
      */
+    @Override
     public <R> R searchOne(SearchModel search, Class<R> rClass)throws Exception{
         SearchResult result = searchES(search);
         String jsonString = result.getJsonString();
@@ -76,6 +77,7 @@ public class EsFastSearchService {
      * @param <R> 返回的类型
      * @return 返回list
      */
+    @Override
     public <R> Page<R> search(SearchModel searchModel, Class<R> rClass) throws Exception{
         SearchResult result = searchES(searchModel);
         String jsonString = result.getJsonString();
@@ -112,7 +114,7 @@ public class EsFastSearchService {
         rPage.setSize(searchModel.getSize());
         //总数
         JSONObject total = hits.getJSONObject("total");
-        rPage.setTotal(total.getInteger("value"));
+        rPage.setTotal(total.getLong("value"));
         rPage.setTotalPage();
         return rPage;
     }
@@ -122,7 +124,8 @@ public class EsFastSearchService {
      * @param searchModel 查询类
      * @return SearchResult
      */
-    private SearchResult searchES(SearchModel searchModel){
+    @Override
+    public SearchResult searchES(SearchModel searchModel){
         try {
             return esClient.searchFields(searchModel);
         }catch (IOException e){
