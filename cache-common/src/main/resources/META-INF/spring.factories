@@ -1,3 +1,4 @@
+# 可以不使用SPI机制，直接在项目上使用EnableCacheConfiguration
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.zxf.cache.configuration.CacheAutoConfiguration
