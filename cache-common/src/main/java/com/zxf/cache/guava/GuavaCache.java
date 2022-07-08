@@ -19,8 +19,10 @@ public class GuavaCache extends AbstractCache {
         super(name, timeout);
         CacheBuilder<Object, Object> builder = CacheBuilder.newBuilder();
         if (timeout > 0){
+            //当缓存项在指定的时间段内没有更新就会被回收
             builder.expireAfterWrite(timeout, TimeUnit.SECONDS);
         }else {
+            //当缓存项上一次更新操作之后的多久会被刷新
             builder.expireAfterAccess(timeout, TimeUnit.SECONDS);
         }
 
