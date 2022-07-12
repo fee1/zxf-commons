@@ -48,6 +48,12 @@
             <groupId>com.zxf</groupId>
             <artifactId>common</artifactId>
         </dependency>
+
+        <!-- 接口数据校验 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
