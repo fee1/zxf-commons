@@ -18,6 +18,8 @@
         <module>boot-app</module>
         <module>eureka-cloud-server-app</module>
         <module>eureka-client-app</module>
+        <module>rate-limite</module>
+        <module>schedule-common</module>
     </modules>
 
     <properties>
@@ -37,7 +39,8 @@
 <!--        <springboot-test.version>2.3.1.RELEASE</springboot-test.version>-->
 <!--        <spring-test.version>5.2.7.RELEASE</spring-test.version>-->
 <!--        <openFeign.version>2.2.3.RELEASE</openFeign.version>-->
-        <mockito.version>1.10.19</mockito.version>
+        <mockito-core.version>4.6.1</mockito-core.version>
+        <mockito-inline.version>4.6.1</mockito-inline.version>
 <!--        <lombok.version>1.18.12</lombok.version>-->
 <!--        <google.code.gson.version>2.8.6</google.code.gson.version>-->
 <!--        <searchbox.jest.version>6.3.1</searchbox.jest.version>-->
@@ -55,7 +58,7 @@
         <cache-common.version>1.0-SNAPSHOT</cache-common.version>
         <test-common.version>1.0-SNAPSHOT</test-common.version>
         <nacos-cloud-app.version>1.0-SNAPSHOT</nacos-cloud-app.version>
-        <boot-app.version>1.0-SNAPSHOT</boot-app.version>
+        <boot-app.version>1.1-SNAPSHOT</boot-app.version>
         <eureka-cloud-server-app.version>1.0-SNAPSHOT</eureka-cloud-server-app.version>
         <eureka-client-app.version>1.0-SNAPSHOT</eureka-client-app.version>
         <auth-common.version>1.0-SNAPSHOT</auth-common.version>
@@ -72,6 +75,12 @@
                 <version>${spring-boot.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mockito</groupId>
+                        <artifactId>mockito-core</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
