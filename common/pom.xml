@@ -16,7 +16,6 @@
         <dependency>
             <groupId>com.zxf</groupId>
             <artifactId>test-common</artifactId>
-<!--            <version>${test-common.version}</version>-->
             <scope>test</scope>
             <exclusions>
                 <exclusion>
@@ -41,25 +40,21 @@
         <dependency>
             <groupId>io.protostuff</groupId>
             <artifactId>protostuff-api</artifactId>
-<!--            <version>${protostuff.version}</version>-->
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.protostuff</groupId>
             <artifactId>protostuff-core</artifactId>
-<!--            <version>${protostuff.version}</version>-->
         </dependency>
         <dependency>
             <groupId>io.protostuff</groupId>
             <artifactId>protostuff-runtime</artifactId>
-<!--            <version>${protostuff.version}</version>-->
         </dependency>
 
         <!--Swagger-UI API文档生产工具-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-<!--            <version>${swagger2.version}</version>-->
             <exclusions>
                 <exclusion>
                     <artifactId>swagger-annotations</artifactId>
@@ -74,18 +69,15 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-<!--            <version>${swagger2.version}</version>-->
         </dependency>
         <!--解决Swagger 2.9.2版本NumberFormatException-->
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-models</artifactId>
-<!--            <version>${swagger-models.version}</version>-->
         </dependency>
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
-<!--            <version>${swagger-annotations.version}</version>-->
         </dependency>
 
         <dependency>
@@ -101,13 +93,11 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-<!--            <version>${hutool.version}</version>-->
         </dependency>
 
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-<!--            <version>${poi-ooxml.version}</version>-->
             <exclusions>
                 <exclusion>
                     <artifactId>xml-apis</artifactId>
@@ -128,7 +118,6 @@
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-<!--            <version>${bcprov.version}</version>-->
         </dependency>
 
         <dependency>
