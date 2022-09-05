@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.zxf.common.domain.WebLog;
 import com.zxf.common.utils.SessionContextUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class WebLogAspect {
 
+    @Value("${webLog.ignore.urls:}")
+    private String[] ignoreUrls;
+
     @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)||" +
             "@annotation(org.springframework.web.bind.annotation.PostMapping)||" +
             "@annotation(org.springframework.web.bind.annotation.GetMapping)||" +
@@ -34,13 +39,20 @@ public class WebLogAspect {
 
     @Around("webLog()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable{
-        long startTime = System.currentTimeMillis();
+        HttpServletRequest currentRequest = SessionContextUtil.getCurrentRequest();
 
+        //需要忽略的web请求日志
+        for (String ignoreUrl : ignoreUrls) {
+            if (StringUtils.contains(currentRequest.getRequestURI(), ignoreUrl)){
+                return joinPoint.proceed();
+            }
+        }
+
+        long startTime = System.currentTimeMillis();
         //方法执行
         Object result = joinPoint.proceed();
         long endTime = System.currentTimeMillis();
         //获取当前请求
-        HttpServletRequest currentRequest = SessionContextUtil.getCurrentRequest();
 
         WebLog webLog = new WebLog();
         webLog.setRemoteUser(currentRequest.getRemoteUser());
