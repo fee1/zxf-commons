@@ -28,10 +28,13 @@ public class SwaggerConfig extends BaseSwaggerConfig {
     @Value("${swagger.version}")
     private String version;
 
+    @Value("${swagger.apiBasePackage}")
+    private String apiBasePackage;
+
     @Override
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
-                .apiBasePackage("com.zxf.application")
+                .apiBasePackage(apiBasePackage)
                 .title(title)
                 .description(description)
                 .contactName(name)

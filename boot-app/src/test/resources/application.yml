@@ -16,11 +16,12 @@ management:
     shutdown:
       enabled: true # 打开健康检查
 swagger:
-  enable: false
+  enable: true
   title: ${spring.application.name}
   description: boot-app类
   version: 1.0
   name: test
+  apiBasePackage: com.zxf.application
 
 feign:
   okhttp: # 使用okhttp
