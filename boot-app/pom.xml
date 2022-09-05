@@ -49,6 +49,11 @@
             <artifactId>common</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
         <!-- 接口数据校验   web 里边有-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
