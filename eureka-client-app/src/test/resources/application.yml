@@ -7,8 +7,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:8080/eureka/
-    fetch-registry: true
-    register-with-eureka: true
+    fetch-registry: true #是否从获取eureka的client
+    register-with-eureka: true #是否注册eureka
     registry-fetch-interval-seconds: 10 # 更新server周期时间，隔多久去拉取服务注册信息，默认为30秒
   instance:
     lease-renewal-interval-in-seconds: 3 # 心跳时间，即服务续约间隔时间（缺省为30s）
