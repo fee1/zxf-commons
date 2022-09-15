@@ -34,12 +34,12 @@ public class WebLog {
     /**
      * 请求入参
      */
-    private Object[] parameters;
+    private Object[] requestBody;
 
     /**
      * 请求结果
      */
-    private Object result;
+    private Object responseBody;
 
     /**
      * 开始时间

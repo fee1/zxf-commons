@@ -59,8 +59,8 @@ public class WebLogAspect {
         webLog.setMethod(currentRequest.getMethod());
         webLog.setRequestURI(currentRequest.getRequestURI());
         webLog.setRequestURL(currentRequest.getRequestURL().toString());
-        webLog.setParameters(joinPoint.getArgs());
-        webLog.setResult(result);
+        webLog.setRequestBody(joinPoint.getArgs());
+        webLog.setResponseBody(result);
         webLog.setStartTime(startTime);
         webLog.setEndTime(endTime);
         webLog.setSpendTime(endTime - startTime);
