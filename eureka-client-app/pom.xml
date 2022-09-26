@@ -37,6 +37,7 @@
         <dependency>
             <groupId>com.zxf</groupId>
             <artifactId>test-common</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

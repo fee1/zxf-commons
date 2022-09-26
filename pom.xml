@@ -20,7 +20,7 @@
         <module>eureka-client-app</module>
         <module>rate-limite</module>
         <module>schedule-common</module>
-        <module>log-common</module>
+        <module>link-tracking-common</module>
     </modules>
 
     <properties>
@@ -69,6 +69,7 @@
         <eureka-client-app.version>1.0-SNAPSHOT</eureka-client-app.version>
         <auth-common.version>1.0-SNAPSHOT</auth-common.version>
         <data-starter.version>1.0-SNAPSHOT</data-starter.version>
+        <link-tracking-common.version>1.0-SNAPSHOT</link-tracking-common.version>
     </properties>
 
     <!--管理工具包的版本，管理使用工具包的人的jar版本-->
@@ -171,10 +172,30 @@
                 <artifactId>fastjson</artifactId>
                 <version>${alibaba-fastjson.version}</version>
             </dependency>
+            <!-- 阿里开源数据源 -->
             <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-all</artifactId>
-                <version>${mockito.version}</version>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${alibaba-druid.version}</version>
+            </dependency>
+
+            <!-- mybatis插件与spring结合 -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis-spring.version}</version>
+            </dependency>
+            <!-- mybatis plus 包含 注意mybatis-spring -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!--pagehelper 分页插件 注意包含mybatis-spring -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-starter.version}</version>
             </dependency>
 
 
@@ -221,30 +242,10 @@
                 <artifactId>eureka-client-app</artifactId>
                 <version>${eureka-client-app.version}</version>
             </dependency>
-            <!-- 阿里开源数据源 -->
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${alibaba-druid.version}</version>
-            </dependency>
-
-            <!-- mybatis插件与spring结合 -->
-            <dependency>
-                <groupId>org.mybatis</groupId>
-                <artifactId>mybatis-spring</artifactId>
-                <version>${mybatis-spring.version}</version>
-            </dependency>
-            <!-- mybatis plus 包含 注意mybatis-spring -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-            <!--pagehelper 分页插件 注意包含mybatis-spring -->
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${pagehelper-starter.version}</version>
+                <groupId>com.zxf</groupId>
+                <artifactId>link-tracking-common</artifactId>
+                <version>${link-tracking-common.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
