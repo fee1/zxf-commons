@@ -274,6 +274,26 @@
 
     </dependencies>
 
+    <!--拉取你的maven库jar-->
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+
+    <!--发布到你的maven库-->
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <id>evo-Nexus-Repository</id>-->
+<!--            <name>evo Nexus Repository</name>-->
+<!--            <url>http://xxx:8081/nexus/content/repositories/evo/</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>evo-Snapshot-Repository</id>-->
+<!--            <name>evo Nexus Repository</name>-->
+<!--            <url>http://xxx:8081/nexus/content/repositories/snapshot/</url>-->
+<!--        </snapshotRepository>-->
+<!--    </distributionManagement>-->
+
     <!--构建项目需要的信息 -->
     <build>
         <!--子项目可以引用的默认插件信息。该插件配置项直到被引用时才会被解析或绑定到生命周期。给定插件的任何本地配置都会覆盖这里的配置 -->
