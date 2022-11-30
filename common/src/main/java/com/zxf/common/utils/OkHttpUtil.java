@@ -17,6 +17,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -38,6 +39,9 @@ public class OkHttpUtil {
     }
 
     private static Request buildPostRequest(String url, Map<String, String> headers , JSONObject requestBody){
+        if (headers == null){
+            headers = new HashMap<>();
+        }
         return new Request.Builder()
                 .url(url)
                 .headers(Headers.of(headers))
@@ -120,17 +124,6 @@ public class OkHttpUtil {
     }
 
     /**
-     * 异步调用
-     * post 请求
-     * @param url 请求地址
-     * @param requestBody 请求体
-     */
-    public static void postAsync(String url, Map<String, String> headers, JSONObject requestBody) throws IOException {
-        Request postRequest = buildPostRequest(url, headers, requestBody);
-        sendRequestAsync(postRequest);
-    }
-
-    /**
      * 同步调用
      * post 请求
      * 指定返回类型
@@ -144,6 +137,28 @@ public class OkHttpUtil {
     public static <T> T post(String url, Map<String, String> headers ,Object requestBody, Class<T> tClass) throws IOException {
         JSONObject responseBody = (JSONObject) post(url, headers, (JSONObject) JSON.toJSON(requestBody));
         return responseBody.toJavaObject(tClass);
+    }
+
+    /**
+     * 异步调用
+     * post 请求
+     * @param url 请求地址
+     * @param requestBody 请求体
+     */
+    public static void postAsync(String url, Map<String, String> headers, JSONObject requestBody) throws IOException {
+        Request postRequest = buildPostRequest(url, headers, requestBody);
+        sendRequestAsync(postRequest);
+    }
+
+    /**
+     * 异步调用
+     * post 请求
+     * @param url 请求地址
+     * @param requestBody 请求体
+     */
+    public static void postAsync(String url, Map<String, String> headers, Object requestBody) throws IOException {
+        Request postRequest = buildPostRequest(url, headers, (JSONObject) JSON.toJSON(requestBody));
+        sendRequestAsync(postRequest);
     }
 
 
