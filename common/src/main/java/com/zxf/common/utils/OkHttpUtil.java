@@ -140,20 +140,10 @@ public class OkHttpUtil {
     }
 
     /**
-     * 异步调用
+     * 异步调用 ，启动另一个线程去调用处理
      * post 请求
      * @param url 请求地址
-     * @param requestBody 请求体
-     */
-    public static void postAsync(String url, Map<String, String> headers, JSONObject requestBody) throws IOException {
-        Request postRequest = buildPostRequest(url, headers, requestBody);
-        sendRequestAsync(postRequest);
-    }
-
-    /**
-     * 异步调用
-     * post 请求
-     * @param url 请求地址
+     * @param headers 请求头
      * @param requestBody 请求体
      */
     public static void postAsync(String url, Map<String, String> headers, Object requestBody) throws IOException {
@@ -161,5 +151,17 @@ public class OkHttpUtil {
         sendRequestAsync(postRequest);
     }
 
+    /**
+     * 异步调用 ，启动另一个线程去调用处理
+     * @param url 请求地址
+     * @param headers 请求头
+     * @param requestBody 请求体
+     * @param success 成功调用完成的后置处理
+     * @param failure 失败后调用的后置处理
+     */
+    public static void postAsync(String url, Map<String, String> headers, Object requestBody, Handler success, Handler failure) throws IOException {
+        Request postRequest = buildPostRequest(url, headers, (JSONObject) JSON.toJSON(requestBody));
+        sendRequestAsync(postRequest, success, failure);
+    }
 
 }
