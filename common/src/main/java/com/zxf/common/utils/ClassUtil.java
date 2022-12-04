@@ -19,4 +19,14 @@ public class ClassUtil {
                 || Float.class.equals(clazz) || Double.class.equals(clazz) || Boolean.class.equals(clazz);
     }
 
+    /**
+     * 判断两个类型是否是同一个类型
+     * @param sourceClass 源
+     * @param tagetClass 目标类型
+     * @return
+     */
+    public static boolean equals(Class<?> sourceClass, Class<?> tagetClass){
+        return sourceClass.equals(tagetClass);
+    }
+
 }
