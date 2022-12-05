@@ -29,4 +29,14 @@ public class ClassUtil {
         return sourceClass.equals(tagetClass);
     }
 
+    /**
+     * 判断是否是某个类的实现类、继承类
+     * @param superClass 超类
+     * @param sourceClass 源类
+     * @return
+     */
+    public static boolean isSubclass(Class<?> superClass, Class<?> sourceClass){
+        return superClass.isAssignableFrom(sourceClass);
+    }
+
 }
