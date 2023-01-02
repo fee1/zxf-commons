@@ -9,6 +9,9 @@ import java.util.regex.Pattern;
  */
 public class UUID {
 
+    /**
+     * 一个静态方法,用于快速匹配字符串,该方法适合用于只匹配一次,且匹配全部字符串
+     */
     private static final Pattern COMPILE = Pattern.compile("-", Pattern.LITERAL);
 
     public synchronized String builder(){
