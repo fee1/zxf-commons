@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<aspectj>
+<!--	<weaver options="-XnoInline -Xse	t:weaveJavaxPackages=true -Xlint:ignore -verbose -XmessageHandlerClass:org.springframework.aop.aspectj.AspectJWeaverMessageHandler">-->
+	<weaver options="-verbose -showWeaveInfo">
+		<!--在编织时导入切面类和需要被切入的目标类-->
+		<!--项目类 和 aspect 类-->
+		<include within="com.zxf..*"/>
+		<include within="java.lang..*"/>
+		<include within="org.apache.rocketmq..*" />
+		<include within="org.springframework.scheduling..*" />
+		<!--排除-->
+		<exclude within="org.aspectj..*" />
+		<exclude within="org.apache.logging..*" />
+	</weaver>
+	<aspects>
+		<!--指定切面类-->
+		<aspect name="com.zxf.method.trace.aspect.thread.ThreadAspect"/>
+		<aspect name="com.zxf.method.trace.aspect.spring.ControllerMethodAspect" />
+		<aspect name="com.zxf.method.trace.aspect.spring.ComponentMethodAspect" />
+		<aspect name="com.zxf.method.trace.aspect.spring.ServiceMethodAspect" />
+		<aspect name="com.zxf.method.trace.aspect.spring.RepositoryMethodAspect" />
+		<aspect name="com.zxf.method.trace.aspect.thread.SpringScheduledTaskAspect" />
+	</aspects>
+</aspectj>
