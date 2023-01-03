@@ -1,6 +1,7 @@
 package com.zxf.common.id;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,13 @@ import java.util.concurrent.ForkJoinPool;
 public class UUIDTest {
 
     @Test
-    public void builder() {
+    public void simpleUse(){
+        UUID uuid = new UUID();
+        System.out.println(uuid.builder());
+    }
+
+    @Test
+    public void concurrencyTest() {
         UUID uuid = new UUID();
 
         ForkJoinPool forkJoinPool =new ForkJoinPool(Runtime.getRuntime().availableProcessors() / 2);

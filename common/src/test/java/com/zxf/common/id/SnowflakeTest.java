@@ -15,7 +15,13 @@ import java.util.concurrent.ForkJoinPool;
 public class SnowflakeTest {
 
     @Test
-    public void nextId() {
+    public void simpleUse(){
+        Snowflake snowflake = new Snowflake();
+        System.out.println(snowflake.nextId());
+    }
+
+    @Test
+    public void concurrencyTest() {
         Snowflake snowflake = new Snowflake();
         ForkJoinPool forkJoinPool =new ForkJoinPool(Runtime.getRuntime().availableProcessors() / 2);
         List<Long> ids = new ArrayList<>();
