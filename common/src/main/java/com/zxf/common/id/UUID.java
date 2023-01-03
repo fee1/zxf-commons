@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * uuid重复几率很小，基于mac地址，可能会暴露mac地址
- * 注：100年重复一次的几率为50%
+ * 不是纯数字，不适用于数据库的插入、删除和修改，不好维护索引和排序
  *
  * @author zhuxiaofeng
  * @date 2022/10/24
