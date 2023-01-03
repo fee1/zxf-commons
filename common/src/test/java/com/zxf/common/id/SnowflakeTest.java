@@ -1,29 +1,28 @@
 package com.zxf.common.id;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ForkJoinPool;
 
-
 /**
  * @author zhuxiaofeng
- * @date 2023/1/2
+ * @date 2023/1/3
  */
-public class UUIDTest {
+public class SnowflakeTest {
 
     @Test
-    public void builder() {
-        UUID uuid = new UUID();
-
+    public void nextId() {
+        Snowflake snowflake = new Snowflake();
         ForkJoinPool forkJoinPool =new ForkJoinPool(Runtime.getRuntime().availableProcessors() / 2);
-        List<String> ids = new ArrayList<>();
-        List<Callable<String>> tasks = new ArrayList<>();
+        List<Long> ids = new ArrayList<>();
+        List<Callable<Long>> tasks = new ArrayList<>();
         for (int i = 0; i < 1000000; i++) {
             tasks.add(() -> {
-                String l = uuid.builder();
+                long l = snowflake.nextId();
                 ids.add(l);
                 return l;
             });
@@ -33,7 +32,5 @@ public class UUIDTest {
         Long endTime = System.currentTimeMillis();
         System.out.println("耗时: "+ (endTime.longValue() - startTime.longValue())/1000);
         System.out.println(ids);
-
-
     }
 }
