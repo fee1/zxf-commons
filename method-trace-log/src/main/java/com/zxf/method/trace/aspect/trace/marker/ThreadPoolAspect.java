@@ -1,6 +1,5 @@
 //package com.zxf.method.trace.aspect.thread;
 //
-//import com.kc.evo.util.MDCUtil;
 //import org.aspectj.lang.ProceedingJoinPoint;
 //import org.aspectj.lang.annotation.Around;
 //import org.aspectj.lang.annotation.Aspect;

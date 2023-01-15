@@ -9,7 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
- * 快仓 定制化 interface-plugin直接复制粘贴进去这个类
+ * 将traceId放入请求头中
  *
  * @author zhuxiaofeng
  * @date 2022/10/25
