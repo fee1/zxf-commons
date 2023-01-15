@@ -14,11 +14,11 @@
 	</weaver>
 	<aspects>
 		<!--指定切面类-->
-		<aspect name="com.zxf.method.trace.aspect.thread.ThreadAspect"/>
+		<aspect name="com.zxf.method.trace.aspect.trace.marker.ThreadAspect"/>
 		<aspect name="com.zxf.method.trace.aspect.spring.ControllerMethodAspect" />
 		<aspect name="com.zxf.method.trace.aspect.spring.ComponentMethodAspect" />
 		<aspect name="com.zxf.method.trace.aspect.spring.ServiceMethodAspect" />
 		<aspect name="com.zxf.method.trace.aspect.spring.RepositoryMethodAspect" />
-		<aspect name="com.zxf.method.trace.aspect.thread.SpringScheduledTaskAspect" />
+		<aspect name="com.zxf.method.trace.aspect.trace.marker.SpringScheduledTaskAspect" />
 	</aspects>
 </aspectj>

@@ -1,4 +1,4 @@
-package com.zxf.method.trace.aspect.thread;
+package com.zxf.method.trace.aspect.trace.marker;
 
 import com.zxf.method.trace.constants.Constants;
 import com.zxf.method.trace.util.TraceFatch;
