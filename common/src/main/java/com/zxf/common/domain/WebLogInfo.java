@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2021/12/16
  */
 @Data
-public class WebLog {
+public class WebLogInfo {
 
     /**
      * ip

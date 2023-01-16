@@ -1,7 +1,7 @@
 package com.zxf.common.log;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zxf.common.domain.WebLog;
+import com.zxf.common.domain.WebLogInfo;
 import com.zxf.common.utils.SessionContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -27,26 +27,12 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class WebLogAspect {
 
-    @Value("${webLog.ignore.urls:}")
-    private String[] ignoreUrls;
-
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)||" +
-            "@annotation(org.springframework.web.bind.annotation.PostMapping)||" +
-            "@annotation(org.springframework.web.bind.annotation.GetMapping)||" +
-            "@annotation(org.springframework.web.bind.annotation.DeleteMapping)||" +
-            "@annotation(org.springframework.web.bind.annotation.PutMapping)")
+    @Pointcut("@annotation(com.zxf.common.log.WebLog)")
     public void webLog(){}
 
     @Around("webLog()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable{
         HttpServletRequest currentRequest = SessionContextUtil.getCurrentRequest();
-
-        //需要忽略的web请求日志
-        for (String ignoreUrl : ignoreUrls) {
-            if (StringUtils.contains(currentRequest.getRequestURI(), ignoreUrl)){
-                return joinPoint.proceed();
-            }
-        }
 
         long startTime = System.currentTimeMillis();
         //方法执行
@@ -54,18 +40,18 @@ public class WebLogAspect {
         long endTime = System.currentTimeMillis();
         //获取当前请求
 
-        WebLog webLog = new WebLog();
-        webLog.setRemoteUser(currentRequest.getRemoteUser());
-        webLog.setMethod(currentRequest.getMethod());
-        webLog.setRequestURI(currentRequest.getRequestURI());
-        webLog.setRequestURL(currentRequest.getRequestURL().toString());
-        webLog.setRequestBody(joinPoint.getArgs());
-        webLog.setResponseBody(result);
-        webLog.setStartTime(startTime);
-        webLog.setEndTime(endTime);
-        webLog.setSpendTime(endTime - startTime);
+        WebLogInfo webLogInfo = new WebLogInfo();
+        webLogInfo.setRemoteUser(currentRequest.getRemoteUser());
+        webLogInfo.setMethod(currentRequest.getMethod());
+        webLogInfo.setRequestURI(currentRequest.getRequestURI());
+        webLogInfo.setRequestURL(currentRequest.getRequestURL().toString());
+        webLogInfo.setRequestBody(joinPoint.getArgs());
+        webLogInfo.setResponseBody(result);
+        webLogInfo.setStartTime(startTime);
+        webLogInfo.setEndTime(endTime);
+        webLogInfo.setSpendTime(endTime - startTime);
 
-        log.info(JSONObject.toJSONString(webLog));
+        log.info(JSONObject.toJSONString(webLogInfo));
         return result;
     }
 
