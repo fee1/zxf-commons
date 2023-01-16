@@ -17,11 +17,6 @@ mappings	显示所有的@RequestMapping路径
 scheduledtasks	显示应用中的调度任务
 threaddump	执行一个线程dump
 heapdump	返回一个GZip压缩的JVM堆dump
-
-作者：alvin_wang
-链接：https://www.jianshu.com/p/d5943e303a1f
-来源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 ```
 ## test验证
 ```text
