@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
  * @author zhuxiaofeng
  * @date 2021/12/16
  */
-public class WebLogAspectTest extends MvcBaseTest {
+public class WebLogInfoAspectTest extends MvcBaseTest {
 
     @SneakyThrows
     @Test

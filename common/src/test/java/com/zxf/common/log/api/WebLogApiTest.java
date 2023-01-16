@@ -1,5 +1,6 @@
 package com.zxf.common.log.api;
 
+import com.zxf.common.log.WebLog;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,21 +22,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebLogApiTest {
 
     @GetMapping("get")
+    @WebLog
     public String getMethod(@RequestParam String name){
         return String.format("{get:%s}", name);
     }
 
     @PostMapping("post")
+    @WebLog
     public String postMethod(@RequestParam String name){
         return "post:" + name;
     }
 
     @PutMapping("put")
+    @WebLog
     public String putMethod(@RequestParam String name){
         return "put:" + name;
     }
 
     @DeleteMapping("delete")
+    @WebLog
     public String deleteMethod(@RequestParam String name){
         return "delete:" + name;
     }
