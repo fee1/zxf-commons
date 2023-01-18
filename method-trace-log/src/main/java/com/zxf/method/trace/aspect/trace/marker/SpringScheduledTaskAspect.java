@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.MDC;
 
 /**
- * Spring定时器线程
+ * Spring定时器线程添加traceId
  *
  * @author zhuxiaofeng
  * @date 2022/12/22

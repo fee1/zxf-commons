@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 区分不同请求
+ * traceId区分不同请求
  *
  * distinguish
  * @author zhuxiaofeng

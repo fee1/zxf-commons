@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
+ * callable 包装traceId
+ *
  * @author zhuxiaofeng
  * @date 2022/11/15
  */

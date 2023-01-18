@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.MDC;
 
 /**
- * 会对反复运行（while(true)）的线程造成tracceId多次复用
+ * note：会对反复运行（while(true)）的线程造成tracceId多次复用
  *
  * @author zhuxiaofeng
  * @date 2022/10/12

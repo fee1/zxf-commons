@@ -5,11 +5,18 @@ import org.slf4j.MDC;
 import org.springframework.util.StringUtils;
 
 /**
+ * traceId 获取类
+ *
  * @author zhuxiaofeng
  * @date 2022/10/24
  */
 public class TraceFatch {
 
+    /**
+     * 获取当前线程的traceId，获取不到直接重新生成
+     *
+     * @return string
+     */
     public static String getTraceId(){
         String trackId = MDC.get(Constants.TRACE_ID);
         if (StringUtils.isEmpty(trackId)){
@@ -18,6 +25,11 @@ public class TraceFatch {
         return trackId;
     }
 
+    /**
+     * 盘点当前线程是否存在traceId
+     *
+     * @return bool
+     */
     public static boolean isExistTraceId(){
         String trackId = MDC.get(Constants.TRACE_ID);
         return StringUtils.isEmpty(trackId);

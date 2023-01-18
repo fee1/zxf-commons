@@ -6,6 +6,8 @@ import com.zxf.common.id.UUID;
 import com.zxf.common.utils.LazyValue;
 
 /**
+ * id生成工具获取取
+ *
  * @author zhuxiaofeng
  * @date 2022/10/24
  */
