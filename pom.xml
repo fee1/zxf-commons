@@ -20,7 +20,7 @@
         <module>eureka-client-app</module>
         <module>rate-limite</module>
         <module>schedule-common</module>
-        <module>link-tracking-common</module>
+        <module>method-trace-log</module>
     </modules>
 
     <properties>
@@ -57,9 +57,10 @@
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
         <mybatis-spring.version>2.0.6</mybatis-spring.version>
         <pagehelper-starter.version>1.4.2</pagehelper-starter.version>
+        <mybatis-plus-boot-starter.version>3.0.1</mybatis-plus-boot-starter.version>
 
 
-        <common.version>1.0-SNAPSHOT</common.version>
+        <common.version>1.3-SNAPSHOT</common.version>
         <es-common.version>1.0-SNAPSHOT</es-common.version>
         <cache-common.version>1.0-SNAPSHOT</cache-common.version>
         <test-common.version>1.0-SNAPSHOT</test-common.version>
@@ -69,7 +70,8 @@
         <eureka-client-app.version>1.0-SNAPSHOT</eureka-client-app.version>
         <auth-common.version>1.0-SNAPSHOT</auth-common.version>
         <data-starter.version>1.0-SNAPSHOT</data-starter.version>
-        <link-tracking-common.version>1.0-SNAPSHOT</link-tracking-common.version>
+        <cat-link-tracking.version>1.0-SNAPSHOT</cat-link-tracking.version>
+        <method-trace-log.version>1.0-SNAPSHOT</method-trace-log.version>
     </properties>
 
     <!--管理工具包的版本，管理使用工具包的人的jar版本-->
@@ -191,6 +193,12 @@
                 <artifactId>mybatis-plus</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
             <!--pagehelper 分页插件 注意包含mybatis-spring -->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
@@ -244,8 +252,8 @@
             </dependency>
             <dependency>
                 <groupId>com.zxf</groupId>
-                <artifactId>link-tracking-common</artifactId>
-                <version>${link-tracking-common.version}</version>
+                <artifactId>method-trace-log</artifactId>
+                <version>${method-trace-log.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
