@@ -144,7 +144,7 @@ public class OkHttpUtil {
      * @return response
      * @throws IOException
      */
-    private static void sendRequestAsync(Request request) throws IOException {
+    private static void sendRequestAsync(Request request)  {
         OK_HTTP_CLIENT_INST.get().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -167,7 +167,7 @@ public class OkHttpUtil {
      * @param failure 失败的处理
      * @throws IOException
      */
-    private static void sendRequestAsync(Request request, Handler success, Handler failure) throws IOException {
+    private static void sendRequestAsync(Request request, Handler success, Handler failure)  {
         OK_HTTP_CLIENT_INST.get().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -195,6 +195,9 @@ public class OkHttpUtil {
      * @return JSON
      */
     private static JSON toJSON(Response response) throws IOException {
+        if (response.body() == null){
+            return new JSONObject();
+        }
         String responseBody = response.body().string();
         return JSON.parseObject(responseBody);
     }
@@ -209,9 +212,6 @@ public class OkHttpUtil {
     public static JSON post(String url, Map<String, String> headers , JSONObject requestBody) throws IOException {
         Request postRequest = buildPostRequest(url, headers, requestBody);
         Response response = sendRequestSync(postRequest);
-        if (response.body() == null) {
-            return new JSONObject();
-        }
         return toJSON(response);
     }
 
@@ -239,7 +239,7 @@ public class OkHttpUtil {
      * @param headers 请求头
      * @param requestBody 请求体
      */
-    public static void postAsync(String url, Map<String, String> headers, Object requestBody) throws IOException {
+    public static void postAsync(String url, Map<String, String> headers, Object requestBody) {
         Request postRequest = buildPostRequest(url, headers, (JSONObject) JSON.toJSON(requestBody));
         sendRequestAsync(postRequest);
     }
@@ -253,7 +253,7 @@ public class OkHttpUtil {
      * @param failure 失败后调用的后置处理
      */
     public static void postAsync(String url, Map<String, String> headers, Object requestBody, Handler success,
-                                 Handler failure) throws IOException {
+                                 Handler failure) {
         Request postRequest = buildPostRequest(url, headers, (JSONObject) JSON.toJSON(requestBody));
         sendRequestAsync(postRequest, success, failure);
     }
@@ -269,9 +269,6 @@ public class OkHttpUtil {
     public static JSON get(String url, Map<String, String> headers, Map<String,String> queryParams) throws IOException {
         Request getRequest = buildGetRequest(url, headers, queryParams);
         Response response = sendRequestSync(getRequest);
-        if (response.body() == null){
-            return new JSONObject();
-        }
         return toJSON(response);
     }
 
@@ -300,7 +297,7 @@ public class OkHttpUtil {
      * @param queryParams url参数
      * @throws IOException
      */
-    public static void getAsync(String url, Map<String, String> headers, Map<String,String> queryParams) throws IOException {
+    public static void getAsync(String url, Map<String, String> headers, Map<String,String> queryParams) {
         Request getRequest = buildGetRequest(url, headers, queryParams);
         sendRequestAsync(getRequest);
     }
@@ -316,7 +313,7 @@ public class OkHttpUtil {
      * @throws IOException
      */
     public static void getAsync(String url, Map<String, String> headers, Map<String,String> queryParams, Handler success,
-                                Handler failure) throws IOException {
+                                Handler failure) {
         Request getRequest = buildGetRequest(url, headers, queryParams);
         sendRequestAsync(getRequest, success, failure);
     }
