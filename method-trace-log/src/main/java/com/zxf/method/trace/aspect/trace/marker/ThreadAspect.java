@@ -28,7 +28,7 @@ public class ThreadAspect {
     @Around(value = "pointCut() && notPointCut()")
     public void doAroud(ProceedingJoinPoint joinPoint) throws Throwable {
         //不要影响lambda的切面，两者同时切入嵌套runable - runable，会提前移除traceId
-        if (TraceFatch.isExistTraceId()) {
+        if (!TraceFatch.isExistTraceId()) {
             MDC.put(Constants.TRACE_ID, TraceFatch.getTraceId());
             joinPoint.proceed();
             MDC.remove(Constants.TRACE_ID);

@@ -24,7 +24,7 @@ public class SpringScheduledTaskAspect {
     @Around("cut()")
     public Object around(ProceedingJoinPoint jp) throws Throwable {
         Object proceed = null;
-        if (TraceFatch.isExistTraceId()) {
+        if (!TraceFatch.isExistTraceId()) {
             MDC.put(Constants.TRACE_ID, TraceFatch.getTraceId());
             proceed = jp.proceed();
             MDC.remove(Constants.TRACE_ID);

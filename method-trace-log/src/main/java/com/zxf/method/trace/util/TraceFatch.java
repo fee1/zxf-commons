@@ -26,13 +26,13 @@ public class TraceFatch {
     }
 
     /**
-     * 盘点当前线程是否存在traceId
+     * 判断当前线程是否存在traceId
      *
      * @return bool
      */
     public static boolean isExistTraceId(){
         String trackId = MDC.get(Constants.TRACE_ID);
-        return StringUtils.isEmpty(trackId);
+        return !StringUtils.isEmpty(trackId);
     }
 
 }
