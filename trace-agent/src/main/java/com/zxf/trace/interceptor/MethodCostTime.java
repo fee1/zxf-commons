@@ -32,14 +32,21 @@ public class MethodCostTime {
             return callable.call();
         } finally{
 //            log.debug("{} is end, cost: {} ms", method, (System.currentTimeMillis() - start));
-            // 由最外层线程推掉traceId
-//            StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-//            StackTraceElement stackTraceElement = stackTrace[stackTrace.length-1];
-//            String className = stackTraceElement.getClassName();
-//            String methodName = stackTraceElement.getMethodName();
-//            if (methodName.equals(method.getName()) && className.equals(method.getDeclaringClass().getName())){
+            // 由最外层run推掉traceId
+            int interceptorTimes = 0;
+            StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+            String traceMethodName = stackTrace[1].getMethodName();
+            String traceClassName = stackTrace[1].getClassName();
+            for (StackTraceElement stackTraceElement : stackTrace) {
+                String className = stackTraceElement.getClassName();
+                String methodName = stackTraceElement.getMethodName();
+                if (methodName.equals(traceMethodName) && className.equals(traceClassName)){
+                    interceptorTimes ++;
+                }
+            }
+            if (interceptorTimes == 1){
                 MDC.remove(Constants.TRACE_ID);
-//            }
+            }
         }
     }
 
