@@ -7,6 +7,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
+import java.util.Arrays;
+
 /**
  * @author zhuxiaofeng
  * @date 2022/12/8
@@ -21,7 +23,7 @@ public class ControllerMethodAspect extends AbstractMethod {
     @Override
     @Around("pointCut() && mustPointCutMethod() && notPointCutLambdaMethod()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        log.debug("request args: {}", joinPoint.getArgs());
+        log.debug("request args: {}", Arrays.toString(joinPoint.getArgs()));
         return super.doAround(joinPoint);
     }
 }
