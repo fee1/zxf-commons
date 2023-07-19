@@ -21,7 +21,7 @@ swagger:
   description: boot-app类
   version: 1.0
   name: test
-  apiBasePackage: com.zxf.application
+  apiBasePackage: com.zxf
 
 feign:
   okhttp: # 使用okhttp

@@ -19,3 +19,4 @@ swagger:
   description: eureka-client-app类
   version: 1.0
   name: test
+  apiBasePackage: com.zxf
