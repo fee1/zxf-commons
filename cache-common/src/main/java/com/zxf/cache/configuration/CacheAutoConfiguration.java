@@ -48,7 +48,7 @@ public class CacheAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     @AutoConfigureAfter(CacheAutoConfiguration.class)
     @ConditionalOnProperty(value = "cache.auto.config.guava.enable", matchIfMissing = true)
-    public static class GuavaConfiguration {
+    public class GuavaConfiguration {
         @Bean
         public GuavaCacheFactory guavaCacheFactory(){
             return new GuavaCacheFactory();
@@ -59,7 +59,7 @@ public class CacheAutoConfiguration {
     @AutoConfigureAfter(CacheAutoConfiguration.class)
     @ConditionalOnProperty(value = "cache.auto.config.redis.enable", matchIfMissing = true)
 //    @EnableConfigurationProperties(RedisProperties.class)
-    public static class RedisConfiguration {
+    public class RedisConfiguration {
 
         @Bean
         @ConfigurationProperties("cache.auto.config.redis")
