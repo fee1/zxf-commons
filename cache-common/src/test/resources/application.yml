@@ -1,15 +1,15 @@
 cache:
 #  default:
-#    type: redis
+#    type: redis #默认使用的缓存类型
   auto:
     config:
-      enable: true
+      enable: true # 是否开启缓存功能
       guava:
-        enable: true
+        enable: true # 是否开启guava缓存功能
       redis:
-        enable: true
-        hosts: 192.168.137.135:6379
-        prefix-key: test-common
+        enable: true # 是否开启redis缓存功能
+        hosts: 192.168.137.135:6379 # redis ip host
+        prefix-key: test-common # 项目缓存key前缀，用于区分不同的项目
 
 ######### old
 #  type: guava # or redis
