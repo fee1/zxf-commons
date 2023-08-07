@@ -1,9 +1,6 @@
 package com.zxf.method.trace.util;
 
 
-import com.zxf.common.id.Snowflake;
-import com.zxf.common.id.UUID;
-import com.zxf.common.utils.LazyValue;
 
 /**
  * id生成工具获取取
