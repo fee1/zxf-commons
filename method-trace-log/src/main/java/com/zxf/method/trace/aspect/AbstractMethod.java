@@ -35,8 +35,9 @@ public abstract class AbstractMethod {
         }
         //后续改成与新的服务记录
         log.debug("{}.{}, is start", fullClassName, methodName);
+        long start = System.currentTimeMillis();
         Object proceed = joinPoint.proceed();
-        log.debug("{}.{}, is end", fullClassName, methodName);
+        log.debug("{}.{}, is end. cost: {} ms", fullClassName, methodName, (System.currentTimeMillis() - start));
         return proceed;
     }
 
