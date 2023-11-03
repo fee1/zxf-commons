@@ -1,6 +1,7 @@
 package com.zxf.cache.domain.cache;
 
 import com.zxf.cache.BaseLoadingCache;
+import com.zxf.cache.CacheType;
 import com.zxf.cache.domain.model.UserModel;
 import com.zxf.cache.infrastructure.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,16 @@ public class UserCache extends BaseLoadingCache<UserModel> {
 
 //    @Autowired
 //    private UserMapper userMapper;
+
+
+    /**
+     * 指定使用哪一种缓存
+     * @return
+     */
+    @Override
+    public String getCacheType() {
+        return CacheType.redis.name();
+    }
 
     //获取 本缓存类的key前缀
     @Override

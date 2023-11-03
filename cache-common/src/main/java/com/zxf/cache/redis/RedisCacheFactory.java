@@ -2,6 +2,7 @@ package com.zxf.cache.redis;
 
 import com.zxf.cache.AbstractCache;
 import com.zxf.cache.AbstractCacheFactory;
+import com.zxf.cache.CacheType;
 import com.zxf.cache.redis.serializer.AutoTypeValueSerializer;
 import com.zxf.cache.redis.serializer.PrefixKeySerializer;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -91,7 +92,7 @@ public class RedisCacheFactory extends AbstractCacheFactory {
      */
     @Override
     public String getCacheType() {
-        return "redis";
+        return CacheType.redis.name();
     }
 
     /**

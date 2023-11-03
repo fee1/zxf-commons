@@ -2,6 +2,7 @@ package com.zxf.cache.guava;
 
 import com.zxf.cache.AbstractCache;
 import com.zxf.cache.AbstractCacheFactory;
+import com.zxf.cache.CacheType;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ public class GuavaCacheFactory extends AbstractCacheFactory {
 
     @Override
     public String getCacheType() {
-        return "guava";
+        return CacheType.guava.name();
     }
 
 }
