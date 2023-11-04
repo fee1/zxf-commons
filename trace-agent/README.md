@@ -17,3 +17,16 @@
     使用MAVEN打包生成jar
     将此jar运用在启动参数上[-javaagent:trace-agent-1.0-SNAPSHOT.jar]
 ```
+
+
+```text
+1.直接deploy的jar可以直接使用
+
+2.install不能使用，会报错
+Java HotSpot(TM) 64-Bit Server VM warning: UseCMSCompactAtFullCollection is deprecated and will likely be removed in a future release.
+Failed to find Premain-Class manifest attribute in /opt/evo-station/trace-agent.jar
+Error occurred during initialization of VM
+agent library failed to init: instrument
+
+3.可以尝试使用package 打包
+```

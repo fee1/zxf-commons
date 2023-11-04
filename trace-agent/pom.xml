@@ -59,10 +59,10 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.zxf</groupId>
-            <artifactId>method-trace-log</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.zxf</groupId>-->
+<!--            <artifactId>method-trace-log</artifactId>-->
+<!--        </dependency>-->
 
     </dependencies>
 

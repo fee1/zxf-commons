@@ -1,7 +1,7 @@
 package com.zxf.trace.interceptor;
 
-import com.zxf.method.trace.util.TraceFatch;
 import com.zxf.trace.constants.Constants;
+import com.zxf.trace.util.TraceFatch;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
