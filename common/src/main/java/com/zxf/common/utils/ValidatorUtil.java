@@ -56,7 +56,7 @@ public class ValidatorUtil {
         for (ConstraintViolation<T> tConstraintViolation : validate) {
             String str =
                     String.format("%s:%s;", tConstraintViolation.getPropertyPath().toString(), tConstraintViolation.getMessage());
-            message.append(message);
+            message.append(str);
         }
         return message.toString();
     }
