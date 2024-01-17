@@ -4,6 +4,7 @@ package com.zxf.common.utils;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author zhuxiaofeng
  * @date 2021/9/29
  */
-class ExcelToolUtilTest {
+public class ExcelToolUtilTest {
 
     @Test
     public void produceExcelFile() throws FileNotFoundException {
@@ -32,7 +33,8 @@ class ExcelToolUtilTest {
         Map<String, String> fieldMapping = new LinkedHashMap<>();
         fieldMapping.put("name", "姓名");
         fieldMapping.put("age", "年龄");
-        ExcelToolUtil.produceExcelFile(list, fieldMapping, "test.xls", "C:\\Users\\Huawei\\Desktop");
+        URL resource = ExcelToolUtil.class.getClassLoader().getResource("");
+        ExcelToolUtil.produceExcelFile(list, fieldMapping, "test.xls", resource.getPath());
     }
 
     @Test
