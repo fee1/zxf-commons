@@ -30,7 +30,7 @@ public class ExcelToolUtil {
      * @param outputAliasField 是否只输出别名字段 true 是， false 全输出
      * @return file
      */
-    public static File produceExcelFile(Collection<?> data, Map<String, String> fieldMapping, String fileName,
+    public static File produceExcelFile(Collection<Map<String, Object>> data, Map<String, String> fieldMapping, String fileName,
                                         String fileLocation, boolean outputAliasField) throws java.io.FileNotFoundException {
         File file = new File(fileLocation + File.separator + fileName);
         ExcelWriter writer = ExcelUtil.getWriter();
@@ -55,7 +55,7 @@ public class ExcelToolUtil {
      * @param fileLocation 生成文件位置
      * @return file
      */
-    public static File produceExcelFile(Collection<?> data, Map<String, String> fieldMapping, String fileName, String fileLocation)
+    public static File produceExcelFile(Collection<Map<String, Object>> data, Map<String, String> fieldMapping, String fileName, String fileLocation)
             throws FileNotFoundException {
         return produceExcelFile(data, fieldMapping, fileName, fileLocation, true);
     }
@@ -71,7 +71,7 @@ public class ExcelToolUtil {
      * @param outputAliasField 是否只输出别名字段 true 是， false 全输出
      * @return file
      */
-    public static File produceExcelFileOverMillion(Collection<?> data, Map<String, String> fieldMapping, String fileName,
+    public static File produceExcelFileOverMillion(Collection<Map<String, Object>> data, Map<String, String> fieldMapping, String fileName,
                                                    String fileLocation, boolean outputAliasField) throws FileNotFoundException {
         File file = new File(fileLocation + File.separator + fileName);
         ExcelWriter writer = ExcelUtil.getBigWriter();
@@ -96,7 +96,7 @@ public class ExcelToolUtil {
      * @param fileLocation 生成文件位置
      * @return file
      */
-    public static File produceExcelFileOverMillion(Collection<?> data, Map<String, String> fieldMapping, String fileName, String fileLocation)
+    public static File produceExcelFileOverMillion(Collection<Map<String, Object>> data, Map<String, String> fieldMapping, String fileName, String fileLocation)
             throws FileNotFoundException {
         return produceExcelFileOverMillion(data, fieldMapping, fileName, fileLocation, true);
     }
