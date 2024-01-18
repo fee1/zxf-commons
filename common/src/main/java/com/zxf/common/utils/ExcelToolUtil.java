@@ -101,4 +101,16 @@ public class ExcelToolUtil {
         return produceExcelFileOverMillion(data, fieldMapping, fileName, fileLocation, true);
     }
 
+    //图片插入
+//    int y = 0;
+//            for (Map.Entry<String, Object> entry : datum.entrySet()) {
+//        if (entry.getValue() instanceof File){
+//            //清空之前的内容
+//            writer.getCell(y, rowNum).setBlank();
+//            //写入图片
+//            writer.writeImg((File) entry.getValue(), y, rowNum, y + 1, rowNum + 1);
+//        }
+//        y ++;
+//    }
+
 }
