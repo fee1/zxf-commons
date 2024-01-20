@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * 反射工具类
+ * 反射工具类  you can use spring ReflectUtils
  *
  * @author zhuxiaofeng
  * @date 2021/7/7
