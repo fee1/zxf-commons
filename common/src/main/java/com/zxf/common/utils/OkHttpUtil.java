@@ -40,7 +40,7 @@ public class OkHttpUtil {
     private static RequestBody buildRequestBody(JSONObject body){
         return FormBody.create(
                 MediaType.parse("application/json"),
-                body.toString()
+                body.toJSONString()
         );
     }
 
