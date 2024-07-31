@@ -88,6 +88,15 @@ public class ApiResult<T> {
      *
      * @return ApiResult
      */
+    public static <T> ApiResult<T> failed(IErrorCode errorCode, T data){
+        return new ApiResult<>(errorCode.getCode(), errorCode.getMessage(), data);
+    }
+
+    /**
+     * 失败
+     *
+     * @return ApiResult
+     */
     public static <T> ApiResult<T> failed(String message ,IErrorCode errorCode, T data){
         return new ApiResult<>(errorCode.getCode(), message, data);
     }
