@@ -2,6 +2,7 @@ package com.zxf.cache.domain.cache;
 
 import com.zxf.cache.BaseLoadingCache;
 import com.zxf.cache.CacheType;
+import com.zxf.cache.domain.cache.key.UserCacheKey;
 import com.zxf.cache.domain.model.UserModel;
 import com.zxf.cache.infrastructure.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class UserCache extends BaseLoadingCache<UserModel> {
 //    @Autowired
 //    private UserMapper userMapper;
 
+
+    @Override
+    public int getTimeout() {
+        return 84600;
+    }
 
     /**
      * 指定使用哪一种缓存
@@ -38,8 +44,9 @@ public class UserCache extends BaseLoadingCache<UserModel> {
     //
     @Override
     public UserModel doLoad(String s) throws Exception {
+//        UserCacheKey userCacheKey = UserCacheKey.parseFromKey(s);
 //        userMapper
-        return null;
+        return new UserModel("xiaoming", "18");
     }
 
 

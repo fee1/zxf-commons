@@ -14,7 +14,7 @@
 	</weaver>
 	<aspects>
 		<!--指定切面类-->
-		<aspect name="com.zxf.method.trace.aspect.trace.marker.ThreadAspect"/>
+<!--		<aspect name="com.zxf.method.trace.aspect.trace.marker.ThreadAspect"/>-->
 		<aspect name="com.zxf.method.trace.aspect.spring.ControllerMethodAspect" />
 		<aspect name="com.zxf.method.trace.aspect.spring.ComponentMethodAspect" />
 		<aspect name="com.zxf.method.trace.aspect.spring.ServiceMethodAspect" />

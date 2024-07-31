@@ -11,6 +11,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserRedisCache  extends BaseLoadingCache<UserModel> {
+
+    @Override
+    public int getTimeout() {
+        return 84600;
+    }
+
     @Override
     public String getCacheName() {
         return "user";

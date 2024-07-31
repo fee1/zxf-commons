@@ -318,7 +318,65 @@ public class OkHttpUtil {
         sendRequestAsync(getRequest, success, failure);
     }
 
-//    put
+    /**
+     * 同步put请求
+     *
+     * @param url 请求地址
+     * @param headers 请求头
+     * @param requestBody 请求体
+     * @return json
+     * @throws IOException
+     */
+    public static JSON put(String url, Map<String, String> headers, JSONObject requestBody) throws IOException {
+        Request putRequest = buildPutRequest(url, headers, requestBody);
+        Response response = sendRequestSync(putRequest);
+        return toJSON(response);
+    }
+
+    /**
+     * 同步put请求
+     *
+     * @param url 请求地址
+     * @param headers 请求头
+     * @param requestBody 请求体
+     * @param tClass 指定返回类型
+     * @param <T> 泛型定义
+     * @return T
+     * @throws IOException
+     */
+    public static <T> T put(String url, Map<String, String> headers, Object requestBody, Class<T> tClass) throws IOException {
+        JSONObject responseBody = (JSONObject) put(url, headers, (JSONObject) JSON.toJSON(requestBody));
+        return responseBody.toJavaObject(tClass);
+    }
+
+    /**
+     * 异步put请求
+     *
+     * @param url 请求地址
+     * @param headers 请求头
+     * @param requestBody 请求体
+     * @throws IOException
+     */
+    public static void putAsync(String url, Map<String, String> headers, Object requestBody) {
+        Request putRequest = buildPutRequest(url, headers, (JSONObject) JSON.toJSON(requestBody));
+        sendRequestAsync(putRequest);
+    }
+
+    /**
+     * 异步put请求
+     *
+     * @param url 请求地址
+     * @param headers 请求头
+     * @param requestBody 请求体
+     * @param success 成功调用完成的后置处理
+     * @param failure 失败后调用的后置处理
+     */
+    public static void putAsync(String url, Map<String, String> headers, Object requestBody, Handler success,
+                                Handler failure) {
+        Request putRequest = buildPutRequest(url, headers, (JSONObject) JSON.toJSON(requestBody));
+        sendRequestAsync(putRequest, success, failure);
+    }
+    
 //    delete
 //    sync
 //    async

@@ -21,6 +21,7 @@
         <module>rate-limite</module>
         <module>schedule-common</module>
         <module>method-trace-log</module>
+        <module>trace-agent</module>
     </modules>
 
     <properties>
@@ -205,6 +206,7 @@
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper-starter.version}</version>
             </dependency>
+
 
 
 

@@ -27,7 +27,9 @@ public class LazyValue<T> implements Supplier<T> {
             return this.value;
         }
         synchronized (this){
-            this.value = doLoad();
+            if (this.value == null) {
+                this.value = doLoad();
+            }
         }
         return this.value;
     }

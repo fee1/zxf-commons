@@ -18,6 +18,8 @@ public class UserService {
 
 
     public UserModel searchUser(String name, String age) throws Exception {
+//        this.userCache.set();
+//        this.userCache.remove();
         return this.userCache.get(UserCacheKey.toKey(name, age));
     }
 

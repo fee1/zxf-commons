@@ -7,7 +7,7 @@ public class Base64UtilTest {
 
     @Test
     void encrypt() {
-        String s = "abc123";
+        String s = "gaoqianxiaodui123";
         String encryptS = Base64Util.encrypt(s);
         System.out.println(encryptS);
         String decryptS = Base64Util.decrypt(encryptS);

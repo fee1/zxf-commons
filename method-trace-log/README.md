@@ -1,3 +1,8 @@
+# 原理
+```text
+    AspectJ使用Java代理来在类加载时织入代码，这种方式称为Load-time weaving（LTW），它是一种在类加载期间动态织入切面的技术。
+通过Java代理和AspectJ的weaver，AspectJ可以在目标类加载到内存之前，将切面的逻辑织入到目标类中，实现AOP（面向切面编程）的功能。
+```
 # 优化
 ```text
 修改成为配置文件的方式，根据需要自由配置
@@ -11,6 +16,7 @@
 ```
 ## 使用
 ```text
+0.修改 AbstractMethod 包名为自己的项目包名
 1.mvn clean install -Dmaven.test.skip=true 命令生成jar包
 2.在启动参数中添加 -javaagent:aspectjweaver-1.8.13.jar
 ```

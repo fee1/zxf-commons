@@ -8,8 +8,9 @@ cache:
         enable: true # 是否开启guava缓存功能
       redis:
         enable: true # 是否开启redis缓存功能
-        hosts: 192.168.137.135:6379 # redis ip host
+        hosts: 127.0.0.1:6379 # redis ip host
         prefix-key: test-common # 项目缓存key前缀，用于区分不同的项目
+#        timeout: 84600 # 支持各缓存自己设置自己的默认过期时间，没设置有默认值
 
 ######### old
 #  type: guava # or redis
