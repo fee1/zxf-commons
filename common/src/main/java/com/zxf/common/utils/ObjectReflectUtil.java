@@ -129,4 +129,8 @@ public class ObjectReflectUtil {
         return constructor.newInstance(params);
     }
 
+    /**
+     * 获取对象定义的泛型，泛型会被擦除成Object类型，只能通过泛型new出来的类型去获取实际的类型
+     */
+
 }
