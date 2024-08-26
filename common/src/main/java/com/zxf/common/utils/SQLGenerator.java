@@ -125,23 +125,28 @@ public class SQLGenerator {
             return String.format("%s %s :%s", fieldName, operator, fieldName);
         }
 
-        private void addCriterionAndParam(String fieldName, Object value, String operator) {
-            addCriterion(this.simpleValueCondition(fieldName, operator));
-            addParams(fieldName, value);
-        }
-
-        private void addCriterionAndParam(String fieldName, Object value1, Object value2,String operator) {
-            addCriterion(this.betweenValueCondition(fieldName, operator));
-            addParams(fieldName + "1", value1);
-            addParams(fieldName + "2", value2);
-        }
-
-        private String matchCondition(String fieldName, String operator) {
-            return String.format("%s %s:%s", fieldName, operator, fieldName);
-        }
-
         private String multiValueCondition(String fieldName, String operator) {
             return String.format("%s %s:(%s)", fieldName, operator, fieldName);
+        }
+
+        private void addCriterionAndParam(boolean condition,String fieldName, Object value, String operator) {
+            if (condition) {
+                if (value instanceof List){
+                    addCriterion(this.multiValueCondition(fieldName, operator));
+                    addParams(fieldName, value);
+                }else {
+                    addCriterion(this.simpleValueCondition(fieldName, operator));
+                    addParams(fieldName, value);
+                }
+            }
+        }
+
+        private void addCriterionAndParam(boolean condition,String fieldName, Object value1, Object value2,String operator) {
+            if (condition) {
+                addCriterion(this.betweenValueCondition(fieldName, operator));
+                addParams(fieldName + "1", value1);
+                addParams(fieldName + "2", value2);
+            }
         }
 
         private String betweenValueCondition(String fieldName, String operator) {
@@ -162,63 +167,121 @@ public class SQLGenerator {
             return (Criteria) this;
         }
 
+        public Criteria andEqualTo(boolean condition,String fieldName, Object value) {
+            addCriterionAndParam(condition,fieldName, value, "=");
+            return (Criteria) this;
+        }
+
         public Criteria andEqualTo(String fieldName, Object value) {
-            addCriterionAndParam(fieldName, value, "=");
+            return this.andEqualTo(true, fieldName, value);
+        }
+
+        public Criteria andNotEqualTo(boolean condition,String fieldName, Object value) {
+            addCriterionAndParam(condition,fieldName, value, "<>");
             return (Criteria) this;
         }
 
         public Criteria andNotEqualTo(String fieldName, Object value) {
-            addCriterionAndParam(fieldName, value, "<>");
+            return this.andNotEqualTo(true, fieldName, value);
+        }
+
+        public Criteria andGreaterThan(boolean condition,String fieldName, Object value) {
+            addCriterionAndParam(condition,fieldName, value, ">");
             return (Criteria) this;
         }
 
         public Criteria andGreaterThan(String fieldName, Object value) {
-            addCriterionAndParam(fieldName, value, ">");
+            this.andGreaterThan(true, fieldName, value);
+            return (Criteria) this;
+        }
+
+        public Criteria andGreaterThanOrEqualTo(boolean condition,String fieldName, Object value) {
+            addCriterionAndParam(condition,fieldName, value, ">=");
             return (Criteria) this;
         }
 
         public Criteria andGreaterThanOrEqualTo(String fieldName, Object value) {
-            addCriterionAndParam(fieldName, value, ">=");
+            this.andGreaterThanOrEqualTo(true, fieldName, value);
+            return (Criteria) this;
+        }
+
+        public Criteria andLessThan(boolean condition,String fieldName,Object value) {
+            addCriterionAndParam(condition,fieldName, value, "<");
             return (Criteria) this;
         }
 
         public Criteria andLessThan(String fieldName,Object value) {
-            addCriterionAndParam(fieldName, value, "<");
+            this.andLessThan(true, fieldName, value);
+            return (Criteria) this;
+        }
+
+        public Criteria andLessThanOrEqualTo(boolean condition,String fieldName,Object value) {
+            addCriterionAndParam(condition,fieldName, value, "<=");
             return (Criteria) this;
         }
 
         public Criteria andLessThanOrEqualTo(String fieldName,Object value) {
-            addCriterionAndParam(fieldName, value, "<=");
+            this.andLessThanOrEqualTo(true, fieldName, value);
+            return (Criteria) this;
+        }
+
+        public Criteria andLike(boolean condition,String fieldName,Object value) {
+            addCriterionAndParam(condition,fieldName, value, "like");
             return (Criteria) this;
         }
 
         public Criteria andLike(String fieldName,Object value) {
-            addCriterionAndParam(fieldName, value, "like");
+            this.andLike(true, fieldName, value);
+            return (Criteria) this;
+        }
+
+        public Criteria andNotLike(boolean condition,String fieldName,Object value) {
+            addCriterionAndParam(condition,fieldName, value, "not like");
             return (Criteria) this;
         }
 
         public Criteria andNotLike(String fieldName,Object value) {
-            addCriterionAndParam(fieldName, value, "not like");
+            this.andNotLike(true, fieldName, value);
+            return (Criteria) this;
+        }
+
+        public Criteria andIn(boolean condition,String fieldName,List<Object> values) {
+            addCriterionAndParam(condition,fieldName, values, "in");
             return (Criteria) this;
         }
 
         public Criteria andIn(String fieldName,List<Object> values) {
-            addCriterionAndParam(fieldName, values, "in");
+            this.andIn(true, fieldName, values);
+            return (Criteria) this;
+        }
+
+        public Criteria andNotIn(boolean condition,String fieldName, List<Object> values) {
+            addCriterionAndParam(condition,fieldName, values, "not in");
             return (Criteria) this;
         }
 
         public Criteria andNotIn(String fieldName, List<Object> values) {
-            addCriterionAndParam(fieldName, values, "not in");
+            this.andNotIn(true, fieldName, values);
+            return (Criteria) this;
+        }
+
+        public Criteria andBetween(boolean condition,String fieldName, Object value1, Object value2) {
+            addCriterionAndParam(condition,fieldName, value1, value2,"between");
             return (Criteria) this;
         }
 
         public Criteria andBetween(String fieldName, Object value1, Object value2) {
-            addCriterionAndParam(fieldName, value1, value2,"between");
+            this.andBetween(true, fieldName, value1, value2);
+            return (Criteria) this;
+        }
+
+        public Criteria andNotBetween(boolean condition,String fieldName, Object value1, Object value2) {
+            addCriterionAndParam(condition,fieldName, value1, value2,"not between");
             return (Criteria) this;
         }
 
         public Criteria andNotBetween(String fieldName, Object value1, Object value2) {
-            addCriterionAndParam(fieldName, value1, value2,"not between");
+            this.andNotBetween(true, fieldName, value1, value2);
             return (Criteria) this;
         }
 
@@ -318,7 +381,6 @@ public class SQLGenerator {
     }
 
     public String generatorSql(){
-        //获取类型的泛型，获取类名
         String simpleName = tableClass.getSimpleName();
         //类名从驼峰变成下划线的方式
         String tableName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, simpleName);
