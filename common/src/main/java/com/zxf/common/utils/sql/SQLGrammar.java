@@ -54,7 +54,7 @@ public class SQLGrammar {
 
     private List<String> selects;
 
-    private List<cn.mezeron.jianzan.utils.sql.Criteria> oredCriteria;
+    private List<Criteria> oredCriteria;
 
     private String orderByClause;
 
@@ -77,16 +77,16 @@ public class SQLGrammar {
         return this;
     }
 
-    public cn.mezeron.jianzan.utils.sql.Criteria where(){
-        cn.mezeron.jianzan.utils.sql.Criteria criteria = createCriteria();
+    public Criteria where(){
+        Criteria criteria = createCriteria();
         if (oredCriteria.size() == 0) {
             oredCriteria.add(criteria);
         }
         return criteria;
     }
 
-    public cn.mezeron.jianzan.utils.sql.Criteria createCriteria() {
-        cn.mezeron.jianzan.utils.sql.Criteria criteria = new cn.mezeron.jianzan.utils.sql.Criteria();
+    public Criteria createCriteria() {
+        Criteria criteria = new Criteria();
         return criteria;
     }
 
@@ -105,12 +105,12 @@ public class SQLGrammar {
             sql = "select * from " + tableName;
         }
         List<String> conditionList = new ArrayList<>();
-        for (cn.mezeron.jianzan.utils.sql.Criteria criteria : oredCriteria) {
+        for (Criteria criteria : oredCriteria) {
             if (criteria.isValid()){
 //                String condition = criteria.getCriteria().stream().map(Criterion::getCondition).collect(Collectors.joining(" and "));
                 StringBuilder condition = new StringBuilder();
-                for (cn.mezeron.jianzan.utils.sql.Criterion criterion : criteria.getCriteria()) {
-                    String symbol = criterion.getConnectSymbol() == null ? cn.mezeron.jianzan.utils.sql.ConnectSymbols.SPACE : criterion.getConnectSymbol().getSymbol();
+                for (Criterion criterion : criteria.getCriteria()) {
+                    String symbol = criterion.getConnectSymbol() == null ? ConnectSymbols.SPACE : criterion.getConnectSymbol().getSymbol();
                     condition.append(" ").append(symbol).append(" ").append(criterion.getCondition());
                 }
                 conditionList.add(" ( " + condition + " ) ");

@@ -10,13 +10,13 @@ import java.util.Map;
  * @date 2024/8/28
  */
 abstract class GeneratedCriteria {
-    protected List<cn.mezeron.jianzan.utils.sql.Criterion> criteria;
+    protected List<Criterion> criteria;
 
     protected Map<String, Object> params;
 
     protected GeneratedCriteria() {
         super();
-        criteria = new ArrayList<cn.mezeron.jianzan.utils.sql.Criterion>();
+        criteria = new ArrayList<Criterion>();
         params = new HashMap<>();
     }
 
@@ -24,7 +24,7 @@ abstract class GeneratedCriteria {
         return criteria.size() > 0;
     }
 
-    protected List<cn.mezeron.jianzan.utils.sql.Criterion> getCriteria() {
+    protected List<Criterion> getCriteria() {
         return criteria;
     }
 
@@ -36,8 +36,8 @@ abstract class GeneratedCriteria {
         if (condition == null) {
             throw new RuntimeException("Value for condition cannot be null");
         }
-        cn.mezeron.jianzan.utils.sql.Criterion criterion = new cn.mezeron.jianzan.utils.sql.Criterion(condition);
-        cn.mezeron.jianzan.utils.sql.Criteria criteria = (cn.mezeron.jianzan.utils.sql.Criteria) this;
+        Criterion criterion = new Criterion(condition);
+        Criteria criteria = (Criteria) this;
         criterion.setConnectSymbol(criteria.getConnectSymbol());
         this.criteria.add(criterion);
     }
@@ -206,134 +206,134 @@ abstract class GeneratedCriteria {
 //        return (Criteria) this;
 //    }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols isNull(String fieldName) {
+    public ConnectSymbols isNull(String fieldName) {
         addCriterion(fieldName + " is null");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols isNotNull(String fieldName) {
+    public ConnectSymbols isNotNull(String fieldName) {
         addCriterion(fieldName + " is not null");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols equalTo(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols equalTo(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "=");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols equalTo(String fieldName, Object value) {
+    public ConnectSymbols equalTo(String fieldName, Object value) {
         this.equalTo(true, fieldName, value);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols notEqualTo(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols notEqualTo(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "<>");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols notEqualTo(String fieldName, Object value) {
+    public ConnectSymbols notEqualTo(String fieldName, Object value) {
         this.notEqualTo(true, fieldName, value);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols greaterThan(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols greaterThan(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, ">");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols greaterThan(String fieldName, Object value) {
+    public ConnectSymbols greaterThan(String fieldName, Object value) {
         this.greaterThan(true, fieldName, value);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols greaterThanOrEqualTo(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols greaterThanOrEqualTo(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, ">=");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols greaterThanOrEqualTo(String fieldName, Object value) {
+    public ConnectSymbols greaterThanOrEqualTo(String fieldName, Object value) {
         this.greaterThanOrEqualTo(true, fieldName, value);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols lessThan(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols lessThan(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "<");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols lessThan(String fieldName, Object value) {
+    public ConnectSymbols lessThan(String fieldName, Object value) {
         this.lessThan(true, fieldName, value);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols lessThanOrEqualTo(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols lessThanOrEqualTo(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "<=");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols lessThanOrEqualTo(String fieldName, Object value) {
+    public ConnectSymbols lessThanOrEqualTo(String fieldName, Object value) {
         this.lessThanOrEqualTo(true, fieldName, value);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols like(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols like(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "like");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols like(String fieldName, Object value) {
+    public ConnectSymbols like(String fieldName, Object value) {
         this.like(true, fieldName, value);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols notLike(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols notLike(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "not like");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols notLike(String fieldName, Object value) {
+    public ConnectSymbols notLike(String fieldName, Object value) {
         this.notLike(true, fieldName, value);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols in(boolean condition, String fieldName, List<Object> values) {
+    public ConnectSymbols in(boolean condition, String fieldName, List<Object> values) {
         addCriterionParam(condition,fieldName, values, "in");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols in(String fieldName, List<Object> values) {
+    public ConnectSymbols in(String fieldName, List<Object> values) {
         this.in(true, fieldName, values);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols notIn(boolean condition, String fieldName, List<Object> values) {
+    public ConnectSymbols notIn(boolean condition, String fieldName, List<Object> values) {
         addCriterionParam(condition,fieldName, values, "not in");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols notIn(String fieldName, List<Object> values) {
+    public ConnectSymbols notIn(String fieldName, List<Object> values) {
         this.notIn(true, fieldName, values);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols between(boolean condition, String fieldName, Object value1, Object value2) {
+    public ConnectSymbols between(boolean condition, String fieldName, Object value1, Object value2) {
         addCriterionParam(condition,fieldName, value1, value2,"between");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols between(String fieldName, Object value1, Object value2) {
+    public ConnectSymbols between(String fieldName, Object value1, Object value2) {
         this.between(true, fieldName, value1, value2);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols notBetween(boolean condition, String fieldName, Object value1, Object value2) {
+    public ConnectSymbols notBetween(boolean condition, String fieldName, Object value1, Object value2) {
         addCriterionParam(condition,fieldName, value1, value2,"not between");
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
-    public cn.mezeron.jianzan.utils.sql.ConnectSymbols notBetween(String fieldName, Object value1, Object value2) {
+    public ConnectSymbols notBetween(String fieldName, Object value1, Object value2) {
         this.notBetween(true, fieldName, value1, value2);
-        return new cn.mezeron.jianzan.utils.sql.ConnectSymbols((cn.mezeron.jianzan.utils.sql.Criteria) this);
+        return new ConnectSymbols((Criteria) this);
     }
 
 }

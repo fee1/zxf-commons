@@ -9,17 +9,17 @@ import java.util.List;
  */
 public class Criteria extends GeneratedCriteria {
 
-    private cn.mezeron.jianzan.utils.sql.ConnectSymbols connectSymbol;
+    private ConnectSymbols connectSymbol;
 
     protected Criteria() {
         super();
     }
 
-    protected void setConnectSymbol(cn.mezeron.jianzan.utils.sql.ConnectSymbols connectSymbol) {
+    protected void setConnectSymbol(ConnectSymbols connectSymbol) {
         this.connectSymbol = connectSymbol;
     }
 
-    protected cn.mezeron.jianzan.utils.sql.ConnectSymbols getConnectSymbol() {
+    protected ConnectSymbols getConnectSymbol() {
         return connectSymbol;
     }
 
@@ -30,12 +30,12 @@ public class Criteria extends GeneratedCriteria {
 //        return (Criteria) this;
 //    }
 
-    public Criteria complex(cn.mezeron.jianzan.utils.sql.ConnectSymbols connectSymbol){
+    public Criteria complex(ConnectSymbols connectSymbol){
         Criteria criteria = connectSymbol.getCriteria();
-        List<cn.mezeron.jianzan.utils.sql.Criterion> criterionList = criteria.getCriteria();
+        List<Criterion> criterionList = criteria.getCriteria();
         StringBuilder complexCondition = new StringBuilder();
-        for (cn.mezeron.jianzan.utils.sql.Criterion criterion : criterionList) {
-            String symbol = criterion.getConnectSymbol() == null ? cn.mezeron.jianzan.utils.sql.ConnectSymbols.SPACE : criterion.getConnectSymbol().getSymbol();
+        for (Criterion criterion : criterionList) {
+            String symbol = criterion.getConnectSymbol() == null ? ConnectSymbols.SPACE : criterion.getConnectSymbol().getSymbol();
             complexCondition.append(" ").append(symbol).append(" ").append(criterion.getCondition());
         }
 //        String complexCondition = criterionList.stream().map(Criterion::getCondition).collect(Collectors.joining(" or "));
