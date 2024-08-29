@@ -1,5 +1,7 @@
 package com.zxf.common.utils.sql;
 
+import com.zxf.common.utils.sql.u.LambdaUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,14 +11,14 @@ import java.util.Map;
  * @author zhuxiaofeng
  * @date 2024/8/28
  */
-abstract class GeneratedCriteria {
-    protected List<Criterion> criteria;
+abstract class GeneratedCriteria<T> {
+    protected List<Criterion<T>> criteria;
 
     protected Map<String, Object> params;
 
     protected GeneratedCriteria() {
         super();
-        criteria = new ArrayList<Criterion>();
+        criteria = new ArrayList<Criterion<T>>();
         params = new HashMap<>();
     }
 
@@ -24,7 +26,7 @@ abstract class GeneratedCriteria {
         return criteria.size() > 0;
     }
 
-    protected List<Criterion> getCriteria() {
+    protected List<Criterion<T>> getCriteria() {
         return criteria;
     }
 
@@ -36,8 +38,8 @@ abstract class GeneratedCriteria {
         if (condition == null) {
             throw new RuntimeException("Value for condition cannot be null");
         }
-        Criterion criterion = new Criterion(condition);
-        Criteria criteria = (Criteria) this;
+        Criterion<T> criterion = new Criterion<T>(condition);
+        Criteria<T> criteria = (Criteria<T>) this;
         criterion.setConnectSymbol(criteria.getConnectSymbol());
         this.criteria.add(criterion);
     }
@@ -206,134 +208,265 @@ abstract class GeneratedCriteria {
 //        return (Criteria) this;
 //    }
 
-    public ConnectSymbols isNull(String fieldName) {
+    public ConnectSymbols<T> isNull(String fieldName) {
         addCriterion(fieldName + " is null");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols isNotNull(String fieldName) {
+    public ConnectSymbols<T> isNull(SFunction<T, ?> fieldName) {
+        addCriterion(LambdaUtil.columnToString(fieldName) + " is null");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> isNotNull(String fieldName) {
         addCriterion(fieldName + " is not null");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols equalTo(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols<T> isNotNull(SFunction<T, ?> fieldName) {
+        addCriterion(LambdaUtil.columnToString(fieldName) + " is not null");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> equalTo(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "=");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols equalTo(String fieldName, Object value) {
+    public ConnectSymbols<T> equalTo(boolean condition, SFunction<T, ?> fieldName, Object value) {
+        addCriterionParam(condition, LambdaUtil.columnToString(fieldName), value, "=");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> equalTo(String fieldName, Object value) {
         this.equalTo(true, fieldName, value);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols notEqualTo(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols<T> equalTo(SFunction<T, ?> fieldName, Object value) {
+        this.equalTo(true, fieldName, value);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+
+    public ConnectSymbols<T> notEqualTo(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "<>");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols notEqualTo(String fieldName, Object value) {
+    public ConnectSymbols<T> notEqualTo(boolean condition, SFunction<T, ?> fieldName, Object value) {
+        addCriterionParam(condition,LambdaUtil.columnToString(fieldName), value, "<>");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> notEqualTo(String fieldName, Object value) {
         this.notEqualTo(true, fieldName, value);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols greaterThan(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols<T> notEqualTo(SFunction<T, ?> fieldName, Object value) {
+        this.notEqualTo(true, fieldName, value);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> greaterThan(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, ">");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols greaterThan(String fieldName, Object value) {
+    public ConnectSymbols<T> greaterThan(boolean condition, SFunction<T, ?> fieldName, Object value) {
+        addCriterionParam(condition,LambdaUtil.columnToString(fieldName), value, ">");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> greaterThan(String fieldName, Object value) {
         this.greaterThan(true, fieldName, value);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols greaterThanOrEqualTo(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols<T> greaterThan(SFunction<T, ?> fieldName, Object value) {
+        this.greaterThan(true, fieldName, value);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> greaterThanOrEqualTo(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, ">=");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols greaterThanOrEqualTo(String fieldName, Object value) {
+    public ConnectSymbols<T> greaterThanOrEqualTo(boolean condition, SFunction<T, ?> fieldName, Object value) {
+        addCriterionParam(condition, LambdaUtil.columnToString(fieldName), value, ">=");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> greaterThanOrEqualTo(String fieldName, Object value) {
         this.greaterThanOrEqualTo(true, fieldName, value);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols lessThan(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols<T> greaterThanOrEqualTo(SFunction<T, ?> fieldName, Object value) {
+        this.greaterThanOrEqualTo(true, fieldName, value);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> lessThan(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "<");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols lessThan(String fieldName, Object value) {
+    public ConnectSymbols<T> lessThan(boolean condition, SFunction<T, ?> fieldName, Object value) {
+        addCriterionParam(condition,LambdaUtil.columnToString(fieldName), value, "<");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> lessThan(String fieldName, Object value) {
         this.lessThan(true, fieldName, value);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols lessThanOrEqualTo(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols<T> lessThan(SFunction<T, ?> fieldName, Object value) {
+        this.lessThan(true, fieldName, value);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> lessThanOrEqualTo(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "<=");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols lessThanOrEqualTo(String fieldName, Object value) {
+    public ConnectSymbols<T> lessThanOrEqualTo(boolean condition, SFunction<T, ?> fieldName, Object value) {
+        addCriterionParam(condition,LambdaUtil.columnToString(fieldName), value, "<=");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> lessThanOrEqualTo(String fieldName, Object value) {
         this.lessThanOrEqualTo(true, fieldName, value);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols like(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols<T> lessThanOrEqualTo(SFunction<T, ?> fieldName, Object value) {
+        this.lessThanOrEqualTo(true, fieldName, value);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> like(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "like");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols like(String fieldName, Object value) {
+    public ConnectSymbols<T> like(boolean condition, SFunction<T, ?> fieldName, Object value) {
+        addCriterionParam(condition,LambdaUtil.columnToString(fieldName), value, "like");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> like(String fieldName, Object value) {
         this.like(true, fieldName, value);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols notLike(boolean condition, String fieldName, Object value) {
+    public ConnectSymbols<T> like(SFunction<T, ?> fieldName, Object value) {
+        this.like(true, fieldName, value);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> notLike(boolean condition, String fieldName, Object value) {
         addCriterionParam(condition,fieldName, value, "not like");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols notLike(String fieldName, Object value) {
+    public ConnectSymbols<T> notLike(boolean condition, SFunction<T, ?> fieldName, Object value) {
+        addCriterionParam(condition,LambdaUtil.columnToString(fieldName), value, "not like");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> notLike(String fieldName, Object value) {
         this.notLike(true, fieldName, value);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols in(boolean condition, String fieldName, List<Object> values) {
+    public ConnectSymbols<T> notLike(SFunction<T, ?> fieldName, Object value) {
+        this.notLike(true, fieldName, value);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> in(boolean condition, String fieldName, List<Object> values) {
         addCriterionParam(condition,fieldName, values, "in");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols in(String fieldName, List<Object> values) {
+    public ConnectSymbols<T> in(boolean condition, SFunction<T, ?> fieldName, List<Object> values) {
+        addCriterionParam(condition,LambdaUtil.columnToString(fieldName), values, "in");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> in(String fieldName, List<Object> values) {
         this.in(true, fieldName, values);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols notIn(boolean condition, String fieldName, List<Object> values) {
+    public ConnectSymbols<T> in(SFunction<T, ?> fieldName, List<Object> values) {
+        this.in(true, fieldName, values);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> notIn(boolean condition, String fieldName, List<Object> values) {
         addCriterionParam(condition,fieldName, values, "not in");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols notIn(String fieldName, List<Object> values) {
+    public ConnectSymbols<T> notIn(boolean condition, SFunction<T, ?> fieldName, List<Object> values) {
+        addCriterionParam(condition,LambdaUtil.columnToString(fieldName), values, "not in");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> notIn(String fieldName, List<Object> values) {
         this.notIn(true, fieldName, values);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols between(boolean condition, String fieldName, Object value1, Object value2) {
+    public ConnectSymbols<T> notIn(SFunction<T, ?> fieldName, List<Object> values) {
+        this.notIn(true, fieldName, values);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> between(boolean condition, String fieldName, Object value1, Object value2) {
         addCriterionParam(condition,fieldName, value1, value2,"between");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols between(String fieldName, Object value1, Object value2) {
+    public ConnectSymbols<T> between(boolean condition, SFunction<T, ?> fieldName, Object value1, Object value2) {
+        addCriterionParam(condition,LambdaUtil.columnToString(fieldName), value1, value2,"between");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> between(String fieldName, Object value1, Object value2) {
         this.between(true, fieldName, value1, value2);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols notBetween(boolean condition, String fieldName, Object value1, Object value2) {
+    public ConnectSymbols<T> between(SFunction<T, ?> fieldName, Object value1, Object value2) {
+        this.between(true, fieldName, value1, value2);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> notBetween(boolean condition, String fieldName, Object value1, Object value2) {
         addCriterionParam(condition,fieldName, value1, value2,"not between");
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
-    public ConnectSymbols notBetween(String fieldName, Object value1, Object value2) {
+    public ConnectSymbols<T> notBetween(boolean condition, SFunction<T, ?> fieldName, Object value1, Object value2) {
+        addCriterionParam(condition,LambdaUtil.columnToString(fieldName), value1, value2,"not between");
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> notBetween(String fieldName, Object value1, Object value2) {
         this.notBetween(true, fieldName, value1, value2);
-        return new ConnectSymbols((Criteria) this);
+        return new ConnectSymbols<T>((Criteria<T>) this);
+    }
+
+    public ConnectSymbols<T> notBetween(SFunction<T, ?> fieldName, Object value1, Object value2) {
+        this.notBetween(true, fieldName, value1, value2);
+        return new ConnectSymbols<T>((Criteria<T>) this);
     }
 
 }

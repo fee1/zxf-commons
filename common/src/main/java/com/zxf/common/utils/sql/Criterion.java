@@ -6,7 +6,7 @@ import java.util.List;
  * @author zhuxiaofeng
  * @date 2024/8/28
  */
-public class Criterion {
+public class Criterion<T> {
     private String condition;
 
     private Object value;
@@ -21,15 +21,15 @@ public class Criterion {
 
     private boolean listValue;
 
-    private ConnectSymbols connectSymbol;
+    private ConnectSymbols<T> connectSymbol;
 
     private String typeHandler;
 
-    public ConnectSymbols getConnectSymbol() {
+    public ConnectSymbols<T> getConnectSymbol() {
         return connectSymbol;
     }
 
-    public void setConnectSymbol(ConnectSymbols connectSymbol) {
+    public void setConnectSymbol(ConnectSymbols<T> connectSymbol) {
         this.connectSymbol = connectSymbol;
     }
 

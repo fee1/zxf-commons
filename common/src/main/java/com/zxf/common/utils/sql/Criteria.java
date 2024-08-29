@@ -7,19 +7,19 @@ import java.util.List;
  * @author zhuxiaofeng
  * @date 2024/8/28
  */
-public class Criteria extends GeneratedCriteria {
+public class Criteria<T> extends GeneratedCriteria<T> {
 
-    private ConnectSymbols connectSymbol;
+    private ConnectSymbols<T> connectSymbol;
 
     protected Criteria() {
         super();
     }
 
-    protected void setConnectSymbol(ConnectSymbols connectSymbol) {
+    protected void setConnectSymbol(ConnectSymbols<T> connectSymbol) {
         this.connectSymbol = connectSymbol;
     }
 
-    protected ConnectSymbols getConnectSymbol() {
+    protected ConnectSymbols<T> getConnectSymbol() {
         return connectSymbol;
     }
 
@@ -30,18 +30,18 @@ public class Criteria extends GeneratedCriteria {
 //        return (Criteria) this;
 //    }
 
-    public Criteria complex(ConnectSymbols connectSymbol){
-        Criteria criteria = connectSymbol.getCriteria();
-        List<Criterion> criterionList = criteria.getCriteria();
+    public Criteria<T> complex(ConnectSymbols<T> connectSymbol){
+        Criteria<T> criteria = connectSymbol.getCriteria();
+        List<Criterion<T>> criterionList = criteria.getCriteria();
         StringBuilder complexCondition = new StringBuilder();
-        for (Criterion criterion : criterionList) {
+        for (Criterion<T> criterion : criterionList) {
             String symbol = criterion.getConnectSymbol() == null ? ConnectSymbols.SPACE : criterion.getConnectSymbol().getSymbol();
             complexCondition.append(" ").append(symbol).append(" ").append(criterion.getCondition());
         }
 //        String complexCondition = criterionList.stream().map(Criterion::getCondition).collect(Collectors.joining(" or "));
         this.addCriterion("( " +complexCondition +" )");
         this.params.putAll(criteria.getParams());
-        return (Criteria) this;
+        return (Criteria<T>) this;
     }
 
 }

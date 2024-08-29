@@ -4,7 +4,7 @@ package com.zxf.common.utils.sql;
  * @author zhuxiaofeng
  * @date 2024/8/28
  */
-public class ConnectSymbols {
+public class ConnectSymbols<T> {
 
     public static final String AND = "AND";
 
@@ -16,27 +16,27 @@ public class ConnectSymbols {
 
     public static final String SPACE = " ";
 
-    private Criteria criteria;
+    private Criteria<T> criteria;
 
     private String symbol = "";
 
-    public ConnectSymbols(Criteria criteria){
+    public ConnectSymbols(Criteria<T> criteria){
         this.criteria = criteria;
     }
 
-    public Criteria and(){
+    public Criteria<T> and(){
         this.symbol = AND;
         this.criteria.setConnectSymbol(this);
         return this.criteria;
     }
 
-    public Criteria or(){
+    public Criteria<T> or(){
         this.symbol = OR;
         this.criteria.setConnectSymbol(this);
         return this.criteria;
     }
 
-    protected Criteria getCriteria() {
+    protected Criteria<T> getCriteria() {
         return criteria;
     }
 

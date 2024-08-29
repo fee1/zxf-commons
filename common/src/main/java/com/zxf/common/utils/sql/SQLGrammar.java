@@ -2,19 +2,27 @@ package com.zxf.common.utils.sql;
 
 
 import com.google.common.base.CaseFormat;
+import com.zxf.common.utils.sql.u.LambdaUtil;
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
+ * SQL 生成器规则，只做sql语言的拼接，目前拼装方式属于hibernate的sql语法，不支持mybatis的sql语法
+ *
+ * TODO 自动获取表名，无需传入
+ *
  * @author zhuxiaofeng
  * @date 2024/8/28
  */
-public class SQLGrammar {
+public class SQLGrammar<T> {
 
     private static final String SELECT = "SELECT ";
 
@@ -50,15 +58,17 @@ public class SQLGrammar {
 
     private static final String IN = " IN ";
 
-    private Class<?> entityClass;
+    private Class<T> entityClass;
 
     private List<String> selects;
 
-    private List<Criteria> oredCriteria;
+    private List<Criteria<T>> oredCriteria;
 
     private String orderByClause;
 
     private Map<String, Object> allParams;
+
+    private String tableName;
 
     public SQLGrammar(){
         this.selects = new ArrayList<>();
@@ -67,37 +77,94 @@ public class SQLGrammar {
         orderByClause = "";
     }
 
-    public SQLGrammar select(String... selects){
+    /**
+     * 查询的字段或使用函数操作列
+     * @param selects
+     * @return
+     */
+    public SQLGrammar<T> select(String... selects){
         this.selects = Arrays.asList(selects);
         return this;
     }
 
-    public SQLGrammar from(Class<?> entityClass){
+    /**
+     * 查询的字段或使用函数操作列
+     * @return
+     */
+    @SafeVarargs
+    public final SQLGrammar<T> select(SFunction<T, ?>... columns) {
+        List<String> columnStringList =
+                Arrays.stream(columns).map(LambdaUtil::columnToString).collect(Collectors.toList());
+        this.selects.addAll(columnStringList);
+        return this;
+    }
+
+    /**
+     * 查询的表，表明默认为类名转下划线
+     * @param entityClass
+     * @return
+     */
+    public SQLGrammar<T> from(Class<T> entityClass){
         this.entityClass = entityClass;
         return this;
     }
 
-    public Criteria where(){
-        Criteria criteria = createCriteria();
+    /**
+     * 获取查询添加编辑器
+     * @return
+     */
+    public Criteria<T> where(){
+        Criteria<T> criteria = createCriteria();
         if (oredCriteria.size() == 0) {
             oredCriteria.add(criteria);
         }
         return criteria;
     }
 
-    public Criteria createCriteria() {
-        Criteria criteria = new Criteria();
+    public SQLGrammar<T> orderByAsc(String... fileName){
+        this.orderByClause = String.join(",", fileName) + ASC;
+        return this;
+    }
+
+    public SQLGrammar<T> orderByAsc(SFunction<T, ?>... fileName){
+        List<String> fileNameList =
+                Arrays.stream(fileName).map(LambdaUtil::columnToString).collect(Collectors.toList());
+        this.orderByClause = String.join(",", fileNameList) + ASC;
+        return this;
+    }
+
+    public SQLGrammar<T> orderByDesc(String... fileName){
+        this.orderByClause = String.join(",", fileName) + DESC;
+        return this;
+    }
+
+    public SQLGrammar<T> orderByDesc(SFunction<T, ?>... fileName){
+        List<String> fileNameList =
+                Arrays.stream(fileName).map(LambdaUtil::columnToString).collect(Collectors.toList());
+        this.orderByClause = String.join(",", fileNameList) + DESC;
+        return this;
+    }
+
+    public Map<String, Object> getAllParams() {
+        return allParams;
+    }
+
+    /**
+     * 创造一个查询条件编辑器
+     * @return
+     */
+    public Criteria<T> createCriteria() {
+        Criteria<T> criteria = new Criteria<T>();
         return criteria;
     }
 
-    protected String getOrderByClause() {
-        return orderByClause;
-    }
-
     public String generatorSql(){
-        String simpleName = entityClass.getSimpleName();
+        String simpleName = tableName;
+        if (entityClass != null) {
+            simpleName = entityClass.getSimpleName();
+        }
         //类名从驼峰变成下划线的方式
-        String tableName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, simpleName);
+        tableName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, simpleName);
         String sql = "";
         if (!selects.isEmpty()) {
             sql = SELECT + String.join(",", selects) + FROM + tableName;
@@ -105,11 +172,11 @@ public class SQLGrammar {
             sql = SELECT + " * " + FROM + tableName;
         }
         List<String> conditionList = new ArrayList<>();
-        for (Criteria criteria : oredCriteria) {
+        for (Criteria<T> criteria : oredCriteria) {
             if (criteria.isValid()){
 //                String condition = criteria.getCriteria().stream().map(Criterion::getCondition).collect(Collectors.joining(" and "));
                 StringBuilder condition = new StringBuilder();
-                for (Criterion criterion : criteria.getCriteria()) {
+                for (Criterion<T> criterion : criteria.getCriteria()) {
                     String symbol = criterion.getConnectSymbol() == null ? ConnectSymbols.SPACE : criterion.getConnectSymbol().getSymbol();
                     condition.append(" ").append(symbol).append(" ").append(criterion.getCondition());
                 }
@@ -126,7 +193,4 @@ public class SQLGrammar {
         return sql;
     }
 
-    public Map<String, Object> getAllParams() {
-        return allParams;
-    }
 }
