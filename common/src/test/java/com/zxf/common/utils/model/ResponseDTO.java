@@ -1,9 +1,12 @@
 package com.zxf.common.utils.model;
 
+import lombok.Data;
+
 /**
  * @author zhuxiaofeng
  * @date 2022/11/30
  */
+@Data
 public class ResponseDTO {
 
     /**

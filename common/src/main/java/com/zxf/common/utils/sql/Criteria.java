@@ -7,41 +7,33 @@ import java.util.List;
  * @author zhuxiaofeng
  * @date 2024/8/28
  */
-public class Criteria<T> extends GeneratedCriteria<T> {
+public class Criteria extends GeneratedCriteria {
 
-    private ConnectSymbols<T> connectSymbol;
+    private ConnectSymbols connectSymbol;
 
-    protected Criteria() {
-        super();
+    protected Criteria(boolean multiTableQuery) {
+        super(multiTableQuery);
     }
 
-    protected void setConnectSymbol(ConnectSymbols<T> connectSymbol) {
+    protected void setConnectSymbol(ConnectSymbols connectSymbol) {
         this.connectSymbol = connectSymbol;
     }
 
-    protected ConnectSymbols<T> getConnectSymbol() {
+    protected ConnectSymbols getConnectSymbol() {
         return connectSymbol;
     }
 
-//    public Criteria complex(Criteria criteria){
-//        List<Criterion> criterionList = criteria.getCriteria();
-//        String complexCondition = criterionList.stream().map(Criterion::getCondition).collect(Collectors.joining(" or "));
-//        this.addCriterion("( " +complexCondition +" )");
-//        return (Criteria) this;
-//    }
-
-    public Criteria<T> complex(ConnectSymbols<T> connectSymbol){
-        Criteria<T> criteria = connectSymbol.getCriteria();
-        List<Criterion<T>> criterionList = criteria.getCriteria();
+    public ConnectSymbols complex(ConnectSymbols connectSymbol){
+        Criteria criteria = connectSymbol.getCriteria();
+        List<Criterion> criterionList = criteria.getCriteria();
         StringBuilder complexCondition = new StringBuilder();
-        for (Criterion<T> criterion : criterionList) {
-            String symbol = criterion.getConnectSymbol() == null ? ConnectSymbols.SPACE : criterion.getConnectSymbol().getSymbol();
+        for (Criterion criterion : criterionList) {
+            String symbol = criterion.getConnectSymbol() == null ? "" : criterion.getConnectSymbol().getSymbol();
             complexCondition.append(" ").append(symbol).append(" ").append(criterion.getCondition());
         }
-//        String complexCondition = criterionList.stream().map(Criterion::getCondition).collect(Collectors.joining(" or "));
-        this.addCriterion("( " +complexCondition +" )");
+        this.addCriterion("(" +complexCondition +")");
         this.params.putAll(criteria.getParams());
-        return (Criteria<T>) this;
+        return this.getConnectSymbol();
     }
 
 }
