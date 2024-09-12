@@ -69,4 +69,6 @@ runnable的子类run方法，但是不包含Spring定时任务下的线程类
     
     aop.xml
     <include within="com.zxf..*"/>
+
+特殊情况可能需要改包名
 ```
