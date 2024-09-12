@@ -1,3 +1,4 @@
+# 半废弃状态
 # 原理
 ```text
     AspectJ使用Java代理来在类加载时织入代码，这种方式称为Load-time weaving（LTW），它是一种在类加载期间动态织入切面的技术。
