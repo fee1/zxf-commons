@@ -58,3 +58,15 @@ runnable的子类run方法，但是不包含Spring定时任务下的线程类
 1. lambda创建的线程traceId的添加
 2. 线程池的traceId添加
 ```
+### 使用指南
+```text
+修改：AbstractMethod
+    @Pointcut("execution(* com.zxf..*.*(..))")
+    public void mustPointCutMethod(){}
+
+    @Pointcut("!execution(* com.zxf..*.lambda*(..))")
+    public void notPointCutLambdaMethod(){}
+    
+    aop.xml
+    <include within="com.zxf..*"/>
+```
