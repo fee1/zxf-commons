@@ -27,12 +27,16 @@ public class MethodCostTime {
             if (!TraceFatch.isExistTraceId()) {
                 MDC.put(Constants.TRACE_ID, TraceFatch.getTraceId());
             }
-//            log.debug( "{} is start", method);
+            // 切入run方法，没有意义
+//            log.debug( "{} is start", method.getName());
+//            System.out.println( method.getName()+" is start");
             // 原有函数执行
             return callable.call();
         } finally{
-//            log.debug("{} is end, cost: {} ms", method, (System.currentTimeMillis() - start));
-            // 由最外层run推掉traceId
+            // 切入run方法，没有意义
+//            log.debug("{} is end, cost: {} ms", method.getName(), (System.currentTimeMillis() - start));
+//            System.out.println( method.getName()+" is end, cost: "+(System.currentTimeMillis() - start));
+            // 由最外层run推掉traceId(run 嵌套 run)
             int interceptorTimes = 0;
             StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
             String traceMethodName = stackTrace[1].getMethodName();
