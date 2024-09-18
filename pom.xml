@@ -22,6 +22,7 @@
         <module>schedule-common</module>
         <module>method-trace-log</module>
         <module>trace-agent</module>
+        <module>db-common</module>
     </modules>
 
     <properties>
@@ -73,6 +74,7 @@
         <data-starter.version>1.0-SNAPSHOT</data-starter.version>
         <cat-link-tracking.version>1.0-SNAPSHOT</cat-link-tracking.version>
         <method-trace-log.version>1.0-SNAPSHOT</method-trace-log.version>
+        <db-common.version>1.0-SNAPSHOT</db-common.version>
     </properties>
 
     <!--管理工具包的版本，管理使用工具包的人的jar版本-->
@@ -256,6 +258,11 @@
                 <groupId>com.zxf</groupId>
                 <artifactId>method-trace-log</artifactId>
                 <version>${method-trace-log.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zxf</groupId>
+                <artifactId>db-common</artifactId>
+                <version>${db-common.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
