@@ -1,6 +1,5 @@
 package com.zxf.sql.grammar.jpa;
 
-import com.zxf.sql.grammar.AbstractGrammer;
 import com.zxf.sql.grammar.Criteria;
 import com.zxf.sql.grammar.IGrammer;
 import com.zxf.sql.grammar.JoinType;
@@ -20,7 +19,7 @@ import java.util.List;
  * @author zhuxiaofeng
  * @date 2024/9/18
  */
-public class JPAGrammar extends AbstractGrammer {
+public class JPAGrammar implements IGrammer {
 
     private List<SelectColumn<?>> selectColumns;
 
@@ -39,6 +38,10 @@ public class JPAGrammar extends AbstractGrammer {
         this.cb = entityManager.getCriteriaBuilder();
         this.cq = cb.createQuery(returnType);
         selectColumns = new ArrayList<>();
+    }
+
+    public Criteria build() {
+        return new Criteria(false);
     }
 
 

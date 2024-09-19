@@ -1,7 +1,8 @@
 package com.zxf.sql.grammar;
 
 
-import com.zxf.common.utils.sql.u.LambdaUtil;
+
+import com.zxf.sql.grammar.util.LambdaUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
