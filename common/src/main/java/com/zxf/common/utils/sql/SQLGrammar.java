@@ -7,6 +7,7 @@ import com.zxf.common.utils.sql.u.EntityUtil;
 import com.zxf.common.utils.sql.u.LambdaUtil;
 import org.apache.commons.lang3.AnnotationUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,7 +65,7 @@ public class SQLGrammar {
 
     private List<Criteria> oredCriteria;
 
-    private String orderByClause;
+    private List<String> orderByClauseList;
 
     private Map<String, Object> allParams;
 
@@ -82,7 +83,7 @@ public class SQLGrammar {
         this.selects = new ArrayList<>();
         this.oredCriteria = new ArrayList<>();
         this.allParams = new HashMap<>();
-        orderByClause = "";
+        orderByClauseList = new ArrayList<>();
         joinInfos = new ArrayList<>();
     }
 
@@ -187,7 +188,9 @@ public class SQLGrammar {
     }
 
     public SQLGrammar orderByAsc(String... fileName){
-        this.orderByClause = String.join(",", fileName) + ASC;
+        for (String name : fileName) {
+            this.orderByClauseList.add(name + ASC);
+        }
         return this;
     }
 
@@ -195,12 +198,16 @@ public class SQLGrammar {
     public final <T> SQLGrammar orderByAsc(SFunction<T, ?>... fileName){
         List<String> fileNameList =
                 Arrays.stream(fileName).map(item -> LambdaUtil.columnToString(true, item)).collect(Collectors.toList());
-        this.orderByClause = String.join(",", fileNameList) + ASC;
+        for (String name : fileNameList) {
+            this.orderByClauseList.add(name + ASC);
+        }
         return this;
     }
 
     public SQLGrammar orderByDesc(String... fileName){
-        this.orderByClause = String.join(",", fileName) + DESC;
+        for (String name : fileName) {
+            this.orderByClauseList.add(name + DESC);
+        }
         return this;
     }
 
@@ -208,12 +215,14 @@ public class SQLGrammar {
     public final <T> SQLGrammar orderByDesc(SFunction<T, ?>... fileName){
         List<String> fileNameList =
                 Arrays.stream(fileName).map(item -> LambdaUtil.columnToString(true, item)).collect(Collectors.toList());
-        this.orderByClause = String.join(",", fileNameList) + DESC;
+        for (String name : fileNameList) {
+            this.orderByClauseList.add(name + DESC);
+        }
         return this;
     }
 
     public SQLGrammar orderBy(String expression){
-        this.orderByClause = expression;
+        this.orderByClauseList.add(expression);
         return this;
     }
 
@@ -293,8 +302,8 @@ public class SQLGrammar {
         if (StringUtils.isNotEmpty(groupByClause)){
             sql.append(GROUP_BY).append(groupByClause);
         }
-        if (StringUtils.isNotEmpty(orderByClause)){
-            sql.append(ORDER_BY).append(orderByClause);
+        if (!CollectionUtils.isEmpty(orderByClauseList)){
+            sql.append(ORDER_BY).append(String.join(",", orderByClauseList));
         }
         if (limit != null){
             sql.append(LIMIT).append(limit);
