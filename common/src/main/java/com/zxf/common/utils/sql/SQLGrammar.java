@@ -276,11 +276,11 @@ public class SQLGrammar {
                 Criteria joinCondition = joinInfo.getJoinCondition();
                 StringBuilder condition = new StringBuilder();
                 for (Criterion criterion : joinCondition.getCriteria()) {
-                    String symbol = criterion.getConnectSymbol() == null ? ConnectSymbols.SPACE : criterion.getConnectSymbol().getSymbol();
-                    condition.append(" ").append(symbol).append(" ").append(criterion.getCondition());
+                    String symbol = criterion.getConnectSymbol() == null ? "" : criterion.getConnectSymbol().getSymbol();
+                    condition.append(symbol).append(" ").append(criterion.getCondition()).append(" ");
                 }
 
-                sql.append(" ").append(joinType).append(" ").append(joinTableName).append(" ON ").append(condition.toString());
+                sql.append(" ").append(joinType).append(" ").append(joinTableName).append(" ON ").append(condition);
             }
         }
         List<String> conditionList = new ArrayList<>();
@@ -290,7 +290,7 @@ public class SQLGrammar {
                 StringBuilder condition = new StringBuilder();
                 for (Criterion criterion : criteria.getCriteria()) {
                     String symbol = criterion.getConnectSymbol() == null ? "" : criterion.getConnectSymbol().getSymbol();
-                    condition.append(" ").append(symbol).append(" ").append(criterion.getCondition());
+                    condition.append(symbol).append(" ").append(criterion.getCondition()).append(" ");
                 }
                 conditionList.add(" (" + condition + ")");
                 this.allParams.putAll(criteria.getParams());

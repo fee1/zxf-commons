@@ -36,4 +36,11 @@ public class Criteria extends GeneratedCriteria {
         return this.getConnectSymbol();
     }
 
+    public ConnectSymbols complex(boolean condition,ConnectSymbols connectSymbol){
+        if (condition) {
+            return complex(connectSymbol);
+        }
+        return this.getConnectSymbol();
+    }
+
 }
