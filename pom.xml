@@ -23,6 +23,7 @@
         <module>method-trace-log</module>
         <module>trace-agent</module>
         <module>db-common</module>
+        <module>jpa-enhancer</module>
     </modules>
 
     <properties>
@@ -281,14 +282,6 @@
             <scope>provided</scope>
         </dependency>
 
-
-        <!--加载配置ConfigurationProperties注解处理器-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-configuration-processor</artifactId>-->
-<!--            <optional>true</optional>&lt;!&ndash;编译阶段使用&ndash;&gt;-->
-<!--        </dependency>-->
-
     </dependencies>
 
     <!--拉取你的maven库jar-->
@@ -328,6 +321,11 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.10.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
