@@ -76,6 +76,7 @@
         <cat-link-tracking.version>1.0-SNAPSHOT</cat-link-tracking.version>
         <method-trace-log.version>1.0-SNAPSHOT</method-trace-log.version>
         <db-common.version>1.0-SNAPSHOT</db-common.version>
+        <jpa-enhancer.version>1.0-SNAPSHOT</jpa-enhancer.version>
     </properties>
 
     <!--管理工具包的版本，管理使用工具包的人的jar版本-->
@@ -264,6 +265,11 @@
                 <groupId>com.zxf</groupId>
                 <artifactId>db-common</artifactId>
                 <version>${db-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zxf</groupId>
+                <artifactId>jpa-enhancer</artifactId>
+                <version>${jpa-enhancer.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
