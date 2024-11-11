@@ -140,13 +140,13 @@ abstract class GeneratedCriteria {
     }
 
     // JOIN on 使用
-    public ConnectSymbols equalTo(String tFieldName1, String tFieldName2){
+    public ConnectSymbols joinEqualTo(String tFieldName1, String tFieldName2){
         this.addCriterion(joinOnCondition(tFieldName1, "=", tFieldName2));
         return new ConnectSymbols((Criteria) this);
     }
 
     // JOIN on 使用
-    public <T1, T2> ConnectSymbols equalTo(SFunction<T1, ?> tFieldName1, SFunction<T2, ?> tFieldName2){
+    public <T1, T2> ConnectSymbols joinEqualTo(SFunction<T1, ?> tFieldName1, SFunction<T2, ?> tFieldName2){
         this.addCriterion(joinOnCondition(LambdaUtil.columnToString(true, tFieldName1), "=", LambdaUtil.columnToString(true,tFieldName2)));
         return new ConnectSymbols((Criteria) this);
     }
