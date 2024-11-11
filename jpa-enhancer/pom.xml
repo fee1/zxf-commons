@@ -10,6 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jpa-enhancer</artifactId>
+    <packaging>jar</packaging>
+    <version>${jpa-enhancer.version}</version>
 
 
     <build>
