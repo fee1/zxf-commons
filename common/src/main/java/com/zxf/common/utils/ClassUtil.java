@@ -16,6 +16,15 @@ import java.util.List;
 public class ClassUtil {
 
     /**
+     * 判断是否是一些简单的类型
+     * @param type 类型
+     * @return boolean
+     */
+    public static boolean isSimpleType(Class<?> type){
+        return String.class.equals(type) || ClassUtil.isBaseType(type);
+    }
+
+    /**
      * 是否是基本类型
      * @param clazz 类型
      * @return boolean
