@@ -113,6 +113,7 @@ public class CacheAutoConfiguration {
                 }
                 connectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration, lettucePoolingClientConfiguration);
                 //设置非共享连接，允许多个连接公用一个物理连接。如果设置false ,每一个连接的操作都会开启和关闭socket连接。 true适合单机环境
+                // 允许多个逻辑连接复用同一个TCP连接，避免频繁创建/关闭socket，提升单机环境下的连接效率。
                 connectionFactory.setShareNativeConnection(true);
             } else {
                 //集群
