@@ -40,7 +40,7 @@ public class UserCache extends BaseLoadingCache<UserModel> {
     }
 
     /**
-     * 本缓存的名称
+     * 本缓存的名称，同时也是此缓存key的前缀，applicationName:cacheName:自定义key
      * @return
      */
     @Override
