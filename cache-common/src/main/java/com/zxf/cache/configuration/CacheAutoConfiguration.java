@@ -79,7 +79,7 @@ public class CacheAutoConfiguration {
             // todo 可以使用sm2 加解密和base64双重加解密方式
             String password = Base64Util.decrypt(properties.getPassword());
             //连接池配置
-            GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+            GenericObjectPoolConfig<Object> poolConfig = new GenericObjectPoolConfig<>();
             poolConfig.setMaxIdle(properties.getMaxIdle());
             poolConfig.setMinIdle(properties.getMinIdle());
             poolConfig.setMaxTotal(properties.getMaxTotal());
