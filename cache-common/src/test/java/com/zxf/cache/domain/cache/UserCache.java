@@ -35,7 +35,10 @@ public class UserCache extends BaseLoadingCache<UserModel> {
         return CacheType.redis.name();
     }
 
-    //获取 本缓存类的key前缀
+    /**
+     * 本缓存的名称
+     * @return
+     */
     @Override
     public String getCacheName() {
         return "user";
@@ -44,8 +47,9 @@ public class UserCache extends BaseLoadingCache<UserModel> {
     //
     @Override
     public UserModel doLoad(String s) throws Exception {
+        // 这里去把key解析成对象，然后获取入参去数据库查询
 //        UserCacheKey userCacheKey = UserCacheKey.parseFromKey(s);
-//        userMapper
+//        userMapper.findByNameAndAge(userCacheKey.getName(), userCacheKey.getAge());
         return new UserModel("xiaoming", "18");
     }
 
