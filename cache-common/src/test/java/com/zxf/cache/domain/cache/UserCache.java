@@ -22,7 +22,7 @@ public class UserCache extends BaseLoadingCache<UserModel> {
 
 
     /**
-     * 不要求要实现，默认1min
+     * 不要求要实现，默认 1 h
      * @return
      */
     @Override
