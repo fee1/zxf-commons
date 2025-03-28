@@ -24,7 +24,7 @@ public class UserCacheKey {
         return new UserCacheKey(keys[0], keys[1]);
     }
 
-    public static String toKey(String name, String age){
+    public static String toKey(String name, Object age){
         return String.format("%s/%s",name, age);
     }
 
