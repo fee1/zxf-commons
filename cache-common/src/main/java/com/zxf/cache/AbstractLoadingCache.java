@@ -29,6 +29,10 @@ public abstract class AbstractLoadingCache<K, V> implements LoadingCache<K, V>, 
 
     public abstract String getCacheName();
 
+    /**
+     * 默认没有实现就默认使用redis
+     * @return
+     */
     public String getCacheType(){
         return "";
     }

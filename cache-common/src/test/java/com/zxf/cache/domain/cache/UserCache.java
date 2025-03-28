@@ -21,13 +21,17 @@ public class UserCache extends BaseLoadingCache<UserModel> {
 //    private UserMapper userMapper;
 
 
+    /**
+     * 不要求要实现，默认1min
+     * @return
+     */
     @Override
     public int getTimeout() {
         return 84600;
     }
 
     /**
-     * 指定使用哪一种缓存
+     * 指定使用哪一种缓存(不强制要求实现，默认走redis)
      * @return
      */
     @Override
