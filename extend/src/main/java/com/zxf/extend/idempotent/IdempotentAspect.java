@@ -184,9 +184,9 @@ public class IdempotentAspect {
     }
 
     /**
-     * 设置幂等锁，使用Redis的setnx命令
+     * 设置幂等锁，使用Redis的setnx命令，加上同步方法，保证并发安全
      */
-    private boolean setIdempotentLock(String key, long expireTime, TimeUnit timeUnit) {
+    private synchronized boolean setIdempotentLock(String key, long expireTime, TimeUnit timeUnit) {
         // 将时间单位转换为秒
         String value = "1"; // 锁的值不重要，只要能设置成功即可
         
