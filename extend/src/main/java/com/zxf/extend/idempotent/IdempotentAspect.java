@@ -23,6 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -174,7 +175,8 @@ public class IdempotentAspect {
         Object[] args = joinPoint.getArgs();
         if (args != null && args.length > 0) {
             for (Object arg : args) {
-                if (arg != null) {
+                // SessionRepositoryFilter -> HttpServletResponse 入参时会被filter处理成每次请求都不一样的参数
+                if (arg != null && !(arg instanceof HttpServletResponse)) {
                     keyBuilder.append(arg.hashCode()).append(":");
                 }
             }
