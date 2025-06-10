@@ -24,6 +24,7 @@
         <module>trace-agent</module>
         <module>db-common</module>
         <module>jpa-enhancer</module>
+        <module>extend</module>
     </modules>
 
     <properties>
@@ -77,6 +78,8 @@
         <method-trace-log.version>1.0-SNAPSHOT</method-trace-log.version>
         <db-common.version>1.0-SNAPSHOT</db-common.version>
         <jpa-enhancer.version>1.0-SNAPSHOT</jpa-enhancer.version>
+        <extend.version>1.0-SNAPSHOT</extend.version>
+        <knife4j.version>4.4.0</knife4j.version>
     </properties>
 
     <!--管理工具包的版本，管理使用工具包的人的jar版本-->
@@ -138,6 +141,13 @@
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger-annotations.version}</version>
             </dependency>
+            <!--引入Knife4j的官方start包,该指南选择Spring Boot版本<3.0,开发者需要注意-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
@@ -270,6 +280,11 @@
                 <groupId>com.zxf</groupId>
                 <artifactId>jpa-enhancer</artifactId>
                 <version>${jpa-enhancer.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zxf</groupId>
+                <artifactId>extend</artifactId>
+                <version>${extend.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

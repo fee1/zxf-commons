@@ -1,5 +1,6 @@
 package com.zxf.startup.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.zxf.common.config.BaseSwaggerConfig;
 import com.zxf.common.domain.SwaggerProperties;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ConditionalOnProperty(value = "swagger.enable", matchIfMissing = true)
 @Configuration
 @EnableSwagger2 ////表示打开swagger功能
+@EnableKnife4j
 public class SwaggerConfig extends BaseSwaggerConfig {
 
     @Value("${swagger.title}")
