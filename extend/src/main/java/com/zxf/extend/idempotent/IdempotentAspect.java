@@ -10,7 +10,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.redisson.api.RedissonClient;
+import org.redisson.api.RLock;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
@@ -39,7 +40,7 @@ import java.util.concurrent.TimeUnit;
 public class IdempotentAspect {
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedissonClient redissonClient;
 
     private static final String LOCK_PREFIX = "idempotent_Lock:";
 
@@ -95,7 +96,10 @@ public class IdempotentAspect {
             // 如果方法执行过程中出现异常，释放锁，允许客户端重试
             throw e;
         }finally {
-            redisTemplate.delete(idempotentKey);
+            RLock lock = redissonClient.getLock(LOCK_PREFIX + idempotentKey);
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
         }
     }
 
@@ -186,18 +190,16 @@ public class IdempotentAspect {
     }
 
     /**
-     * 设置幂等锁，使用Redis的setnx命令，加上同步方法，保证并发安全
+     * 设置幂等锁，使用Redisson分布式锁实现
      */
-    private synchronized boolean setIdempotentLock(String key, long expireTime, TimeUnit timeUnit) {
-        // 将时间单位转换为秒
-        String value = "1"; // 锁的值不重要，只要能设置成功即可
-        
-        // 在Redis中设置key-value，如果key不存在才设置成功，返回true，否则返回false
-        Boolean b = redisTemplate.hasKey(key);
-        if (b != null && b) {
+    private boolean setIdempotentLock(String key, long expireTime, TimeUnit timeUnit) {
+        RLock lock = redissonClient.getLock(key);
+        try {
+            // 尝试加锁，最多等待0秒，过期时间由注解指定
+            return lock.tryLock(0, expireTime, timeUnit);
+        } catch (InterruptedException e) {
+            log.error("获取分布式锁失败", e);
             return false;
         }
-        redisTemplate.opsForValue().set(key, value, expireTime, timeUnit);
-        return true;
     }
 } 
