@@ -29,4 +29,10 @@ public @interface RateLimit {
      * @return 提示信息
      */
     String message() default "请求过于频繁，请稍后再试";
+
+    /**
+     * 限流类型，默认 Guava 本地限流
+     * @return 限流类型
+     */
+    RateLimitType type() default RateLimitType.GUAVA;
 } 

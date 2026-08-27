@@ -42,7 +42,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
         double qps = rateLimit.qps();
 
         // 尝试获取令牌
-        boolean allowed = rateLimiterService.tryAcquire(key, qps);
+        boolean allowed = rateLimiterService.tryAcquire(key, qps, rateLimit.type());
         if (!allowed) {
             log.warn("接口 [{}] 被限流，当前QPS: {}", key, qps);
             // 抛出限流异常，由全局异常处理器处理

@@ -77,6 +77,19 @@ public class RateLimitDemo {
     }
 
     /**
+     * Redis 共享限流配置，QPS=2
+     * 所有 JVM 实例共享同一限流配额
+     */
+    @RateLimit(key = "redis-shared", qps = 2, type = RateLimitType.REDIS)
+    @GetMapping("/redis-shared")
+    public Map<String, Object> redisShared() {
+        Map<String, Object> result = new HashMap<>(2);
+        result.put("message", "Redis 共享限流 key: redis-shared, QPS=2");
+        result.put("time", LocalDateTime.now().toString());
+        return result;
+    }
+
+    /**
      * 无限流接口
      */
     @GetMapping("/no-limit")
