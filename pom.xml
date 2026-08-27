@@ -71,7 +71,6 @@
         <boot-app.version>1.1-SNAPSHOT</boot-app.version>
         <eureka-cloud-server-app.version>1.0-SNAPSHOT</eureka-cloud-server-app.version>
         <eureka-client-app.version>1.0-SNAPSHOT</eureka-client-app.version>
-        <auth-common.version>1.0-SNAPSHOT</auth-common.version>
         <data-starter.version>1.0-SNAPSHOT</data-starter.version>
         <cat-link-tracking.version>1.0-SNAPSHOT</cat-link-tracking.version>
         <method-trace-log.version>1.0-SNAPSHOT</method-trace-log.version>
