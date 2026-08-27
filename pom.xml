@@ -23,7 +23,6 @@
         <module>method-trace-log</module>
         <module>trace-agent</module>
         <module>db-common</module>
-        <module>jpa-enhancer</module>
         <module>extend</module>
     </modules>
 
@@ -78,7 +77,6 @@
         <cat-link-tracking.version>1.0-SNAPSHOT</cat-link-tracking.version>
         <method-trace-log.version>1.0-SNAPSHOT</method-trace-log.version>
         <db-common.version>1.0-SNAPSHOT</db-common.version>
-        <jpa-enhancer.version>1.0-SNAPSHOT</jpa-enhancer.version>
         <extend.version>1.0-SNAPSHOT</extend.version>
         <knife4j.version>4.4.0</knife4j.version>
         <redisson.version>3.16.6</redisson.version>
@@ -287,11 +285,6 @@
                 <groupId>com.zxf</groupId>
                 <artifactId>db-common</artifactId>
                 <version>${db-common.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.zxf</groupId>
-                <artifactId>jpa-enhancer</artifactId>
-                <version>${jpa-enhancer.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zxf</groupId>
